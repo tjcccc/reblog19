@@ -1,0 +1,42 @@
+@import "variables";
+
+html,
+body {
+  font-size: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: $font-size-xxl;
+}
+h2 {
+  font-size: $font-size-xl;
+}
+h3 {
+  font-size: $font-size-l;
+}
+h4 {
+  font-size: $font-size-m;
+}
+h5 {
+  font-size: $font-size-s;
+}
+h6 {
+  font-size: $font-size-xs;
+}
+
