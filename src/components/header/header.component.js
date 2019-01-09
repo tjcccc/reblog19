@@ -5,10 +5,10 @@ import './header.scss';
 
 class Header extends Component {
   render = () => {
-    const { blog } = this.props;
+    const { blogInfo } = this.props;
     return (
       <div className="header">
-        <h1>{blog.name}</h1>
+        <h1>{blogInfo.name}</h1>
       </div>
 
     );
@@ -16,7 +16,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  blog: PropTypes.shape({
+  blogInfo: PropTypes.shape({
     name: PropTypes.string
   })
 }
