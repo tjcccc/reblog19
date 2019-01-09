@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 import './container.scss';
 
 class Container extends Component {
   render = () => {
     const { posts, categories } = this.props;
+    const postList = posts.map((post, i) =>
+      <article className="post" key={i}>
+        <ReactMarkdown source={post.content} />
+      </article>
+    );
+    const categoryList = categories.map((category, i) =>
+      <li key={i}>{category.label}</li>
+    );
     return (
       <div className="container">
-        <article>{posts}</article>
-        <aside>{categories}</aside>
+        <article>
+          {postList}
+        </article>
+        <aside>
+          <ul>
+            {categoryList}
+          </ul>
+        </aside>
       </div>
-
     );
   };
 }

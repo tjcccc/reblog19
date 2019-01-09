@@ -1,0 +1,7 @@
+@import "variables";
+
+article.post {
+  & > h1 {
+    color: red;
+  }
+}
