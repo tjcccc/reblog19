@@ -1,38 +1,81 @@
 @import "../../styles/variables";
 
-@media all and (min-width: $desktop-width-l) {
-  .container {
-    padding: ($space-common * 2) ($container-desktop-margin * 2);
+@mixin aside-wide {
+  width: 20rem;
+  padding: 0 2rem;
+  & > *:first-child {
+    margin-top: 0;
+  }
+  & > *:last-child {
+    margin-bottom: 0;
   }
 }
 
-@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-l) {
+@media all and (min-width: $desktop-width-l) {
   .container {
+    width: 100rem;
+    padding: ($space-common * 2) ($container-desktop-margin * 1.5);
+    & > article {
+      width: calc(100% - 20rem);
+    }
+    & > aside {
+      @include aside-wide;
+    }
+  }
+}
+
+@media all and (min-width: $desktop-width-m) and (max-width: $desktop-width-l) {
+  .container {
+    width: auto;
     padding: ($space-common * 2) $container-desktop-margin;
+    & > article {
+      width: calc(100% - 20rem);
+    }
+    & > aside {
+      @include aside-wide;
+    }
+  }
+}
+
+@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-m) {
+  .container {
+    width: auto;
+    padding: ($space-common * 2) $container-desktop-margin;
+    & > article {
+      width: calc(100% - 20rem);
+    }
+    & > aside {
+      @include aside-wide;
+    }
   }
 }
 
 @media all and (max-width: $desktop-width-s) {
   .container {
+    width: auto;
+    margin: 0 auto;
     padding: $space-common * 2;
     & > article {
       width: 100%;
-      float: none;
     }
     & > aside {
-      width: 0%;
-      display: none;
+      width: 0;
+      height: 0;
+      visibility: hidden;
     }
   }
 }
 
 .container {
+  margin: 0 auto;
+  & > * {
+    vertical-align: top;
+    box-sizing: border-box;
+  };
   & > article {
-    width: 80%;
-    float: left;
+    display: inline-block;
   }
   & > aside {
-    width: 20%;
-    float: right;
+    display: inline-block;
   }
 }

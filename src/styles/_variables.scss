@@ -1,10 +1,10 @@
 // Font size
-$font-size-xs: calc(1.2rem + 0.5vw);
-$font-size-s: calc(1.2rem + 1vw);
-$font-size-m: calc(1.4rem + 1vw);
-$font-size-l: calc(2rem + 1vw);
-$font-size-xl: calc(2.2rem + 1vw);
-$font-size-xxl: calc(2.4rem + 1vw);
+$font-size-xs: 1rem;
+$font-size-s: 1.2rem;
+$font-size-m: 1.4rem;
+$font-size-l: 1.8rem;
+$font-size-xl: 2.4rem;
+$font-size-xxl: 3.2rem;
 
 // Color
 $primary-color: rgb(12, 85, 168);
@@ -23,7 +23,7 @@ $input-line: #ccc;
 $input-line-highlight: $highlight-blue;
 
 // Common Size
-$border-width: 2px;
+$border-width: 0.1rem;
 
 // Lighter and darken
 $darken-hover-bg: 5%;
@@ -36,10 +36,11 @@ $container-desktop-margin: 10vw;
 
 // Responsive Layout
 $desktop-width-s: 48rem;
-$desktop-width-l: 76.8rem;
+$desktop-width-m: 76.8rem;
+$desktop-width-l: 10.24rem;
 
 // Radius
-$rect-radius-s: 0.5rem;
+$rect-radius-s: 0.25rem;
 $btn-radius: 1.5rem;
 $input-radius: 0.3rem;
 

@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReactMarkdown from 'react-markdown';
+import Post from '../post/post.component';
+import CategoryCollection from '../category-collection/category-collection.component';
 import './container.scss';
 
 class Container extends Component {
   render = () => {
     const { posts, categories } = this.props;
-    const postList = posts.map((post, i) =>
-      <article className="markdown-body post" key={i}>
-        <ReactMarkdown source={post.content} />
-      </article>
-    );
-    const categoryList = categories.map((category, i) =>
-      <li key={i}>{category.label}</li>
+    const postList = posts.map((post, index) =>
+      <Post data={post} key={index} />
     );
     return (
       <div className="container">
@@ -21,9 +17,7 @@ class Container extends Component {
           {postList}
         </article>
         <aside>
-          <ul>
-            {categoryList}
-          </ul>
+          <CategoryCollection items={categories} />
         </aside>
       </div>
     );

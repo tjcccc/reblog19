@@ -2,5 +2,15 @@
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 
 article.post-collection {
-
+  background: transparent;
+  & > article {
+    margin-top: 1rem;
+    padding: $space-common * 2;
+    background: white;
+    border-radius: $rect-radius-s;
+    border: $border-width solid $bg-dim;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 }
