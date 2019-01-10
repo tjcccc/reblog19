@@ -28,23 +28,28 @@ export const blog = {
   categories: [
     {
       id: 'aaa',
-      label: 'Devlopment'
+      label: 'Devlopment',
+      postCount: 24
     },
     {
       id: 'bbb',
-      label: 'Life'
+      label: 'Life',
+      postCount: 15
     },
     {
       id: 'ccc',
-      label: 'Game'
+      label: 'Game',
+      postCount: 21
     },
     {
       id: 'ddd',
-      label: 'Study'
+      label: 'Study',
+      postCount: 10
     },
     {
       id: 'eee',
-      label: 'Recommend'
+      label: 'Recommend',
+      postCount: 38
     }
   ],
   posts: [

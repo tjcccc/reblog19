@@ -1,8 +1,8 @@
 @import "../../styles/variables";
 
 @mixin aside-wide {
-  width: 20rem;
-  padding: 0 2rem;
+  width: 28rem;
+  margin-left: 2rem;
   & > *:first-child {
     margin-top: 0;
   }
@@ -13,10 +13,9 @@
 
 @media all and (min-width: $desktop-width-l) {
   .container {
-    width: 100rem;
     padding: ($space-common * 2) ($container-desktop-margin * 1.5);
     & > article {
-      width: calc(100% - 20rem);
+      width: calc(100% - 30rem);
     }
     & > aside {
       @include aside-wide;
@@ -26,10 +25,9 @@
 
 @media all and (min-width: $desktop-width-m) and (max-width: $desktop-width-l) {
   .container {
-    width: auto;
     padding: ($space-common * 2) $container-desktop-margin;
     & > article {
-      width: calc(100% - 20rem);
+      width: calc(100% - 30rem);
     }
     & > aside {
       @include aside-wide;
@@ -39,10 +37,9 @@
 
 @media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-m) {
   .container {
-    width: auto;
     padding: ($space-common * 2) $container-desktop-margin;
     & > article {
-      width: calc(100% - 20rem);
+      width: calc(100% - 30rem);
     }
     & > aside {
       @include aside-wide;
@@ -52,8 +49,6 @@
 
 @media all and (max-width: $desktop-width-s) {
   .container {
-    width: auto;
-    margin: 0 auto;
     padding: $space-common * 2;
     & > article {
       width: 100%;
@@ -70,7 +65,6 @@
   margin: 0 auto;
   & > * {
     vertical-align: top;
-    box-sizing: border-box;
   };
   & > article {
     display: inline-block;

@@ -7,9 +7,14 @@ class CategoryCollection extends Component {
   render = () => {
     const { items } = this.props;
     const categories = items.map((category, index) =>
-      <li key={index}>{category.label}</li>
+      <a href='/' key={index}>{category.label} ({category.postCount})</a>
     );
-    return (<ul className="category-collection">{categories}</ul>);
+    return (
+      <nav className="side-block category-collection">
+      <h2>Category</h2>
+      {categories}
+      </nav>
+    );
   }
 }
 

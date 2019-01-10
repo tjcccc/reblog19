@@ -20,4 +20,11 @@ code {
   background: white;
 }
 
-
+.side-block {
+  margin-bottom: $space-common;
+  & > h2 {
+    font-size: $font-size-m;
+    line-height: $rect-height * 2;
+    color: $label-dark;
+  }
+}

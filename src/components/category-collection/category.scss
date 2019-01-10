@@ -2,5 +2,27 @@
 
 .category-collection {
   font-size: $font-size-m;
-  border: $border-width solid $bg-dim;
+  & > a {
+    display: block;
+    line-height: $rect-height * 2;
+    height: $rect-height * 2;
+    border: $border-width solid $line-dim;
+    border-bottom: 0;
+    padding-left: $space-common * 2;
+    &:first-child {
+      border-radius: $rect-radius-s $rect-radius-s 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0 $rect-radius-s $rect-radius-s;
+      border-bottom: $border-width solid $line-dim;
+    }
+    &:link,
+    &:visited {
+      color: $link-blue;
+      text-decoration: none;
+    }
+    &:hover {
+      background: darken(white, $darken-shadow);;
+    }
+  }
 }
