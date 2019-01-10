@@ -64,7 +64,7 @@ export const blog = {
       createTime: '2019-01-09 17:38',
       postTime: '2019-01-09 17:39',
       updateTime: '2019-01-09 17:40',
-      content: 'Hello, world. How are you?',
+      content: 'Hello, world.\n\n```js\ntest();\n```',
       categories: ['bbb', 'ddd'],
       tags: ['greeting', 'test']
     },

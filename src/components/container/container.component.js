@@ -8,7 +8,7 @@ class Container extends Component {
   render = () => {
     const { posts, categories } = this.props;
     const postList = posts.map((post, i) =>
-      <article className="post" key={i}>
+      <article className="markdown-body post" key={i}>
         <ReactMarkdown source={post.content} />
       </article>
     );
@@ -17,7 +17,7 @@ class Container extends Component {
     );
     return (
       <div className="container">
-        <article>
+        <article className="post-collection">
           {postList}
         </article>
         <aside>

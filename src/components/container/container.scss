@@ -1,5 +1,38 @@
 @import "../../styles/variables";
 
+@media all and (min-width: $desktop-width-l) {
+  .container {
+    padding: ($space-common * 2) ($container-desktop-margin * 2);
+  }
+}
+
+@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-l) {
+  .container {
+    padding: ($space-common * 2) $container-desktop-margin;
+  }
+}
+
+@media all and (max-width: $desktop-width-s) {
+  .container {
+    padding: $space-common * 2;
+    & > article {
+      width: 100%;
+      float: none;
+    }
+    & > aside {
+      width: 0%;
+      display: none;
+    }
+  }
+}
+
 .container {
-  padding: $space-common * 2;
+  & > article {
+    width: 80%;
+    float: left;
+  }
+  & > aside {
+    width: 20%;
+    float: right;
+  }
 }

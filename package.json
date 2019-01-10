@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "github-markdown-css": "^2.10.0",
     "node-sass": "^4.10.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",

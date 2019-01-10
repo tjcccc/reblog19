@@ -1,7 +1,6 @@
 @import "variables";
+@import "../../node_modules/github-markdown-css/github-markdown.css";
 
-article.post {
-  & > h1 {
-    color: red;
-  }
+article.post-collection {
+
 }
