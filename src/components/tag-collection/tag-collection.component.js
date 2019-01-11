@@ -22,7 +22,7 @@ class TagCollection extends Component {
 TagCollection.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
-    tag: PropTypes.string,
+    label: PropTypes.string,
     count: PropTypes.number
   }))
 }

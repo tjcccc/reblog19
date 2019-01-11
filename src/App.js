@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Header blogInfo={blog.info} />
+        <Header blogInfo={blog.info} menuItems={blog.menuItems} />
         <Container posts={blog.posts} categories={blog.categories} tags={blog.tags} />
       </div>
     );

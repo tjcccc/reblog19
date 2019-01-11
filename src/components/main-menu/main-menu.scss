@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+.main-menu {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  font-size: $font-size-s;
+  & > a {
+    line-height: $rect-height;
+    margin: 0 $space-common;
+    @include a-common;
+    @include a-common-hover;
+  }
+}

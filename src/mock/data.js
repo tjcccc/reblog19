@@ -3,26 +3,21 @@ export const blog = {
     name: 'Another Blog',
     author: 'Someone'
   },
-  menu: [
+  menuItems: [
     {
       id: 'aa',
       label: 'Home',
-      link: '#'
+      link: '/'
     },
     {
       id: 'bb',
       label: 'Archive',
-      link: '#'
+      link: '/'
     },
     {
       id: 'cc',
       label: 'About',
-      link: '#'
-    },
-    {
-      id: 'dd',
-      label: 'RSS',
-      link: '#'
+      link: '/'
     }
   ],
   categories: [
