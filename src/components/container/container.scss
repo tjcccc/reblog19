@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 @mixin aside-wide {
   width: 28rem;
@@ -71,5 +72,20 @@
   }
   & > aside {
     display: inline-block;
+    & > p {
+      display: block;
+      font-size: $font-size-m;
+      line-height: $font-size-m;
+      margin: $space-tight 0;
+      padding: $space-tight 0;
+      & > span {
+        padding-left: $space-tight;
+        & > a {
+          font-weight: bold;
+          @include a-common;
+          @include a-common-hover;
+        }
+      }
+    }
   }
 }

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRss } from '@fortawesome/free-solid-svg-icons'
 import Post from '../post/post.component';
 import CategoryCollection from '../category-collection/category-collection.component';
 import TagCollection from '../tag-collection/tag-collection.component';
+import terms from '../../config/terms';
 import './container.scss';
 
 class Container extends Component {
@@ -20,6 +23,10 @@ class Container extends Component {
         <aside>
           <CategoryCollection items={categories} />
           <TagCollection items={tags} />
+          <p>
+            <FontAwesomeIcon icon={faRss} fixedWidth />
+            <span><a href='/'>{terms.subscribeLabel}</a></span>
+          </p>
         </aside>
       </div>
     );
