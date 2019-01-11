@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Post from '../post/post.component';
 import CategoryCollection from '../category-collection/category-collection.component';
+import TagCollection from '../tag-collection/tag-collection.component';
 import './container.scss';
 
 class Container extends Component {
   render = () => {
-    const { posts, categories } = this.props;
+    const { posts, categories, tags } = this.props;
     const postList = posts.map((post, index) =>
       <Post data={post} key={index} />
     );
@@ -18,6 +19,7 @@ class Container extends Component {
         </article>
         <aside>
           <CategoryCollection items={categories} />
+          <TagCollection items={tags} />
         </aside>
       </div>
     );
@@ -37,7 +39,13 @@ Container.propTypes = {
   })),
   categories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
-    label: PropTypes.string
+    label: PropTypes.string,
+    postCount: PropTypes.number
+  })),
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+    postCount: PropTypes.number
   }))
 }
 

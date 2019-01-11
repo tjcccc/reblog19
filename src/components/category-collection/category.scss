@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 .category-collection {
   font-size: $font-size-m;
@@ -16,13 +17,7 @@
       border-radius: 0 0 $rect-radius-s $rect-radius-s;
       border-bottom: $border-width solid $line-dim;
     }
-    &:link,
-    &:visited {
-      color: $link-blue;
-      text-decoration: none;
-    }
-    &:hover {
-      background: darken(white, $darken-shadow);;
-    }
+    @include a-common;
+    @include a-common-hover-block;
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import terms from '../../config/terms';
 import './category.scss';
 
 class CategoryCollection extends Component {
@@ -11,8 +12,8 @@ class CategoryCollection extends Component {
     );
     return (
       <nav className="side-block category-collection">
-      <h2>Category</h2>
-      {categories}
+        <h2>{terms.categoryLabel}</h2>
+        {categories}
       </nav>
     );
   }

@@ -83,5 +83,77 @@ export const blog = {
       categories: ['aaa', 'eee'],
       tags: ['greeting', 'test']
     }
+  ],
+  tags: [
+    {
+      id: 'tag-a',
+      label: 'Docker',
+      postCount: 18
+    },
+    {
+      id: 'tag-b',
+      label: 'React',
+      postCount: 25
+    },
+    {
+      id: 'tag-c',
+      label: 'Angular',
+      postCount: 21
+    },
+    {
+      id: 'tag-d',
+      label: 'Vue',
+      postCount: 35
+    },
+    {
+      id: 'tag-e',
+      label: 'Visual Studio',
+      postCount: 8
+    },
+    {
+      id: 'tag-f',
+      label: 'macOS',
+      postCount: 10
+    },
+    {
+      id: 'tag-g',
+      label: 'iPhone',
+      postCount: 23
+    },
+    {
+      id: 'tag-h',
+      label: 'Nintendo Switch',
+      postCount: 64
+    },
+    {
+      id: 'tag-i',
+      label: 'Shanghai',
+      postCount: 36
+    },
+    {
+      id: 'tag-j',
+      label: 'HTML/CSS',
+      postCount: 64
+    },
+    {
+      id: 'tag-k',
+      label: 'NodeJS',
+      postCount: 26
+    },
+    {
+      id: 'tag-l',
+      label: '.NET Core',
+      postCount: 17
+    },
+    {
+      id: 'tag-m',
+      label: 'UI/UX',
+      postCount: 22
+    },
+    {
+      id: 'tag-n',
+      label: 'Cthulhu',
+      postCount: 38
+    }
   ]
 }

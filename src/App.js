@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="app">
         <Header blogInfo={blog.info} />
-        <Container posts={blog.posts} categories={blog.categories} />
+        <Container posts={blog.posts} categories={blog.categories} tags={blog.tags} />
       </div>
     );
   }
