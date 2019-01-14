@@ -1,16 +1,26 @@
 @import "../../styles/variables";
 
-.header {
+header {
   width: 100%;
-  height: 9rem;
-  padding-top: 1rem;
-  background-color: $primary-color-dark;
+  height: 8rem;
+  background-color: $primary-color;
   color: white;
-  & > h1 {
-    display: block;
-    width: 100%;
-    height: 6rem;
-    line-height: 6rem;
-    text-align: center;
+  & > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > h1 {
+      display: block;
+      height: 4rem;
+      line-height: 4rem;
+      font-size: $font-size-xl;
+      padding-left: $space-common * 2;
+      & > img {
+        float: left;
+        width: 4rem;
+        height: 4rem;
+      }
+    }
   }
+
 }

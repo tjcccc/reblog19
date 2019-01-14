@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import UserPanel from '../user-panel/user-panel.component';
 import MainMenu from '../main-menu/main-menu.component';
 import './header.scss';
+import logo from '../../logo.svg';
 
 class Header extends Component {
   render = () => {
     const { blogInfo, menuItems } = this.props;
     return (
-      <div className="header">
-        <h1>{blogInfo.name}</h1>
+      <header>
+        <div>
+          <h1>
+            <img src={logo} alt='reblog19' />
+            {blogInfo.name}
+          </h1>
+          <UserPanel isSignedIn={true} />
+        </div>
         <MainMenu items={menuItems} />
-      </div>
+      </header>
     );
   };
 }

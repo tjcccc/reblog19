@@ -6,17 +6,17 @@ export const blog = {
   menuItems: [
     {
       id: 'aa',
-      label: 'Home',
+      label: 'HOME',
       link: '/'
     },
     {
       id: 'bb',
-      label: 'Archive',
+      label: 'ARCHIVE',
       link: '/'
     },
     {
       id: 'cc',
-      label: 'About',
+      label: 'ABOUT',
       link: '/'
     }
   ],

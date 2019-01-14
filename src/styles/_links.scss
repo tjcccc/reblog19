@@ -1,0 +1,11 @@
+@import "variables";
+
+.special {
+  border-radius: $rect-radius-s;
+  background: $link-blue;
+  color: white !important;
+  padding: 0 $space-common;
+  &:hover {
+    background: darken($link-blue, $darken-shadow);
+  }
+}

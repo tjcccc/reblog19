@@ -1,14 +1,13 @@
 @import "../../styles/variables";
 @import "../../styles/mixins";
 
-.main-menu {
+.user-panel {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: flex-end;
   font-size: $font-size-s;
-  background: $bg-dim;
   & > a {
-    line-height: 4rem;
+    line-height: $rect-height;
     margin: 0 $space-common;
     @include a-common;
     @include a-common-hover;
