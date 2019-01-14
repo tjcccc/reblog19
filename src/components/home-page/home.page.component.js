@@ -7,9 +7,8 @@ import Post from '../post/post.component';
 import CategoryCollection from '../category-collection/category-collection.component';
 import TagCollection from '../tag-collection/tag-collection.component';
 import terms from '../../config/terms';
-import './container.scss';
 
-class Container extends Component {
+class HomePage extends Component {
   render = () => {
     const { posts, categories, tags } = this.props;
     const postList = posts.map((post, index) =>
@@ -33,7 +32,7 @@ class Container extends Component {
   };
 }
 
-Container.propTypes = {
+HomePage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
@@ -56,4 +55,4 @@ Container.propTypes = {
   }))
 }
 
-export default connect()(Container);
+export default connect()(HomePage);
