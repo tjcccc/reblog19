@@ -1,6 +1,10 @@
 # reblog19
 
-A simple blog. Front-end: React + Redux; Back-end: NodeJS with Koa; Database: MongoDB.
+A simple markdown blog.
+
+- Front-end: React + Redux;
+- Back-end: NodeJS with Express;
+- Database: MongoDB.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

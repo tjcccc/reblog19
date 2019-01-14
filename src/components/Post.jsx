@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 
-class PostPage extends Component {
+class Post extends Component {
   render = () => {
-    // const { post } = this.props;
+    const { data, key } = this.props;
     return (
-      <div className="container">
-        <article>
-          single post here
-        </article>
-        <aside>
-          header list
-        </aside>
-      </div>
+      <article className="markdown-body post" key={key}>
+        <ReactMarkdown source={data.content} />
+        <hr />
+        <p>{data.postTime}</p>
+      </article>
     );
   };
 }
 
-PostPage.propTypes = {
-  post: PropTypes.shape({
+Post.propTypes = {
+  data: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
     createTime: PropTypes.string,
@@ -28,7 +26,8 @@ PostPage.propTypes = {
     content: PropTypes.string,
     categories: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  key: PropTypes.number
 }
 
-export default connect()(PostPage);
+export default connect()(Post);

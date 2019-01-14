@@ -1,11 +1,9 @@
 // Normalize CSS
 @import "../../node_modules/normalize.css/normalize.css";
 
-// reblog19
+// Global
 @import "variables";
 @import "global";
-@import "main";
-@import "container";
-@import "articles";
-@import "links";
-@import "buttons";
+
+// Theme
+@import "./default/theme";

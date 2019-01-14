@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Routes from './Routes';
 import { blog } from './mock/data';
-import Header from './components/header/header.component';
+import Header from './components/Header';
 
 class App extends Component {
 

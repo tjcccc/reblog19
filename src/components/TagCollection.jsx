@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import terms from '../../config/terms';
-import './tag.scss';
+import terms from '../config/terms';
 
 class TagCollection extends Component {
   render = () => {

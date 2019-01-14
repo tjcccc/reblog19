@@ -1,21 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import HomePage from './components/home-page/home.page.component';
-import PostPage from './components/post-page/post.page.component';
+import HomePage from './components/HomePage';
+import PostPage from './components/PostPage';
 
 import { blog } from './mock/data';
 
-const Page = {
-  Home: () => (<HomePage posts={blog.posts} categories={blog.categories} tags={blog.tags} />),
-  Post: () => (<PostPage />)
-}
+const homePage = () => (<HomePage posts={blog.posts} categories={blog.categories} tags={blog.tags} />);
+const postPage = () => (<PostPage post={blog.posts[0]} />);
 
 const Routes = () => (
   <BrowserRouter>
     <div>
-      <Route path="/" exact component={Page.Home} />
-      <Route path="/post/" component={Page.Post} />
+      <Route path="/" exact component={homePage} />
+      <Route path="/post/" component={postPage} />
     </div>
   </BrowserRouter>
 );

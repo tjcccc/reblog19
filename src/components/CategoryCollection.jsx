@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import terms from '../../config/terms';
-import './category.scss';
+import terms from '../config/terms';
 
 class CategoryCollection extends Component {
   render = () => {

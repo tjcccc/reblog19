@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRss } from '@fortawesome/free-solid-svg-icons'
-import Post from '../post/post.component';
-import CategoryCollection from '../category-collection/category-collection.component';
-import TagCollection from '../tag-collection/tag-collection.component';
-import terms from '../../config/terms';
+import Post from './Post';
+import CategoryCollection from './CategoryCollection';
+import TagCollection from './TagCollection';
+import terms from '../config/terms';
 
 class HomePage extends Component {
   render = () => {

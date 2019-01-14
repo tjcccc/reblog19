@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import UserPanel from '../user-panel/user-panel.component';
-import MainMenu from '../main-menu/main-menu.component';
-import './header.scss';
-import logo from '../../logo.svg';
+import UserPanel from './UserPanel';
+import MainMenu from './MainMenu';
+import logo from '../logo.svg';
 
 class Header extends Component {
   render = () => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './user-panel.scss';
 
 class UserPanel extends Component {
   render = () => {
@@ -21,6 +21,10 @@ class UserPanel extends Component {
 
     return isSignedIn ? signedInOptions : unsignedInOptions;
   }
+}
+
+UserPanel.propTypes = {
+  isSignedIn: PropTypes.bool
 }
 
 export default connect()(UserPanel);

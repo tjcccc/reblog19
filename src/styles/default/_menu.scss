@@ -1,0 +1,30 @@
+@import "variables";
+@import "mixins";
+
+.main-menu {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  font-size: $font-size-s;
+  background: $bg-light;
+  border-bottom: $border-width solid $line-dim;
+  & > a {
+    line-height: 4rem;
+    margin: 0 $space-common;
+    @include a-common;
+    @include a-common-hover;
+  }
+}
+
+.user-panel {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  font-size: $font-size-s;
+  & > a {
+    line-height: $rect-height;
+    margin: 0 $space-common;
+    @include a-common;
+    @include a-common-hover;
+  }
+}
