@@ -9,8 +9,10 @@
   }
 }
 @mixin a-common-disable {
-  &:disabled {
+  &.disabled {
     color: $value-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 @mixin a-common-hover {
@@ -38,5 +40,17 @@
   background: white;
   &:first-child {
     margin-top: 0;
+  }
+}
+
+// Layout
+@mixin aside-wide {
+  width: 28rem;
+  margin-left: 2rem;
+  & > *:first-child {
+    margin-top: 0;
+  }
+  & > *:last-child {
+    margin-bottom: 0;
   }
 }

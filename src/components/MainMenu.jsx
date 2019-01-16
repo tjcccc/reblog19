@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import SearchBar from './SearchBar';
 
 class MainMenu extends Component {
   render = () => {
@@ -9,9 +10,10 @@ class MainMenu extends Component {
       <a href='/' key={index}>{menuItem.label}</a>
     );
     return (
-      <nav className='main-menu'>
-        {menuItems}
-      </nav>
+      <div className='main-menu responsive-container'>
+        <nav>{menuItems}</nav>
+        <SearchBar placeholder='Search the blog...' />
+      </div>
     );
   }
 }

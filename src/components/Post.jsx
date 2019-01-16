@@ -5,12 +5,15 @@ import ReactMarkdown from 'react-markdown';
 
 class Post extends Component {
   render = () => {
-    const { data, key } = this.props;
+    const { data, isCompact ,key } = this.props;
+    const postOptions = isCompact ? (<p>aaa</p>) : (<p>Comments could be placed here.</p>);
     return (
       <article className='markdown-body post' key={key}>
         <ReactMarkdown source={data.content} />
-        <hr />
-        <p>{data.postTime}</p>
+        <section>
+          Update Time: {data.updateTime}
+          {postOptions}
+        </section>
       </article>
     );
   };
@@ -27,6 +30,7 @@ Post.propTypes = {
     categories: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
   }),
+  isCompact: PropTypes.bool,
   key: PropTypes.number
 }
 

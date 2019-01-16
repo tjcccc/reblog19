@@ -42,6 +42,8 @@ h6 {
 }
 
 a {
+  user-select: none;
+  cursor: pointer;
   @include a-common;
   @include a-common-hover;
 }

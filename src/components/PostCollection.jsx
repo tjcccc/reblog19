@@ -7,13 +7,13 @@ class PostCollection extends Component {
   render = () => {
     const { data, count } = this.props;
     const posts = data.slice(0, count).map((post, index) =>
-      <Post data={post} key={index} />
+      <Post data={post} isCompact={true} key={index} />
     );
     return (
       <article className='post-collection'>
         {posts}
         <nav className='article-nav-group'>
-          <a href='/' disabled>Newer</a>
+          <a className='disabled' href='/'>Newer</a>
           <a href='/'>Older</a>
         </nav>
       </article>
@@ -32,6 +32,7 @@ PostCollection.propTypes = {
     categories: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
   })),
+  isCompact: PropTypes.bool,
   count: PropTypes.number
 }
 

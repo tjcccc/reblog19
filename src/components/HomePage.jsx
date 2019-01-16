@@ -13,7 +13,7 @@ class HomePage extends Component {
     const { posts, categories, tags } = this.props;
 
     return (
-      <div className='container'>
+      <div className='container responsive-container'>
         <PostCollection data={posts} count={10} />
         <aside>
           <CategoryCollection items={categories} />

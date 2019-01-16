@@ -2,17 +2,43 @@
 @import "mixins";
 
 .main-menu {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  font-size: $font-size-s;
+  height: $std-height * 2;
   background: $bg-light;
   border-bottom: $border-width solid $line-dim;
-  & > a {
-    line-height: 4rem;
-    margin: 0 $space-common;
-    @include a-common;
-    @include a-common-hover;
+  display: flex;
+  justify-content: space-between;
+  & > nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    font-size: $font-size-s;
+    & > a {
+      line-height: $std-height * 2;
+      margin: 0 $space-common;
+      @include a-common;
+      @include a-common-hover;
+    }
+  }
+}
+
+@media all and (min-width: $desktop-width-l) {
+  .main-menu {
+    padding: 0 ($container-desktop-margin * 1.5);
+  }
+}
+@media all and (min-width: $desktop-width-m) and (max-width: $desktop-width-l) {
+  .main-menu {
+    padding: 0 $container-desktop-margin;
+  }
+}
+@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-m) {
+  .main-menu {
+    padding: 0 $container-desktop-margin;
+  }
+}
+@media all and (max-width: $desktop-width-s) {
+  .main-menu {
+    padding: 0 $space-common * 2;
   }
 }
 
@@ -26,5 +52,27 @@
     margin: 0 $space-common;
     @include a-common;
     @include a-common-hover;
+  }
+}
+
+.search-bar {
+  @include aside-wide;
+  background: white;
+  margin: $space-tight 0;
+  border: $border-width solid $line-dim;
+  border-radius: $std-radius-m;
+  font-size: $font-size-m;
+  display: flex;
+  align-items: center;
+  & > input[type='text'] {
+    line-height: $std-height;
+    margin-left: $space-common;
+    padding: 0 $space-common;
+    border: none;
+    outline: none;
+    flex-grow: 1;
+  }
+  & > a {
+    padding: 0 $space-common;
   }
 }
