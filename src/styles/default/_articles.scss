@@ -14,16 +14,19 @@ article.post-single {
       display: flex;
       justify-content: space-between;
       & > .post-info {
-        & > label {
-          color: $label-dark;
-          margin-right: $space-tight;
-          &::after {
-            content: ':'
+        display: flex;
+        & > div {
+          & > label {
+            color: $label-dark;
+            margin-right: $space-tight;
+            &::after {
+              content: ':'
+            }
           }
-        }
-        & > span {
-          color: $value-dark;
-          margin-right: $space-common * 2;
+          & > span {
+            color: $value-dark;
+            margin-right: $space-common * 2;
+          }
         }
       }
       & > .post-actions {

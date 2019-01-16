@@ -14,6 +14,8 @@ const terms = {
   olderLabel: 'OLDER',
   postUpdateTimeLabel: 'Update Time',
   viewCountLabel: 'Views',
+  commentCountLabel: 'Comments',
+  readLabel: 'READ',
   shareLabel: 'SHARE',
   editLabel: 'EDIT'
 };
