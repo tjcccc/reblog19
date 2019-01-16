@@ -10,7 +10,7 @@ class CategoryCollection extends Component {
       <a href='/' key={index}>{category.label} ({category.postCount})</a>
     );
     return (
-      <nav className="side-block category-collection">
+      <nav className='side-block category-collection'>
         <h2>{terms.categoryLabel}</h2>
         {categories}
       </nav>

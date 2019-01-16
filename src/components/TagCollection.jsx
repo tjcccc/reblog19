@@ -10,7 +10,7 @@ class TagCollection extends Component {
       <a href='/' key={index}>{tag.label} ({tag.postCount})</a>
     );
     return (
-      <nav className="side-block tag-collection">
+      <nav className='side-block tag-collection'>
         <h2>{terms.tagsLabel}</h2>
         <div>{tags}</div>
       </nav>

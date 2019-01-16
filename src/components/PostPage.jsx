@@ -8,8 +8,8 @@ class PostPage extends Component {
   render = () => {
     const { post } = this.props;
     return (
-      <div className="container">
-        <article>
+      <div className='container'>
+        <article className='post-single'>
           <Post data={post} key={0} />
         </article>
         <aside>

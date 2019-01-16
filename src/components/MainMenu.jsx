@@ -9,7 +9,7 @@ class MainMenu extends Component {
       <a href='/' key={index}>{menuItem.label}</a>
     );
     return (
-      <nav className="main-menu">
+      <nav className='main-menu'>
         {menuItems}
       </nav>
     );

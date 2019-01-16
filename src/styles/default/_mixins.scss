@@ -8,6 +8,11 @@
     text-decoration: none;
   }
 }
+@mixin a-common-disable {
+  &:disabled {
+    color: $value-disabled;
+  }
+}
 @mixin a-common-hover {
   &:hover {
     color: darken($link-blue, $darken-shadow);
@@ -16,5 +21,22 @@
 @mixin a-common-hover-block {
   &:hover {
     background: darken(white, $darken-shadow);
+  }
+}
+@mixin a-highlight-hover-block {
+  &:hover {
+    color: white;
+    border-color: darken($link-blue, $darken-shadow);
+    background: darken($link-blue, $darken-shadow);
+  }
+}
+
+// Article
+@mixin single-article {
+  margin-top: 1rem;
+  padding: $space-common * 2;
+  background: white;
+  &:first-child {
+    margin-top: 0;
   }
 }

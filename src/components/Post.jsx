@@ -7,7 +7,7 @@ class Post extends Component {
   render = () => {
     const { data, key } = this.props;
     return (
-      <article className="markdown-body post" key={key}>
+      <article className='markdown-body post' key={key}>
         <ReactMarkdown source={data.content} />
         <hr />
         <p>{data.postTime}</p>

@@ -1,16 +1,19 @@
 @import "variables";
+@import "mixins";
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 
-article.post-collection {
+article.post-collection,
+article.post-single {
   background: transparent;
   & > article {
-    margin-top: 1rem;
-    padding: $space-common * 2;
-    background: white;
-    border-radius: $std-radius-s;
-    border: $border-width solid $line-dim;
-    &:first-child {
-      margin-top: 0;
-    }
+    @include single-article;
   }
 }
+
+article.post-collection {
+  & > article {
+    border-radius: $std-radius-s;
+    border: $border-width solid $line-dim;
+  }
+}
+

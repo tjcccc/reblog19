@@ -7,14 +7,14 @@ class UserPanel extends Component {
     const { isSignedIn } = this.props;
 
     const signedInOptions = (
-      <nav className="user-panel">
+      <nav className='user-panel'>
         <a href='/' className='special'>+ NEW POST</a>
         <a href='/'>CONFIG</a>
         <a href='/'>SIGN OUT</a>
       </nav>
     );
     const unsignedInOptions = (
-      <nav className="user-panel">
+      <nav className='user-panel'>
         <a href='/'>SIGN IN</a>
       </nav>
     );

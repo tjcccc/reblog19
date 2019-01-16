@@ -1,11 +1,40 @@
 @import "variables";
+@import "mixins";
 
-.special {
+a.special {
   border-radius: $std-radius-s;
   background: $link-blue;
   color: white !important;
   padding: 0 $space-common;
   &:hover {
     background: darken($link-blue, $darken-shadow);
+  }
+}
+
+nav.article-nav-group {
+  height: $std-height * 2;
+  font-size: $font-size-m;
+  margin: $space-common * 2 0;
+  line-height: $std-height * 2;
+  text-align: center;
+  & > a {
+    vertical-align: middle;
+    font-weight: bold;
+    padding: $space-common ($space-common * 2);
+    border: $border-width solid $line-dim;
+    background: white;
+    &:first-child {
+      border-radius: $std-radius-s 0 0 $std-radius-s;
+      border-right-width: 0;
+    }
+    &:last-child {
+      border-radius: 0 $std-radius-s $std-radius-s 0;
+      border-left-width: 0;
+      &:nth-child(2) {
+        border-left-width: $border-width;
+      }
+    }
+    @include a-common-disable;
+    @include a-highlight-hover-block;
   }
 }
