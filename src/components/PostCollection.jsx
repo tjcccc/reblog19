@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Post from './Post';
+import terms from '../config/terms';
 
 class PostCollection extends Component {
   render = () => {
@@ -13,8 +14,8 @@ class PostCollection extends Component {
       <article className='post-collection'>
         {posts}
         <nav className='article-nav-group'>
-          <a className='disabled' href='/'>Newer</a>
-          <a href='/'>Older</a>
+          <a className='disabled' href='/'>{terms.newerLabel}</a>
+          <a href='/'>{terms.olderLabel}</a>
         </nav>
       </article>
     );

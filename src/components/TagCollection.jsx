@@ -11,7 +11,7 @@ class TagCollection extends Component {
     );
     return (
       <nav className='side-block tag-collection'>
-        <h2>{terms.tagsLabel}</h2>
+        <h2>{terms.tagCollectionLabel}</h2>
         <div>{tags}</div>
       </nav>
     );

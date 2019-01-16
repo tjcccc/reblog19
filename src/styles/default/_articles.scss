@@ -7,6 +7,39 @@ article.post-single {
   background: transparent;
   & > article {
     @include single-article;
+    & > section.post-panel {
+      font-size: $font-size-s;
+      border-top: $border-width solid $line-dim;
+      padding-top: $space-tight;
+      display: flex;
+      justify-content: space-between;
+      & > .post-info {
+        & > label {
+          color: $label-dark;
+          margin-right: $space-tight;
+          &::after {
+            content: ':'
+          }
+        }
+        & > span {
+          color: $value-dark;
+          margin-right: $space-common * 2;
+        }
+      }
+      & > .post-actions {
+        & > a {
+          padding: 0 $space-common;
+          @include a-common;
+          @include a-common-hover;
+          &:last-child {
+            padding-right: 0;
+          }
+          & > span {
+            margin-left: $space-tight;
+          }
+        }
+      }
+    }
   }
 }
 

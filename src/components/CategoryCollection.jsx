@@ -11,7 +11,7 @@ class CategoryCollection extends Component {
     );
     return (
       <nav className='side-block category-collection'>
-        <h2>{terms.categoryLabel}</h2>
+        <h2>{terms.categoryCollectionLabel}</h2>
         {categories}
       </nav>
     );
