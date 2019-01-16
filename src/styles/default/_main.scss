@@ -24,7 +24,7 @@ code {
   margin-bottom: $space-common * 2;
   & > h2 {
     font-size: $font-size-m;
-    line-height: $rect-height * 2;
+    line-height: $std-height * 2;
     color: $label-dark;
   }
 }

@@ -22,7 +22,7 @@
   justify-content: flex-end;
   font-size: $font-size-s;
   & > a {
-    line-height: $rect-height;
+    line-height: $std-height;
     margin: 0 $space-common;
     @include a-common;
     @include a-common-hover;

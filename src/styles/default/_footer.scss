@@ -1,0 +1,24 @@
+@import "variables";
+@import "mixins";
+
+footer {
+  font-size: $font-size-s;
+  background: $bg-light;
+  border-top: $border-width solid $line-dim;
+  padding: $space-common;
+  & > p {
+    text-align: center;
+    & > span {
+      margin-right: $space-tight;
+    }
+  }
+  & a {
+    font-weight: bold;
+  }
+  & .license {
+    & img {
+      height: $std-height;
+      width: auto;
+    }
+  }
+}

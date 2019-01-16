@@ -8,12 +8,12 @@
     flex-flow: row wrap;
     justify-content: flex-start;
     & > a {
-      line-height: $rect-height * 2;
-      height: $rect-height * 2;
+      line-height: $std-height * 2;
+      height: $std-height * 2;
       margin: 0 $space-tight $space-tight 0;
       padding: 0 $space-common;
       border: $border-width solid $line-dim;
-      border-radius: $rect-radius-l;
+      border-radius: $std-radius-l;
       @include a-common;
       @include a-common-hover-block;
     }

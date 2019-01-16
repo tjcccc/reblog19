@@ -5,16 +5,16 @@
   font-size: $font-size-m;
   & > a {
     display: block;
-    line-height: $rect-height * 2;
-    height: $rect-height * 2;
+    line-height: $std-height * 2;
+    height: $std-height * 2;
     border: $border-width solid $line-dim;
     border-bottom: 0;
     padding-left: $space-common * 2;
     &:first-of-type {
-      border-radius: $rect-radius-s $rect-radius-s 0 0;
+      border-radius: $std-radius-s $std-radius-s 0 0;
     }
     &:last-of-type {
-      border-radius: 0 0 $rect-radius-s $rect-radius-s;
+      border-radius: 0 0 $std-radius-s $std-radius-s;
       border-bottom: $border-width solid $line-dim;
     }
     @include a-common;
