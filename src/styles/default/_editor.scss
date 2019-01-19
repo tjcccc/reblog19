@@ -1,0 +1,126 @@
+@import "variables";
+@import "mixins";
+
+.editor {
+  & > .editor-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $space-common;
+    & > .editor-nav {
+      font-size: $font-size-m;
+      margin-bottom: -0.1rem;
+      z-index: 999;
+    }
+    & > .editor-toolbar {
+      font-size: $font-size-m;
+      & > div {
+        display: inline-block;
+        margin: 0 $space-common;
+        @include trim-group-margin-horizontal;
+        & > * {
+          margin-right: $space-tight;
+          @include trim-group-margin-horizontal;
+        }
+      }
+    }
+  }
+  & > .editor-body {
+    padding: $space-common;
+    border: $border-width solid $input-line;
+    border-radius: $std-radius-s;
+    & > textarea {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 30rem;
+      max-height: 60rem;
+      border: $border-width solid $input-line;
+      border-radius: $std-radius-s;
+      padding: $space-common;
+      background: $bg-light;
+      font-size: $font-size-m;
+      line-height: $std-height;
+      resize: vertical;
+      &:focus {
+        background: white;
+        border-color: $highlight-blue;
+        outline: none;
+      }
+    }
+    & > .editor-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: $font-size-s;
+      margin-top: $space-common;
+      & > p {
+        & > * {
+          vertical-align: middle;
+        }
+        & > a {
+          margin-left: $space-tight;
+        }
+      }
+    }
+    & > article {
+      padding: $space-common;
+    }
+  }
+}
+
+.editor-options {
+  & select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: $std-width * 2;
+    padding: $space-tight $space-common;
+    background: $bg-light;
+    box-sizing: border-box;
+    margin: 0 $space-common;
+    font-size: $font-size-m;
+    &,
+    &:focus {
+      outline: none;
+    }
+    & > option {
+      font-size: $font-size-m;
+      height: $std-height * 2;
+      padding: $space-common;
+    }
+  }
+  & ul {
+    margin: 0;
+    padding: $space-tight $space-common;
+    list-style: none;
+    font-size: $font-size-s;
+    & > li {
+      box-sizing: border-box;
+      width: $std-width * 2;
+      line-height: $std-height;
+      background: $bg-dim;
+      border-radius: $std-radius-s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $space-tight $space-common;
+      margin: $space-tight 0;
+      @include trim-group-margin-vertical;
+    }
+  }
+  & p {
+    margin: 0;
+    padding: $space-tight $space-common;
+  }
+  & input {
+    background: white;
+    margin: $space-tight 0;
+    border: $border-width solid $line-dim;
+    border-radius: $std-radius-m;
+    font-size: $font-size-s;
+    line-height: $std-height;
+    margin-right: $space-common;
+    padding: 0 $space-common;
+    outline: none;
+  }
+}

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRss } from '@fortawesome/free-solid-svg-icons'
+import { FaRss } from 'react-icons/fa'
 import PostCollection from './PostCollection';
 import CategoryCollection from './CategoryCollection';
 import TagCollection from './TagCollection';
@@ -19,7 +18,7 @@ class HomePage extends Component {
           <CategoryCollection items={categories} />
           <TagCollection items={tags} />
           <p>
-            <FontAwesomeIcon icon={faRss} fixedWidth />
+            <FaRss />
             <span><a href='/'>{terms.subscribeLabel}</a></span>
           </p>
         </aside>

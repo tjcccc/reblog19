@@ -54,3 +54,22 @@
     margin-bottom: 0;
   }
 }
+
+// Margin
+@mixin trim-group-margin-horizontal {
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+@mixin trim-group-margin-vertical {
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

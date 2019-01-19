@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FaSearch } from 'react-icons/fa'
 
 class SearchBar extends Component {
   render = () => {
@@ -10,7 +9,7 @@ class SearchBar extends Component {
     return (
       <form className='search-bar'>
         <input type='text' placeholder={placeholder} />
-        <a href='/'><FontAwesomeIcon icon={faSearch} fixedWidth /></a>
+        <a href='/'><FaSearch /></a>
       </form>
     );
   }

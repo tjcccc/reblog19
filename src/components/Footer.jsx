@@ -25,7 +25,7 @@ Footer.propTypes = {
   blogInfo: PropTypes.shape({
     name: PropTypes.string,
     author: PropTypes.string
-  }),
+  })
 }
 
 export default connect()(Footer);

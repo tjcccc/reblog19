@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookOpen, faEdit, faShare } from '@fortawesome/free-solid-svg-icons'
+import { FaBookOpen, FaShare, FaEdit } from 'react-icons/fa'
 import terms from '../config/terms';
 
 class Post extends Component {
@@ -27,15 +26,15 @@ class Post extends Component {
         </section>
         <section className='post-actions'>
           <a href='/post'>
-            <FontAwesomeIcon icon={faBookOpen} fixedWidth />
+            <FaBookOpen />
             <span>{terms.readLabel}</span>
           </a>
           <a href='/'>
-            <FontAwesomeIcon icon={faShare} fixedWidth />
+            <FaShare />
             <span>{terms.shareLabel}</span>
           </a>
           <a href='/'>
-            <FontAwesomeIcon icon={faEdit} fixedWidth />
+            <FaEdit />
             <span>{terms.editLabel}</span>
           </a>
         </section>
@@ -59,11 +58,11 @@ class Post extends Component {
         </section>
         <section className='post-actions'>
           <a href='/'>
-            <FontAwesomeIcon icon={faShare} fixedWidth />
+            <FaShare />
             <span>{terms.shareLabel}</span>
           </a>
           <a href='/'>
-            <FontAwesomeIcon icon={faEdit} fixedWidth />
+            <FaEdit />
             <span>{terms.editLabel}</span>
           </a>
         </section>

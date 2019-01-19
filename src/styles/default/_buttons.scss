@@ -1,7 +1,53 @@
 @import "variables";
+@import "mixins";
 
 button {
   font-weight: bold;
   margin: 0;
   padding: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.icon-button-group > * {
+  cursor: pointer;
+  color: $label-dark;
+  &:hover {
+    color: $link-blue;
+  }
+}
+
+.editor-nav > button {
+  color: $label-dark;
+  font-weight: normal;
+  background: none;
+  padding: $space-common;
+  border: $border-width solid transparent;
+  &:hover {
+    color: $link-blue;
+  }
+  &:disabled {
+    pointer-events: none;
+    border: $border-width solid $input-line;
+    border-bottom-color: white;
+    border-radius: $std-radius-s $std-radius-s 0 0;
+  }
+}
+
+.editor-actions-button-group {
+  & > button {
+    padding: $space-common ($space-common * 2);
+    margin: 0 $space-tight;
+    @include trim-group-margin-horizontal;
+    border: $border-width solid $line-dim;
+    border-radius: $std-radius-s;
+    color: white;
+    &.commit {
+      background: $success-green;
+      border-color: darken($success-green, $darken-shadow);
+      &:hover {
+        background: darken($success-green, $darken-shadow);
+      }
+    }
+  }
 }

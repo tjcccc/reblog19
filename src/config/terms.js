@@ -17,7 +17,17 @@ const terms = {
   commentCountLabel: 'Comments',
   readLabel: 'READ',
   shareLabel: 'SHARE',
-  editLabel: 'EDIT'
+  editLabel: 'EDIT',
+  writeLabel: 'WRITE',
+  previewLabel: 'PREVIEW',
+  draftStateLabel: 'Draft',
+  publishStateLabel: 'Publish',
+  addLabel: 'ADD',
+  deleteLabel: 'DELETE',
+  saveLabel: 'SAVE IT',
+  publishLabel: 'PUBLISH IT',
+  setCategoriesLabel: 'SET CATEGORIES',
+  setTagsLabel: 'Set a tag...'
 };
 
 export default terms;
