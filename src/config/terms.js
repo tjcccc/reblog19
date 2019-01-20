@@ -26,7 +26,7 @@ const terms = {
   deleteLabel: 'DELETE',
   saveLabel: 'SAVE IT',
   publishLabel: 'PUBLISH IT',
-  setCategoriesLabel: 'SET CATEGORIES',
+  setCategoriesLabel: 'SET CATEGORIES FOR POST',
   setTagsLabel: 'Set a tag...'
 };
 

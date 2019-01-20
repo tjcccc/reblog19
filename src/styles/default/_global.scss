@@ -46,4 +46,5 @@ a {
   cursor: pointer;
   @include a-common;
   @include a-common-hover;
+  @include children-vertical-align-middle;
 }

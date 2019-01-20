@@ -17,9 +17,9 @@ class HomePage extends Component {
         <aside>
           <CategoryCollection items={categories} />
           <TagCollection items={tags} />
-          <p>
+          <p className='aside-option'>
             <FaRss />
-            <span><a href='/'>{terms.subscribeLabel}</a></span>
+            <a href='/'>{terms.subscribeLabel}</a>
           </p>
         </aside>
       </div>

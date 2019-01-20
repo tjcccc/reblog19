@@ -55,6 +55,12 @@
   }
 }
 
+@mixin children-vertical-align-middle {
+  & > * {
+    vertical-align: middle;
+  }
+}
+
 // Margin
 @mixin trim-group-margin-horizontal {
   &:first-child {

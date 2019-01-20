@@ -7,6 +7,12 @@ button {
   padding: 0;
   outline: none;
   cursor: pointer;
+  background: $bg-light;
+  color: $link-blue;
+  border-radius: $std-radius-s;
+  &:hover {
+    background: darken($bg-light, $darken-hover-bg);
+  }
 }
 
 .icon-button-group > * {
@@ -50,4 +56,8 @@ button {
       }
     }
   }
+}
+
+.side-block button {
+  padding: $space-tight $space-common;
 }
