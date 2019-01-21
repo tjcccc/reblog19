@@ -67,6 +67,11 @@
       padding: $space-common;
     }
   }
+  & > .editor-preview {
+    padding: $space-common * 2;
+    border: $border-width solid $input-line;
+    border-radius: $std-radius-s;
+  }
 }
 
 .editor-options {

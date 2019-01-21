@@ -7,9 +7,22 @@ import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaL
 import terms from '../config/terms';
 
 class Editor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isWriting: true
+    }
+  }
+
+  switchWritingState = () => {
+    this.setState({ isWriting: !this.state.isWriting });
+  };
+
   render = () => {
-    const { post, isWriting, formId } = this.props;
+    const { post, formId } = this.props;
+
     const wroteContent = '# test\n\ntest preview';
+
     const editorContent = (
       <div className='editor-body'>
         <textarea id='editor-body-content' placeholder='Write your blog post.'>
@@ -23,18 +36,21 @@ class Editor extends Component {
         </div>
       </div>
     );
+
     const previewContent = (
       <article className='editor-preview markdown-body post'>
         <ReactMarkdown source={wroteContent} />
       </article>
     );
-    const editorBody = isWriting ? editorContent : previewContent;
+
+    const editorBody = this.state.isWriting ? editorContent : previewContent;
+
     return (
       <div className='editor'>
         <div className='editor-head'>
           <nav className='editor-nav'>
-            <button disabled>{terms.writeLabel}</button>
-            <button>{terms.previewLabel}</button>
+            <button type='button' disabled={this.state.isWriting} onClick={this.switchWritingState}>{terms.writeLabel}</button>
+            <button type='button' disabled={!this.state.isWriting} onClick={this.switchWritingState}>{terms.previewLabel}</button>
           </nav>
           <markdown-toolbar class='editor-toolbar' for='editor-body-content'>
             <div className='icon-button-group'>
@@ -61,8 +77,8 @@ class Editor extends Component {
 }
 
 Editor.propTypes = {
-  post: PropTypes.string,
   isWriting: PropTypes.bool,
+  post: PropTypes.string,
   formId: PropTypes.string
 }
 

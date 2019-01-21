@@ -9,10 +9,21 @@ button {
   cursor: pointer;
   background: $bg-light;
   color: $link-blue;
+  border: $border-width solid $line-dim;
   border-radius: $std-radius-s;
   &:hover {
     background: darken($bg-light, $darken-hover-bg);
   }
+  &:active {
+    background: darken($bg-light, $darken-hover-bg * 2);
+  }
+}
+
+.side-block li button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 .icon-button-group > * {
@@ -29,10 +40,12 @@ button {
   background: none;
   padding: $space-common;
   border: $border-width solid transparent;
+  user-select: none;
   &:hover {
     color: $link-blue;
   }
   &:disabled {
+    font-weight: bold;
     pointer-events: none;
     border: $border-width solid $input-line;
     border-bottom-color: white;
