@@ -3,7 +3,7 @@ const terms = {
   tagCollectionLabel: 'Tags Cloud',
   subscribeLabel: 'Subscribe',
   newPostLabel: 'NEW POST',
-  configLabel: 'CONFIG',
+  settingLabel: 'SETTING',
   signInLabel: 'SIGN IN',
   signUpLabel: 'SIGN UP',
   signOutLabel: 'SIGN OUT',

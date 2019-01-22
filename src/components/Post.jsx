@@ -15,23 +15,11 @@ class Post extends Component {
             <label>{terms.postUpdateTimeLabel}</label>
             <span>{data.updateTime}</span>
           </div>
-          <div>
-            <label>{terms.viewCountLabel}</label>
-            <span>{data.viewCount}</span>
-          </div>
-          <div>
-            <label>{terms.commentCountLabel}</label>
-            <span>{23}</span>
-          </div>
         </section>
         <section className='post-actions'>
           <a href='/post'>
             <FaBookOpen />
             <span>{terms.readLabel}</span>
-          </a>
-          <a href='/'>
-            <FaShare />
-            <span>{terms.shareLabel}</span>
           </a>
           <a href='/'>
             <FaEdit />

@@ -8,16 +8,53 @@
     line-height: $std-height * 2;
     height: $std-height * 2;
     border: $border-width solid $line-dim;
-    border-bottom: 0;
+    border-bottom-width: 0;
     padding-left: $space-common * 2;
     &:first-of-type {
       border-radius: $std-radius-s $std-radius-s 0 0;
     }
     &:last-of-type {
       border-radius: 0 0 $std-radius-s $std-radius-s;
-      border-bottom: $border-width solid $line-dim;
+      border-bottom-width: $border-width;
     }
     @include a-common;
     @include a-common-hover-block;
   }
+}
+
+.category-selector {
+  margin-top: -2.8rem;
+  position: absolute;
+  width: $std-width * 3;
+  font-size: $font-size-m;
+  border: $border-width solid $line-dark;
+  border-radius: $std-radius-s;
+  box-shadow: 0.2rem 0.2rem 0.4rem $bg-dim;
+  margin-right: $space-common;
+  background: white;
+  & > h3 {
+    font-size: $font-size-s;
+    display: block;
+    padding: $space-common;
+    background: $bg-dim;
+    border-bottom: $border-width solid $line-dim;
+    border-radius: $std-radius-s $std-radius-s 0 0;
+  }
+  & > .filter-bar {
+    width: 100%;
+    background: $bg-light;
+    padding: $space-common 0;
+    & > input[type='text'] {
+      display: block;
+      width: 85%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    & > button {
+      display: block;
+      font-size: $font-size-s;
+      margin: $space-common auto 0 auto;
+    }
+  }
+
 }

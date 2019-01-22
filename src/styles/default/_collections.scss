@@ -1,0 +1,82 @@
+.tag-collection {
+  font-size: $font-size-s;
+  & > div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    & > a {
+      line-height: $std-height * 2;
+      height: $std-height * 2;
+      margin: 0 $space-tight $space-tight 0;
+      padding: 0 $space-common;
+      border: $border-width solid $line-dim;
+      border-radius: $std-radius-l;
+      @include a-common;
+      @include a-common-hover-block;
+    }
+  }
+}
+
+ul.aside-selected-list {
+  margin: 0;
+  padding: $space-tight $space-common;
+  list-style: none;
+  font-size: $font-size-s;
+  & > li {
+    box-sizing: border-box;
+    width: $std-width * 2;
+    line-height: $std-height;
+    background: $bg-dim;
+    border-radius: $std-radius-s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-tight $space-common;
+    margin: $space-tight 0;
+    @include trim-group-margin-vertical;
+  }
+}
+
+ul.aside-optional-list {
+  margin: 0;
+  padding: 0;
+  & > li {
+    cursor: pointer;
+    display: block;
+    line-height: $std-height * 2;
+    border: $border-width solid $line-dim;
+    border-bottom-width: 0;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding-left: $space-common * 2;
+    & > * {
+      vertical-align: middle;
+    }
+    &:last-child {
+      border-bottom-width: $border-width;
+    }
+    &.selected {
+      & > .selected-mark {
+        margin-right: $space-common;
+        display: inline-block !important;
+        color: $label-dark;
+      }
+    }
+    @include trim-group-margin-vertical;
+    @include a-common-hover-block;
+  }
+}
+
+.category-selector > .aside-optional-list {
+  & > li {
+    border-left-width: 0;
+    border-right-width: 0;
+    &:last-of-type {
+      border-bottom-width: 0;
+      &,
+      &:hover {
+        border-radius: 0 0 $std-radius-s $std-radius-s !important;
+      }
+    }
+  }
+}

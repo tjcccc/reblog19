@@ -10,7 +10,6 @@
     & > .editor-nav {
       font-size: $font-size-m;
       margin-bottom: -0.1rem;
-      z-index: 999;
     }
     & > .editor-toolbar {
       font-size: $font-size-m;
@@ -101,25 +100,6 @@
       font-size: $font-size-m;
       height: $std-height * 2;
       padding: $space-common;
-    }
-  }
-  & ul {
-    margin: 0;
-    padding: $space-tight $space-common;
-    list-style: none;
-    font-size: $font-size-s;
-    & > li {
-      box-sizing: border-box;
-      width: $std-width * 2;
-      line-height: $std-height;
-      background: $bg-dim;
-      border-radius: $std-radius-s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: $space-tight $space-common;
-      margin: $space-tight 0;
-      @include trim-group-margin-vertical;
     }
   }
   & p {

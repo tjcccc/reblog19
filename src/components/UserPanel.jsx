@@ -9,7 +9,7 @@ class UserPanel extends Component {
     const signedInOptions = (
       <nav className='user-panel'>
         <a href='/' className='special'>+ NEW POST</a>
-        <a href='/'>CONFIG</a>
+        <a href='/'>SETTING</a>
         <a href='/'>SIGN OUT</a>
       </nav>
     );

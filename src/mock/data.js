@@ -45,6 +45,11 @@ export const blog = {
       id: 'eee',
       label: 'Recommend',
       postCount: 38
+    },
+    {
+      id: 'nnn',
+      label: 'Not categorized',
+      postCount: 8
     }
   ],
   posts: [

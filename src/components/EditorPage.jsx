@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GoX } from 'react-icons/go'
 import Editor from './Editor';
+import CategorySelector from './CategorySelector';
 import terms from '../config/terms';
+import { blog } from '../mock/data';
 
 class EditorPage extends Component {
   constructor(props) {
@@ -107,16 +109,17 @@ class EditorPage extends Component {
           </div>
           <div className='side-block'>
             <h2>Categories</h2>
-            <ul>
+            <ul className='aside-selected-list'>
               {categoryList}
             </ul>
             <p>
               <button type='button'>{terms.setCategoriesLabel}</button>
             </p>
+            <CategorySelector items={blog.categories} />
           </div>
           <div className='side-block'>
             <h2>Tags</h2>
-            <ul>
+            <ul className='aside-selected-list'>
               {tagList}
             </ul>
             <p>
