@@ -1,0 +1,57 @@
+@import "variables";
+@import "mixins";
+
+form.config-form {
+  padding: $space-common * 2;
+  & > h2 {
+    margin: ($space-common * 2) 0;
+    padding: $space-common ($space-common * 2);
+    // background: $bg-dim;
+    // text-align: center;
+    border: $border-width solid $line-dim;
+    border-left: none;
+    border-right: none;
+  }
+  & .form-element-group {
+    width: $std-width * 4;
+    margin: 0 auto;
+    padding: $space-common;
+    & > label {
+      display: block;
+      font-size: $font-size-m;
+      font-weight: bold;
+      color: $label-dark;
+      margin-bottom: $space-tight;
+    }
+    & > input {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      font-size: $font-size-l;
+      padding: $space-common;
+      background: $bg-light;
+      outline: none;
+      border: $border-width solid $line-dim;
+      border-radius: $std-radius-s;
+      &:focus {
+        background: white;
+        border-color: $input-line;
+      }
+    }
+    & > p {
+      &.input-warning {
+        font-size: $font-size-s;
+        color: $warning-red;
+        padding-left: $space-common;
+      }
+    }
+  }
+  & > .form-button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: $border-width solid $line-dim;
+    margin-top: $space-common * 4;
+    padding: $space-common;
+  }
+}

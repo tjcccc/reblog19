@@ -74,3 +74,8 @@ button {
 .side-block button {
   padding: $space-tight $space-common;
 }
+
+form button {
+  font-size: $font-size-l;
+  padding: $space-common ($space-common * 2);
+}

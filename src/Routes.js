@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import HomePage from './components/HomePage';
+import InitializationPage from './components/InitializationPage';
 import PostPage from './components/PostPage';
 import EditorPage from './components/EditorPage';
 
@@ -15,6 +16,7 @@ const Routes = () => (
   <BrowserRouter>
     <div>
       <Route path='/' exact component={homePage} />
+      <Route path='/initialize' component={InitializationPage} />
       <Route path='/post/' component={postPage} />
       <Route path='/editor' component={editorPage} />
     </div>
