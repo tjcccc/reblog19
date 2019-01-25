@@ -23,7 +23,7 @@ export const blog = {
   categories: [
     {
       id: 'aaa',
-      label: 'Devlopment',
+      label: 'Development',
       postCount: 24
     },
     {

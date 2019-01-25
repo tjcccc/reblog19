@@ -19,11 +19,20 @@ button {
   }
 }
 
+.side-block button {
+  padding: $space-tight $space-common;
+}
+
 .side-block li button {
   background: none;
   border: none;
   border-radius: 0;
   padding: 0;
+}
+
+form.config-form button {
+  font-size: $font-size-l;
+  padding: $space-common ($space-common * 2);
 }
 
 .icon-button-group > * {
@@ -57,10 +66,10 @@ button {
   & > button {
     padding: $space-common ($space-common * 2);
     margin: 0 $space-tight;
-    @include trim-group-margin-horizontal;
     border: $border-width solid $line-dim;
     border-radius: $std-radius-s;
     color: white;
+    @include trim-group-margin-horizontal;
     &.commit {
       background: $success-green;
       border-color: darken($success-green, $darken-shadow);
@@ -69,13 +78,4 @@ button {
       }
     }
   }
-}
-
-.side-block button {
-  padding: $space-tight $space-common;
-}
-
-form button {
-  font-size: $font-size-l;
-  padding: $space-common ($space-common * 2);
 }

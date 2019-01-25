@@ -54,7 +54,6 @@
     margin-bottom: 0;
   }
 }
-
 @mixin children-vertical-align-middle {
   & > * {
     vertical-align: middle;
@@ -70,7 +69,6 @@
     margin-right: 0;
   }
 }
-
 @mixin trim-group-margin-vertical {
   &:first-child {
     margin-top: 0;

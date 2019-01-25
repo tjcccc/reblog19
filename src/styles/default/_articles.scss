@@ -20,7 +20,7 @@ article.post-single {
             color: $label-dark;
             margin-right: $space-tight;
             &::after {
-              content: ':'
+              content: ':';
             }
           }
           & > span {
@@ -52,4 +52,3 @@ article.post-collection {
     border: $border-width solid $line-dim;
   }
 }
-

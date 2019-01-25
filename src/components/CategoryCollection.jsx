@@ -5,9 +5,9 @@ import terms from '../config/terms';
 
 class CategoryCollection extends Component {
   render = () => {
-    const { items } = this.props;
+    const { items, selectedId } = this.props;
     const categories = items.map((category, index) =>
-      <a href='/' key={index}>{category.label} ({category.postCount})</a>
+    (<a href='/' key={index} className={category.id === selectedId ? 'disabled' : ''}>{category.label} ({category.postCount})</a>)
     );
     return (
       <nav className='side-block category-collection'>
@@ -22,7 +22,8 @@ CategoryCollection.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     label: PropTypes.string
-  }))
+  })),
+  selectedId: PropTypes.string
 }
 
 export default connect()(CategoryCollection);

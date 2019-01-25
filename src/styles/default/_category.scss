@@ -17,6 +17,11 @@
       border-radius: 0 0 $std-radius-s $std-radius-s;
       border-bottom-width: $border-width;
     }
+    &.disabled {
+      pointer-events: none;
+      font-weight: 600;
+      color: $value-dark !important;
+    }
     @include a-common;
     @include a-common-hover-block;
   }
@@ -56,5 +61,4 @@
       margin: $space-common auto 0 auto;
     }
   }
-
 }
