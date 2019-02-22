@@ -1,10 +1,18 @@
 /*eslint-env browser*/
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import HeaderReducer from './components/header/header.reducer';
+import { SIGN_OUT } from './redux/Login/actionTypes';
+import LoginReducer from './redux/Login/reducer';
 
-const reducer = combineReducers({
-  header: HeaderReducer
+const appReducer = combineReducers({
+  login: LoginReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === SIGN_OUT) {
+    state = undefined
+  }
+  return appReducer(state, action);
+}
 
 const win = window;
 // win.Perf = Perf;
@@ -16,6 +24,6 @@ const storeEnhancers = compose(
   (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
 );
 
-const store = createStore(reducer, {}, storeEnhancers);
+const store = createStore(rootReducer, {}, storeEnhancers);
 
 export default store;
