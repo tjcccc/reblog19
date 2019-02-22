@@ -7,7 +7,14 @@ import terms from '../config/terms';
 
 class Post extends Component {
   render = () => {
-    const { data, isCompact ,key } = this.props;
+    const { data, isCompact, key, isAdmin } = this.props;
+
+    const adminActions = isAdmin ? (
+      <a href='/'>
+        <FaEdit />
+        <span>{terms.editLabel}</span>
+      </a>
+    ) : undefined;
     const postPanelCompact = (
       <section className='post-panel'>
         <section className='post-info'>
@@ -21,10 +28,7 @@ class Post extends Component {
             <FaBookOpen />
             <span>{terms.readLabel}</span>
           </a>
-          <a href='/'>
-            <FaEdit />
-            <span>{terms.editLabel}</span>
-          </a>
+          {adminActions}
         </section>
       </section>
     );
@@ -49,10 +53,7 @@ class Post extends Component {
             <FaShare />
             <span>{terms.shareLabel}</span>
           </a>
-          <a href='/'>
-            <FaEdit />
-            <span>{terms.editLabel}</span>
-          </a>
+          {adminActions}
         </section>
       </section>
     );
@@ -79,7 +80,12 @@ Post.propTypes = {
     viewCount: PropTypes.number
   }),
   isCompact: PropTypes.bool,
-  key: PropTypes.number
+  key: PropTypes.number,
+  isAdmin: PropTypes.bool
 }
 
-export default connect()(Post);
+const mapStateToProps = state => ({
+  isAdmin: state.login.isAdmin
+});
+
+export default connect(mapStateToProps, null)(Post);
