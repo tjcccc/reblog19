@@ -22,25 +22,45 @@ form.config-form {
       margin-bottom: $space-tight;
     }
     & > input {
-      width: 100%;
-      max-width: 100%;
       box-sizing: border-box;
-      font-size: $font-size-l;
-      padding: $space-common;
       background: $bg-light;
       outline: none;
       border: $border-width solid $line-dim;
       border-radius: $std-radius-s;
+    }
+    & > input[type="text"],
+    & > input[type="email"],
+    & > input[type="password"] {
+      width: 100%;
+      max-width: 100%;
+      font-size: $font-size-m;
+      padding: $space-common;
       &:focus {
         background: white;
         border-color: $input-line;
       }
+    }
+    & > input[type="checkbox"] {
+      display: inline-block;
+      width: $std-length * 2;
+      height: $std-length * 2;
+      margin-right: $space-tight;
     }
     & > p {
       &.input-warning {
         font-size: $font-size-s;
         color: $warning-red;
         padding-left: $space-common;
+      }
+    }
+    &.one-line {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      & > label {
+        margin: 0;
+        font-size: $font-size-m;
+        vertical-align: middle;
       }
     }
   }

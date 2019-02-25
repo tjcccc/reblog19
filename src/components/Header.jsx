@@ -28,8 +28,8 @@ class Header extends Component {
           <UserPanel />
         </div>
         <MainMenu items={menuItems} />
-        <button onClick={this.testSignIn}>Test Sign In</button>
-        <button onClick={this.testSignInAsReader}>Test Sign In As Reader</button>
+        {/* <button onClick={this.testSignIn}>Test Sign In</button>
+        <button onClick={this.testSignInAsReader}>Test Sign In As Reader</button> */}
       </header>
     );
   };
@@ -48,7 +48,7 @@ Header.propTypes = {
   onSignInAsReader: PropTypes.func.isRequired
 }
 
-const mapDisPatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   onSignIn: () => {
     dispatch(signIn());
   },
@@ -57,4 +57,4 @@ const mapDisPatchToProps = (dispatch) => ({
   }
 });
 
-export default connect(null, mapDisPatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);

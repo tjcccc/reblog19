@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import terms from '../config/terms';
 
 class InitializationPage extends Component {
   constructor(props) {
@@ -17,48 +18,50 @@ class InitializationPage extends Component {
       isValidationChecked: false
     };
   }
+
   displayName = 'PostPage';
+
   render = () => {
     // const { validInput } = this.props;
 
     return (
       <div className='container'>
-        <h1>Initialize Your Blog</h1>
+        <h1>{terms.initializationTitle}</h1>
         <form className='config-form'>
-          <h2>Blog Setting</h2>
+          <h2>{terms.blogSettingTitle}</h2>
           <div className='form-element-group'>
-            <label>BLOG NAME</label>
+            <label>{terms.blogNameLabel}</label>
             <input type='text' placeholder='Set your blog name.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.blogName}>A Blog Name is necessary.</p>
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.blogName}>{terms.blogNameValidation}</p>
           </div>
           <div className='form-element-group'>
-            <label>AUTHOR NAME</label>
+            <label>{terms.authorNameLabel}</label>
             <input type='text' placeholder='Set the author name of this blog.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.author}>Input name is invalid.</p>
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.author}>{terms.nameValidation}</p>
           </div>
-          <h2>Create the Administrator Account</h2>
+          <h2>{terms.createAdminAccountTitle}</h2>
           <div className='form-element-group'>
-            <label>USERNAME</label>
+            <label>{terms.usernameLabel}</label>
             <input type='text' placeholder='Set the username for sign in.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.username}>Input name is invalid.</p>
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.username}>{terms.nameValidation}</p>
           </div>
           <div className='form-element-group'>
-            <label>MAIL</label>
+            <label>{terms.mailLabel}</label>
             <input type='email' placeholder='Set the E-Mail.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.mail}>Input E-Mail is invalid.</p>
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.mail}>{terms.emailValidation}</p>
           </div>
           <div className='form-element-group'>
-            <label>PASSWORD</label>
+            <label>{terms.passwordLabel}</label>
             <input type='password' placeholder='Input password.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.password}>Password contains invalid characters.</p>
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.password}>{terms.passwordValidation}</p>
           </div>
           <div className='form-element-group'>
-            <label>CONFIRM PASSWORD</label>
+            <label>{terms.confirmPasswordLabel}</label>
             <input type='password' placeholder='Input the same password again.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.confirmPassword}>Not the same password.</p>
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.confirmPassword}>{terms.confirmPasswordValidation}</p>
           </div>
           <div className='form-button-group'>
-            <button type='button'>CREATE IT</button>
+            <button type='button'>{terms.submitCreatingAccountLabel}</button>
           </div>
         </form>
       </div>

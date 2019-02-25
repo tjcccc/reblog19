@@ -27,7 +27,24 @@ const terms = {
   saveLabel: 'SAVE IT',
   publishLabel: 'PUBLISH IT',
   setCategoriesLabel: 'SET CATEGORIES FOR POST',
-  setTagsLabel: 'Set a tag...'
+  setTagsLabel: 'Set a tag...',
+  initializationTitle: 'Initialize Your Blog',
+  blogSettingTitle: 'Blog Setting',
+  createAdminAccountTitle: 'Create the Administrator Account',
+  loginTitle: 'Login',
+  blogNameLabel: 'BLOG NAME',
+  authorNameLabel: 'AUTHOR NAME',
+  usernameLabel: 'USERNAME',
+  mailLabel: 'MAIL',
+  passwordLabel: 'PASSWORD',
+  confirmPasswordLabel: 'CONFIRM PASSWORD',
+  submitCreatingAccountLabel: 'CREATE IT',
+  rememberMeLabel: 'Remember me',
+  blogNameValidation: 'A Blog Name is necessary.',
+  nameValidation: 'Input name is invalid.',
+  emailValidation: 'Input E-Mail is invalid.',
+  passwordValidation: 'Password contains invalid characters.',
+  confirmPasswordValidation: 'Not the same password.'
 };
 
 export default terms;

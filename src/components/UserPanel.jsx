@@ -46,10 +46,10 @@ const mapStateToProps = state => ({
   isAdmin: state.login.isAdmin
 });
 
-const mapDisPatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   onSignOut: () => {
     dispatch(signOut());
   }
 });
 
-export default connect(mapStateToProps, mapDisPatchToProps)(UserPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPanel);
