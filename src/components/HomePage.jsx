@@ -19,7 +19,7 @@ class HomePage extends Component {
           <TagCollection items={tags} />
           <p className='aside-option'>
             <FaRss />
-            <a href='/'>{terms.subscribeLabel}</a>
+            <a href='/'>{terms.label.subscribe}</a>
           </p>
         </aside>
       </div>

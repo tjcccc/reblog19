@@ -31,7 +31,7 @@ class Editor extends Component {
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
-            <button className='commit' type='submit' htmlFor={formId}>{terms.saveLabel}</button>
+            <button className='commit' type='submit' htmlFor={formId}>{terms.label.save}</button>
           </div>
         </div>
       </div>
@@ -49,8 +49,8 @@ class Editor extends Component {
       <div className='editor'>
         <div className='editor-head'>
           <nav className='editor-nav'>
-            <button type='button' disabled={this.state.isWriting} onClick={this.switchWritingState}>{terms.writeLabel}</button>
-            <button type='button' disabled={!this.state.isWriting} onClick={this.switchWritingState}>{terms.previewLabel}</button>
+            <button type='button' disabled={this.state.isWriting} onClick={this.switchWritingState}>{terms.label.write}</button>
+            <button type='button' disabled={!this.state.isWriting} onClick={this.switchWritingState}>{terms.label.preview}</button>
           </nav>
           <markdown-toolbar class='editor-toolbar' for='editor-body-content'>
             <div className='icon-button-group'>

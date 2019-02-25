@@ -80,7 +80,7 @@ class EditorPage extends Component {
   render = () => {
     const { isNew, post } = this.props;
 
-    const categoryList = this.blogPost.categories.map((category, index) =>(
+    const categoryList = this.blogPost.categories.map((category, index) => (
       <li key={index}>
         <span>{category}</span>
         <button type='button' id={category} onClick={this.removeCategory}><GoX /></button>
@@ -103,8 +103,8 @@ class EditorPage extends Component {
           <div className='side-block'>
             <h2>Post State</h2>
             <select>
-              <option>{terms.draftStateLabel}</option>
-              <option>{terms.publishStateLabel}</option>
+              <option>{terms.label.draftState}</option>
+              <option>{terms.label.publishState}</option>
             </select>
           </div>
           <div className='side-block'>
@@ -113,7 +113,7 @@ class EditorPage extends Component {
               {categoryList}
             </ul>
             <p>
-              <button type='button'>{terms.setCategoriesLabel}</button>
+              <button type='button'>{terms.label.setCategories}</button>
             </p>
             <CategorySelector items={blog.categories} />
           </div>
@@ -126,12 +126,12 @@ class EditorPage extends Component {
               <input
                 id='post-tags'
                 type='text'
-                placeholder={terms.setTagsLabel}
+                placeholder={terms.label.setTags}
                 value={this.state.newTag}
                 onChange={this.handleTagChange}
                 onKeyPress={this.handleTagInputReturnKey}
               />
-              <button type='button' onClick={this.addTag}>{terms.addLabel}</button>
+              <button type='button' onClick={this.addTag}>{terms.label.add}</button>
             </p>
           </div>
         </aside>

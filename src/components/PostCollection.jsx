@@ -14,8 +14,8 @@ class PostCollection extends Component {
       <article className='post-collection'>
         {posts}
         <nav className='article-nav-group'>
-          <a className='disabled' href='/'>{terms.newerLabel}</a>
-          <a href='/'>{terms.olderLabel}</a>
+          <a className='disabled' href='/'>{terms.label.newer}</a>
+          <a href='/'>{terms.label.older}</a>
         </nav>
       </article>
     );

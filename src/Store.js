@@ -21,7 +21,7 @@ const middlewares = [];
 
 const storeEnhancers = compose(
   applyMiddleware(...middlewares),
-  (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
+  (win.__REDUX_DEVTOOLS_EXTENSION__ && win.__REDUX_DEVTOOLS_EXTENSION__()) ? win.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
 );
 
 const store = createStore(rootReducer, {}, storeEnhancers);

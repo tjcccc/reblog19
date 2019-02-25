@@ -25,43 +25,43 @@ class InitializationPage extends Component {
     // const { validInput } = this.props;
 
     return (
-      <div className='container'>
-        <h1>{terms.initializationTitle}</h1>
+      <div className='container responsive-container'>
+        <h1>{terms.title.initialization}</h1>
         <form className='config-form'>
-          <h2>{terms.blogSettingTitle}</h2>
+          <h2>{terms.title.blogSetting}</h2>
           <div className='form-element-group'>
-            <label>{terms.blogNameLabel}</label>
-            <input type='text' placeholder='Set your blog name.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.blogName}>{terms.blogNameValidation}</p>
+            <label>{terms.label.blogName}</label>
+            <input type='text' placeholder={terms.placeholder.setBlogName} />
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.blogName}>{terms.validation.blogName}</p>
           </div>
           <div className='form-element-group'>
-            <label>{terms.authorNameLabel}</label>
-            <input type='text' placeholder='Set the author name of this blog.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.author}>{terms.nameValidation}</p>
+            <label>{terms.label.authorName}</label>
+            <input type='text' placeholder={terms.placeholder.setAuthorName} />
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.author}>{terms.validation.name}</p>
           </div>
-          <h2>{terms.createAdminAccountTitle}</h2>
+          <h2>{terms.title.createAdminAccount}</h2>
           <div className='form-element-group'>
-            <label>{terms.usernameLabel}</label>
-            <input type='text' placeholder='Set the username for sign in.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.username}>{terms.nameValidation}</p>
-          </div>
-          <div className='form-element-group'>
-            <label>{terms.mailLabel}</label>
-            <input type='email' placeholder='Set the E-Mail.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.mail}>{terms.emailValidation}</p>
+            <label>{terms.label.username}</label>
+            <input type='text' placeholder={terms.placeholder.setUsername} />
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.username}>{terms.validation.name}</p>
           </div>
           <div className='form-element-group'>
-            <label>{terms.passwordLabel}</label>
-            <input type='password' placeholder='Input password.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.password}>{terms.passwordValidation}</p>
+            <label>{terms.label.mail}</label>
+            <input type='email' placeholder={terms.placeholder.setEmail} />
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.mail}>{terms.validation.email}</p>
           </div>
           <div className='form-element-group'>
-            <label>{terms.confirmPasswordLabel}</label>
-            <input type='password' placeholder='Input the same password again.' />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.confirmPassword}>{terms.confirmPasswordValidation}</p>
+            <label>{terms.label.password}</label>
+            <input type='password' placeholder={terms.placeholder.setPassword} />
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.password}>{terms.validation.password}</p>
+          </div>
+          <div className='form-element-group'>
+            <label>{terms.label.confirmPassword}</label>
+            <input type='password' placeholder={terms.placeholder.confirmSetPassword} />
+            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.confirmPassword}>{terms.validation.confirmPassword}</p>
           </div>
           <div className='form-button-group'>
-            <button type='button'>{terms.submitCreatingAccountLabel}</button>
+            <button type='button'>{terms.label.submitCreatingAccount}</button>
           </div>
         </form>
       </div>

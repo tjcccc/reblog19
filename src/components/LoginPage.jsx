@@ -18,22 +18,22 @@ class LoginPage extends Component {
   render = () => {
     return (
       <div className='container responsive-container'>
-        <h1>{terms.loginTitle}</h1>
+        <h1>{terms.title.login}</h1>
         <form className='config-form'>
           <div className='form-element-group'>
-            <label>{terms.mailLabel}</label>
-            <input type='email' placeholder='E-Mail, not username.' />
+            <label>{terms.label.mail}</label>
+            <input type='email' placeholder={terms.placeholder.emailForLogin} />
           </div>
           <div className='form-element-group'>
-            <label>{terms.passwordLabel}</label>
-            <input type='password' placeholder='Input your password.' />
+            <label>{terms.label.password}</label>
+            <input type='password' placeholder={terms.placeholder.passwordForLogin} />
           </div>
           <div className='form-element-group one-line'>
             <input type='checkbox' htmlFor='remember-me' />
-            <label name='remember-me' id='remember-me'>{terms.rememberMeLabel}</label>
+            <label name='remember-me' id='remember-me'>{terms.label.rememberMe}</label>
           </div>
           <div className='form-button-group'>
-            <button>{terms.signInLabel}</button>
+            <button>{terms.label.signIn}</button>
           </div>
         </form>
       </div>

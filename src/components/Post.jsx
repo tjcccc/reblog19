@@ -12,21 +12,21 @@ class Post extends Component {
     const adminActions = isAdmin ? (
       <a href='/'>
         <FaEdit />
-        <span>{terms.editLabel}</span>
+        <span>{terms.label.edit}</span>
       </a>
     ) : undefined;
     const postPanelCompact = (
       <section className='post-panel'>
         <section className='post-info'>
           <div>
-            <label>{terms.postUpdateTimeLabel}</label>
+            <label>{terms.label.postUpdateTime}</label>
             <span>{data.updateTime}</span>
           </div>
         </section>
         <section className='post-actions'>
           <a href='/post'>
             <FaBookOpen />
-            <span>{terms.readLabel}</span>
+            <span>{terms.label.read}</span>
           </a>
           {adminActions}
         </section>
@@ -36,22 +36,22 @@ class Post extends Component {
       <section className='post-panel'>
         <section className='post-info'>
           <div>
-            <label>{terms.postUpdateTimeLabel}</label>
+            <label>{terms.label.postUpdateTime}</label>
             <span>{data.updateTime}</span>
           </div>
           <div>
-            <label>{terms.viewCountLabel}</label>
+            <label>{terms.label.viewCount}</label>
             <span>{data.viewCount}</span>
           </div>
           <div>
-            <label>{terms.commentCountLabel}</label>
+            <label>{terms.label.commentCount}</label>
             <span>{23}</span>
           </div>
         </section>
         <section className='post-actions'>
           <a href='/'>
             <FaShare />
-            <span>{terms.shareLabel}</span>
+            <span>{terms.label.share}</span>
           </a>
           {adminActions}
         </section>
