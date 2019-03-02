@@ -1,0 +1,37 @@
+{
+  "name": "reblog19-server",
+  "version": "0.0.0",
+  "private": true,
+  "description": "API Server for reblog19.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "graphql"
+  ],
+  "author": "seesaw game",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "express-jwt": "^5.3.1",
+    "graphql": "^14.1.1",
+    "mongoose": "^5.4.16",
+    "morgan": "^1.9.1",
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-plugin-node": "^8.0.1",
+    "nodemon": "^1.18.10"
+  }
+}
