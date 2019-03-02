@@ -1,6 +1,6 @@
 const { buildSchema } = require('graphql');
-const configSchema = require('./config.schema');
-const postSchema = require('./post.schema');
+const { configSchema, configQuery, configMutation } = require('./config.schema');
+const { postSchema, postQuery, postMutation } = require('./post.schema');
 
 const schemas = buildSchema(
   ``.concat(
@@ -8,11 +8,13 @@ const schemas = buildSchema(
     postSchema,
     `
     type RootQuery {
-      posts: [Post!]!
+      ${configQuery},
+      ${postQuery}
     }
 
     type RootMutation {
-      createPost(newPost: PostInput): Post
+      ${configMutation},
+      ${postMutation}
     }
 
     schema {

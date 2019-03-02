@@ -1,4 +1,4 @@
-module.exports = `
+module.exports.postSchema = `
 type Post {
   _id: ID!
   title: String!
@@ -19,3 +19,9 @@ input PostInput {
   categories: [ID]!
   tags: [ID]!
 }`;
+
+module.exports.postQuery = `posts: [Post!]!`;
+module.exports.postMutation = `
+  createPost(newPost: PostInput): Post,
+  updateTitle(_id: ID!, title: String!): Post
+`

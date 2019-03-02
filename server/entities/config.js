@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
-const ConfigSchema = new mongoose.Schema({
+const configSchema = new mongoose.Schema({
   _id: ObjectId,
   user_id: ObjectId,
   blog_name: String,
   author_name: String
 },
 {
-  collection: 'config'
+  collection: 'configs'
 });
 
-module.exports = mongoose.model('Config', ConfigSchema);
+module.exports = mongoose.model('Config', configSchema);

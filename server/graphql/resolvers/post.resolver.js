@@ -33,9 +33,30 @@ module.exports = {
       .then(result => {
         logger.info(result);
         return { ...result._doc };
-      }).catch(error => {
-        logger.error(error);
-        throw error;
+      }).catch(err => {
+        logger.error(err);
+        throw err;
       });
+  },
+  // updateTitle: (args) => {
+  //   return Post.findOneAndUpdate({ _id: args._id }, { title: args.title }).then(result => {
+  //     logger.info(result._doc);
+  //     return { ...result._doc };
+  //   }).catch(err => {
+  //     logger.error(err);
+  //     throw err;
+  //   });
+  // }
+  updateTitle: async (args) => {
+    try {
+      const result = await Post.findOneAndUpdate({ _id: args._id }, { title: args.title });
+      logger.info(result._doc);
+      return { ...result._doc };
+    }
+    catch (err) {
+      logger.error(err);
+      throw err;
+    }
   }
+
 }
