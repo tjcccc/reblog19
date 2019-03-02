@@ -1,10 +1,12 @@
 module.exports.postSchema = `
+scalar Date
+
 type Post {
   _id: ID!
   title: String!
-  create_time: String!
-  post_time: String!
-  update_time: String!
+  create_time: Date!
+  post_time: Date!
+  update_time: Date!
   content: String!
   state: Int!
   categories: [ID]!

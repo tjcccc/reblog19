@@ -6,6 +6,11 @@ import PostCollection from './PostCollection';
 import CategoryCollection from './CategoryCollection';
 import TagCollection from './TagCollection';
 import terms from '../config/terms';
+// import gql from 'graphql-tag';
+// import { Query } from 'react-apollo';
+
+// const LAUNCHES_QUERY = gql`
+// `;
 
 class HomePage extends Component {
   render = () => {

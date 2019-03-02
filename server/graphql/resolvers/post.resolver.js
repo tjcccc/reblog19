@@ -1,19 +1,20 @@
-const logger = require('../../middlewares/logger');
 const Post = require('../../entities/post');
 const ObjectId = require('mongoose').Types.ObjectId;
-
-const tenPosts = Post.find().limit(10).then(posts => {
-  return posts.map(post => {
-    return { ...post._doc };
-  });
-}).catch(error => {
-  logger.error(error);
-  throw error;
-});
+const logger = require('../../middlewares/logger');
 
 module.exports = {
-  posts: () => {
-    return tenPosts;
+  // Return first 10 posts.
+  posts: async () => {
+    try {
+      const result = await Post.find().limit(10);
+      return result.map(post => {
+        return { ...post._doc };
+      });
+    }
+    catch(err) {
+      logger.info(err);
+      throw err;
+    }
   },
   createPost: (args) => {
     const post = new Post({
