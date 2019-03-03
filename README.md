@@ -6,6 +6,12 @@ A simple markdown blog.
 - Back-end: NodeJS with Express;
 - Database: MongoDB.
 
+---
+
+**NOT FINISHED YET. DON'T USE IT.**
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
