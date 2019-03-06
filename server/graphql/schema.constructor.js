@@ -1,6 +1,6 @@
 const { GraphQLSchema } = require('graphql');
-const QueryType = require('./types/query.type');
+const queryType = require('./queries/index');
 
 module.exports = new GraphQLSchema({
-  query: QueryType
+  query: queryType
 });
