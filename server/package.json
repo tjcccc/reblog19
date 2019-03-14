@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
