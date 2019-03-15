@@ -10,11 +10,19 @@ const dbConnection = require('./middlewares/db-connection');
 // GraphQL
 const graphqlHTTP = require('./graphql/http');
 
+// Cross-Origin Resource Sharing
+const cors = require('./middlewares/cors');
+
+// Authoration
+const { isAuthorized } = require('./middlewares/authorization');
+
 const app = express();
 
 app.use(morgan('short'));
 app.use(bodyParser.json());
 app.use(dbConnection);
+app.use(cors);
+app.use(isAuthorized);
 app.use('/graphql', graphqlHTTP);
 
 app.get('/', (req, res) => {

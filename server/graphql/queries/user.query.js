@@ -1,9 +1,12 @@
-const { GraphQLID, GraphQLString, GraphQLList } = require('graphql');
+const logger = require('../../middlewares/logger');
+const { GraphQLString, GraphQLList } = require('graphql');
 const { UserType } = require('../types/user.type');
+const { AuthorizationType } = require('../types/authorization.type');
 const User = require('../../entities/user');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const logger = require('../../middlewares/logger');
+const jwt = require('jsonwebtoken');
+const { secretKey } = require('../../keys');
+
 
 const userQueries = {
   users: {
@@ -22,30 +25,44 @@ const userQueries = {
       }
     }
   },
-  updatePassword: {
-    type: UserType,
+  login: {
+    type: AuthorizationType,
     args: {
-      _id: { type: GraphQLID },
-      rawPassword: { type: GraphQLString },
-      repeatedRawPassword: { type: GraphQLString }
+      mail: { type: GraphQLString },
+      password: { type: GraphQLString }
     },
     resolve: async (_, args) => {
-      if (args.rawPassword != args.repeatedRawPassword) {
-        logger.error('Second paswword input is not identitified.')
-        return {
-          error: 'Update failed. Make sure that your seconed password input is same as the first one.'
-        }
-      }
-      const salt = bcrypt.genSaltSync(saltRounds);
-      const password = bcrypt.hashSync(args.rawPassword, salt);
       try {
-        const result = await User.findOneAndUpdate({ _id: args._id }, { password: password });
-        logger.info(result._doc);
-        return { ...result._doc };
+        // Match user's password.
+        const user = await User.findOne({ mail: args.mail });
+        const isPasswordIdentified = bcrypt.compareSync(args.password, user.password);
+        if (!isPasswordIdentified) {
+          logger.error('Passwor is incorrect.');
+        }
+
+        // Token
+        const token = isPasswordIdentified ? jwt.sign({userId: user._id, email: user.mail }, secretKey, {
+          expiresIn: '1h'
+        }) : null;
+
+        return {
+          userId: user ? user._id : null,
+          isLoginSuccess: isPasswordIdentified,
+          loginTime: isPasswordIdentified ? new Date().toISOString() : null,
+          token: isPasswordIdentified ? token : '',
+          tokenExpiration: isPasswordIdentified ? 1 : 0
+        };
       }
       catch(err) {
         logger.error(err);
-        throw err;
+        logger.error('User dose not exist.');
+        return {
+          userId: null,
+          isLoginSuccess: false,
+          loginTime: null,
+          token: '',
+          tokenExpiration: 0
+        }
       }
     }
   }
