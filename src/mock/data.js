@@ -12,12 +12,12 @@ export const blog = {
     {
       id: 'bb',
       label: 'ARCHIVE',
-      link: '/'
+      link: '/archive'
     },
     {
       id: 'cc',
       label: 'ABOUT',
-      link: '/'
+      link: '/blog'
     }
   ],
   categories: [

@@ -7,7 +7,7 @@ class MainMenu extends Component {
   render = () => {
     const { items } = this.props;
     const menuItems = items.map((menuItem, index) =>
-      <a href='/' key={index}>{menuItem.label}</a>
+      <a href={menuItem.link} key={index}>{menuItem.label}</a>
     );
     return (
       <div className='main-menu responsive-container'>

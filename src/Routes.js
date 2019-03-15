@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import links from './config/links';
 
 import HomePage from './components/HomePage';
 import InitializationPage from './components/InitializationPage';
@@ -17,17 +18,18 @@ const settingPage = () => (<SettingPage />);
 const postPage = () => (<PostPage post={blog.posts[0]} />);
 const editorPage = () => (<EditorPage />);
 
-
 const Routes = () => (
   <BrowserRouter>
-    <div>
-      <Route path='/' exact component={homePage} />
-      <Route path='/initialize' component={initializationPage} />
-      <Route path='/login' component={loginPage} />
-      <Route path='/setting' component={settingPage} />
-      <Route path='/post/' component={postPage} />
-      <Route path='/editor' component={editorPage} />
-    </div>
+    <Switch>
+      <Redirect from={links.index} to={links.default} exact />
+      <Route path={links.default} exact component={homePage} />
+      <Route path={links.home} component={homePage} />
+      <Route path={links.initialize} component={initializationPage} />
+      <Route path={links.login} component={loginPage} />
+      <Route path={links.setting} component={settingPage} />
+      <Route path={links.post} component={postPage} />
+      <Route path={links.editor} component={editorPage} />
+    </Switch>
   </BrowserRouter>
 );
 

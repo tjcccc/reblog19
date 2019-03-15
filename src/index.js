@@ -9,8 +9,13 @@ import store from './Store';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
+// eslint-disable-next-line no-undef
+if (process.env.NODE_ENV !== 'production') {
+  localStorage.setItem('debug', 'reblog19:*');
+}
+
 const client = new ApolloClient({
-  uri: 'http://127.0.0.1:5000/graphql'
+  uri: 'http://127.0.0.1:4000/graphql'
 });
 
 const rootElement = document.getElementById('root');
