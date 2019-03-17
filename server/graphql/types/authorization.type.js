@@ -5,7 +5,8 @@ const AuthorizationType = new GraphQLObjectType({
   name: 'Account',
   fields: () => ({
     userId: { type: GraphQLID },
-    isLoginSuccess: { type: GraphQLBoolean },
+    userLevel: { type: GraphQLInt },
+    isLoginSuccessful: { type: GraphQLBoolean },
     loginTime: { type: scalarTypes.Date },
     token: { type: GraphQLString },
     tokenExpiration: { type: GraphQLInt }

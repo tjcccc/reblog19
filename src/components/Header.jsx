@@ -4,17 +4,8 @@ import { connect } from 'react-redux';
 import UserPanel from './UserPanel';
 import MainMenu from './MainMenu';
 import logo from '../logo.svg';
-import { signIn, signInAsReader } from '../redux/Login/actions';
 
 class Header extends Component {
-
-  testSignIn = () => {
-    this.props.onSignIn();
-  };
-
-  testSignInAsReader = () => {
-    this.props.onSignInAsReader();
-  };
 
   render = () => {
     const { blogInfo, menuItems } = this.props;
@@ -28,8 +19,6 @@ class Header extends Component {
           <UserPanel />
         </div>
         <MainMenu items={menuItems} />
-        {/* <button onClick={this.testSignIn}>Test Sign In</button>
-        <button onClick={this.testSignInAsReader}>Test Sign In As Reader</button> */}
       </header>
     );
   };
@@ -43,18 +32,7 @@ Header.propTypes = {
     id: PropTypes.string,
     label: PropTypes.string,
     link: PropTypes.string
-  })),
-  onSignIn: PropTypes.func.isRequired,
-  onSignInAsReader: PropTypes.func.isRequired
+  }))
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onSignIn: () => {
-    dispatch(signIn());
-  },
-  onSignInAsReader: () => {
-    dispatch(signInAsReader());
-  }
-});
-
-export default connect(null, mapDispatchToProps)(Header);
+export default connect()(Header);

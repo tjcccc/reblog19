@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import links from '../config/links';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { signOut } from '../redux/Login/actions';
+import { signOut } from '../redux/authorization/actions';
 
 class UserPanel extends Component {
 
@@ -43,8 +43,8 @@ UserPanel.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isSignedIn: state.login.isSignedIn,
-  isAdmin: state.login.isAdmin
+  isSignedIn: state.authorization.isSignedIn,
+  isAdmin: state.authorization.isAdmin
 });
 
 const mapDispatchToProps = (dispatch) => ({

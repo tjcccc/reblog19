@@ -2,7 +2,7 @@ const { GraphQLID, GraphQLString } = require('graphql');
 const { PostType, PostInput } = require('../types/post.type');
 const Post = require('../../entities/post');
 const ObjectId = require('mongoose').Types.ObjectId;
-const logger = require('../../middlewares/logger');
+const logger = require('../../middleware/logger');
 
 const postMutations = {
   createPost: {

@@ -7,7 +7,11 @@ const getAuthorization = async (mail, password) => {
       query {
         login(mail: "${mail}", password: "${password}") {
           userId,
-          token
+          userLevel,
+          isLoginSuccessful,
+          loginTime,
+          token,
+          tokenExpiration
         }
       }
     `

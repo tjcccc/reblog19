@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAuthorization } from '../services/user.service';
+import { signIn } from '../redux/authorization/actions';
 import terms from '../config/terms';
 import logger from '../utilities/logger';
 
@@ -35,8 +36,10 @@ class LoginPage extends Component {
     }
 
     const authorization = await getAuthorization(mail, password);
+    const [loginData] = [authorization.data.data.login];
 
-    logger.info(authorization);
+    logger.info(loginData.token);
+    this.props.onSignIn(loginData);
 
     return authorization.data;
   }
@@ -67,9 +70,6 @@ class LoginPage extends Component {
     )
   };
 
-  // componentWillUnmount = () => {
-  //   clearTimeout()
-  // };
 }
 
 LoginPage.propTypes = {
@@ -77,7 +77,14 @@ LoginPage.propTypes = {
     mail: PropTypes.bool,
     password: PropTypes.bool
   }),
-  isValidationChecked: PropTypes.bool
+  isValidationChecked: PropTypes.bool,
+  onSignIn: PropTypes.func.isRequired
 }
 
-export default connect()(LoginPage);
+const mapDispatchToProps = (dispatch) => ({
+  onSignIn: (loginData) => {
+    dispatch(signIn(loginData));
+  }
+});
+
+export default connect(null, mapDispatchToProps)(LoginPage);

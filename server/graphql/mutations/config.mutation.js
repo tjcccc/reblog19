@@ -1,7 +1,7 @@
 const { GraphQLString } = require('graphql');
 const { ConfigType } = require('../types/config.type');
 const Config = require('../../entities/config');
-const logger = require('../../middlewares/logger');
+const logger = require('../../middleware/logger');
 
 const configMutations = {
   updateBlogName: {

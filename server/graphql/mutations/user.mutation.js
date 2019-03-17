@@ -1,4 +1,4 @@
-const logger = require('../../middlewares/logger');
+const logger = require('../../middleware/logger');
 const { UserType, PasswordInput } = require('../types/user.type');
 const User = require('../../entities/user');
 const bcrypt = require('bcrypt');

@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 
 class App extends Component {
 
-  render() {
+  render = () => {
     return (
       <div className="app">
         <Header blogInfo={blog.info} menuItems={blog.menuItems} />
@@ -15,6 +15,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 export default App;

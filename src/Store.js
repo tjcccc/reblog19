@@ -1,10 +1,10 @@
 /*eslint-env browser*/
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { SIGN_OUT } from './redux/Login/actionTypes';
-import LoginReducer from './redux/Login/reducer';
+import { SIGN_OUT } from './redux/authorization/actionTypes';
+import AuthorizationReducer from './redux/authorization/reducer';
 
 const appReducer = combineReducers({
-  login: LoginReducer
+  authorization: AuthorizationReducer
 });
 
 const rootReducer = (state, action) => {
@@ -17,10 +17,10 @@ const rootReducer = (state, action) => {
 const win = window;
 // win.Perf = Perf;
 
-const middlewares = [];
+const middleware = [];
 
 const storeEnhancers = compose(
-  applyMiddleware(...middlewares),
+  applyMiddleware(...middleware),
   (win.__REDUX_DEVTOOLS_EXTENSION__ && win.__REDUX_DEVTOOLS_EXTENSION__()) ? win.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
 );
 

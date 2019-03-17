@@ -80,7 +80,7 @@ SettingPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isAdmin: state.login.isAdmin
+  isAdmin: state.authorization.isAdmin
 });
 
 export default connect(mapStateToProps, null)(SettingPage);

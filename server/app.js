@@ -1,20 +1,20 @@
 // Express
 const express = require('express');
 const morgan = require('morgan');
-const logger = require('./middlewares/logger');
+const logger = require('./middleware/logger');
 const bodyParser = require('body-parser');
 
 // Database
-const dbConnection = require('./middlewares/db-connection');
+const dbConnection = require('./middleware/db-connection');
 
 // GraphQL
 const graphqlHTTP = require('./graphql/http');
 
 // Cross-Origin Resource Sharing
-const cors = require('./middlewares/cors');
+const cors = require('./middleware/cors');
 
 // Authoration
-const { isAuthorized } = require('./middlewares/authorization');
+const { isAuthorized } = require('./middleware/authorization');
 
 const app = express();
 
