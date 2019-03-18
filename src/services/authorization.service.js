@@ -28,6 +28,30 @@ const getAuthorization = async (mail, password) => {
   }
 };
 
+const checkAuthorization = async (token) => {
+  const requestBody = {
+    query: `
+      query {
+        authorization(token: "${token}") {
+          _id,
+          level
+        }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+};
+
 export {
-  getAuthorization
+  getAuthorization,
+  checkAuthorization
 };

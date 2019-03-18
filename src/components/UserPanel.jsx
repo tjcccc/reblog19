@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import links from '../config/links';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
-import { signOut, check } from '../redux/authorization/actions';
+import { withCookies, Cookies } from 'react-cookie';
+import { checkAuthorization } from '../services/authorization.service';
 import logger from '../utilities/logger';
+import { signOut, check } from '../redux/authorization/actions';
+import links from '../config/links';
+
 
 class UserPanel extends Component {
 
   signUserOut = () => {
+    const { cookies } = this.props;
+    cookies.remove('token');
+
     this.props.onSignOut();
   };
 
@@ -36,20 +42,25 @@ class UserPanel extends Component {
     return isSignedIn ? (isAdmin ? adminOptions : readerOptions) : unsignedInOptions;
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    const { cookies } = this.props;
     // Get token
-    // Send to server
-    // Get response
-    // this.props.onCheck({
-    //   userId: 'AAA',
-    //   userLevel: 99,
-    //   isLoginSuccessful: true,
-    //   loginTime: null
-    // });
+    logger.trace(`token: ${cookies.get('token')}`);
+    const token = cookies.get('token');
+    const response = await checkAuthorization(token);
+    const user = response.data.data.authorization;
+    logger.info(user);
+    this.props.onCheck({
+      userId: user._id,
+      userLevel: user.level,
+      isLoginSuccessful: user.level > 0,
+      loginTime: new Date().toISOString()
+    });
   }
 }
 
 UserPanel.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
   isSignedIn: PropTypes.bool,
   isAdmin: PropTypes.bool,
   onSignOut: PropTypes.func.isRequired,
@@ -71,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserPanel);
+export default withCookies(connect(mapStateToProps, mapDispatchToProps)(UserPanel));

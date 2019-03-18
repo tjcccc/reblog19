@@ -4,7 +4,6 @@ const User = require('../../entities/user');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
 const userMutations = {
   updatePassword: {
     type: UserType,

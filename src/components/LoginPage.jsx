@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
+import logger from '../utilities/logger';
 import { getAuthorization } from '../services/authorization.service';
 import { signIn } from '../redux/authorization/actions';
 import terms from '../config/terms';
-import logger from '../utilities/logger';
-import { withCookies, Cookies } from 'react-cookie';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -28,6 +28,17 @@ class LoginPage extends Component {
     })
   };
 
+  signUserIn = (loginData) => {
+    // Store authorization data to cookie
+    const { cookies } = this.props;
+    cookies.set('token', loginData.token, {
+      path: '/',
+      maxAge: loginData.tokenExpiration * 24 * 60 * 60
+    });
+
+    this.props.onSignIn(loginData);
+  }
+
   login = async (event) => {
     event.preventDefault();
     const mail = this.state.mail;
@@ -42,17 +53,7 @@ class LoginPage extends Component {
 
     logger.info(loginData.token);
 
-    // Store authorization data to cookie
-    const { cookies } = this.props;
-    cookies.set('token', loginData.token, {
-      path: '/',
-      maxAge: loginData.tokenExpiration * 24 * 60 * 60,
-      secure: false,
-      httpOnly: true
-    });
-    logger.info(cookies.get('token'));
-
-    this.props.onSignIn(loginData);
+    this.signUserIn(loginData);
 
     return authorization.data;
   }
