@@ -6,8 +6,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './Store';
-import ApolloClient from 'apollo-boost';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import { CookiesProvider } from 'react-cookie';
 
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV !== 'production') {
@@ -15,17 +16,21 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const client = new ApolloClient({
-  uri: 'http://127.0.0.1:4000/graphql'
+  cache: new InMemoryCache(),
+  uri: 'http://127.0.0.1:4000/graphql',
+  credentials: 'same-origin'
 });
 
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </ApolloProvider>,
+  <CookiesProvider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ApolloProvider>
+  </CookiesProvider>,
   rootElement
 );
 

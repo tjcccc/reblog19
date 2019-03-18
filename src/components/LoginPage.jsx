@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
-import { getAuthorization } from '../services/user.service';
+import { getAuthorization } from '../services/authorization.service';
 import { signIn } from '../redux/authorization/actions';
 import terms from '../config/terms';
 import logger from '../utilities/logger';
+import { withCookies, Cookies } from 'react-cookie';
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       mail: '',
       password: '',
@@ -39,6 +41,17 @@ class LoginPage extends Component {
     const [loginData] = [authorization.data.data.login];
 
     logger.info(loginData.token);
+
+    // Store authorization data to cookie
+    const { cookies } = this.props;
+    cookies.set('token', loginData.token, {
+      path: '/',
+      maxAge: loginData.tokenExpiration * 24 * 60 * 60,
+      secure: false,
+      httpOnly: true
+    });
+    logger.info(cookies.get('token'));
+
     this.props.onSignIn(loginData);
 
     return authorization.data;
@@ -73,6 +86,7 @@ class LoginPage extends Component {
 }
 
 LoginPage.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
   validInput: PropTypes.shape({
     mail: PropTypes.bool,
     password: PropTypes.bool
@@ -87,4 +101,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default withCookies(connect(null, mapDispatchToProps)(LoginPage));

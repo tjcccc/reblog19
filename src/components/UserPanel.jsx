@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import links from '../config/links';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { signOut } from '../redux/authorization/actions';
+import { signOut, check } from '../redux/authorization/actions';
+import logger from '../utilities/logger';
 
 class UserPanel extends Component {
 
@@ -34,12 +35,25 @@ class UserPanel extends Component {
 
     return isSignedIn ? (isAdmin ? adminOptions : readerOptions) : unsignedInOptions;
   }
+
+  componentDidMount() {
+    // Get token
+    // Send to server
+    // Get response
+    // this.props.onCheck({
+    //   userId: 'AAA',
+    //   userLevel: 99,
+    //   isLoginSuccessful: true,
+    //   loginTime: null
+    // });
+  }
 }
 
 UserPanel.propTypes = {
   isSignedIn: PropTypes.bool,
   isAdmin: PropTypes.bool,
-  onSignOut: PropTypes.func.isRequired
+  onSignOut: PropTypes.func.isRequired,
+  onCheck: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -50,6 +64,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => ({
   onSignOut: () => {
     dispatch(signOut());
+  },
+  onCheck: (result) => {
+    logger.trace(result);
+    dispatch(check(result));
   }
 });
 

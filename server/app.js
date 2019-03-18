@@ -3,6 +3,8 @@ const express = require('express');
 const morgan = require('morgan');
 const logger = require('./middleware/logger');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // Database
 const dbConnection = require('./middleware/db-connection');
@@ -10,18 +12,16 @@ const dbConnection = require('./middleware/db-connection');
 // GraphQL
 const graphqlHTTP = require('./graphql/http');
 
-// Cross-Origin Resource Sharing
-const cors = require('./middleware/cors');
-
-// Authoration
+// Authorization
 const { isAuthorized } = require('./middleware/authorization');
 
 const app = express();
 
 app.use(morgan('short'));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
 app.use(dbConnection);
-app.use(cors);
 app.use(isAuthorized);
 app.use('/graphql', graphqlHTTP);
 

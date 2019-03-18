@@ -66,18 +66,6 @@ const userQueries = {
         }
       }
     }
-  },
-  checkAuthorization: {
-    type: AuthorizationType,
-    args: null,
-    resolve: async (_, args) => {
-      try {
-
-      }
-      catch(err) {
-        return null;
-      }
-    }
   }
 }
 

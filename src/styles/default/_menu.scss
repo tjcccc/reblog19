@@ -47,6 +47,7 @@
   flex-flow: row nowrap;
   justify-content: flex-end;
   font-size: $font-size-s;
+  margin-right: $space-common;
   & > a {
     line-height: $std-height;
     margin: 0 $space-common;
@@ -56,7 +57,6 @@
 }
 
 .search-bar {
-  @include aside-wide;
   background: white;
   margin: $space-tight 0;
   border: $border-width solid $line-dim;
@@ -64,6 +64,7 @@
   font-size: $font-size-m;
   display: flex;
   align-items: center;
+  @include aside-wide;
   &:focus-within {
     border-color: $input-line;
   }

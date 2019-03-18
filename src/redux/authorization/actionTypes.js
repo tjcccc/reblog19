@@ -1,2 +1,3 @@
 export const SIGN_IN = 'AUTHORIZATION/ADMIN';
 export const SIGN_OUT = 'AUTHORIZATION/SIGN_OUT';
+export const CHECK = 'AUTHORIZATION/CHECK';
