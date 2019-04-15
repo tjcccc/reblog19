@@ -7,18 +7,16 @@ import logger from '../utilities/logger';
 import { signOut, check } from '../redux/authorization/actions';
 import links from '../config/links';
 
-
 class UserPanel extends Component {
 
   signUserOut = () => {
     const { cookies } = this.props;
     cookies.remove('token');
-
     this.props.onSignOut();
   };
 
   render = () => {
-    const { isSignedIn, isAdmin } = this.props;
+    const { isAccountChecked, isSignedIn, isAdmin } = this.props;
 
     const adminOptions = (
       <nav className='user-panel'>
@@ -39,7 +37,9 @@ class UserPanel extends Component {
       </nav>
     );
 
-    return isSignedIn ? (isAdmin ? adminOptions : readerOptions) : unsignedInOptions;
+    logger.info(`Is Login status checked: ${isAccountChecked}`);
+
+    return isAccountChecked ? (isSignedIn ? (isAdmin ? adminOptions : readerOptions) : unsignedInOptions) : null;
   }
 
   componentDidMount = async () => {
@@ -56,11 +56,15 @@ class UserPanel extends Component {
       isLoginSuccessful: user.level > 0,
       loginTime: new Date().toISOString()
     });
+    this.setState({
+      isChecked: true
+    })
   }
 }
 
 UserPanel.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
+  isAccountChecked: PropTypes.bool,
   isSignedIn: PropTypes.bool,
   isAdmin: PropTypes.bool,
   onSignOut: PropTypes.func.isRequired,
@@ -68,6 +72,7 @@ UserPanel.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  isAccountChecked: state.authorization.isAccountChecked,
   isSignedIn: state.authorization.isSignedIn,
   isAdmin: state.authorization.isAdmin
 });

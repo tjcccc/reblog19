@@ -47,7 +47,7 @@
   flex-flow: row nowrap;
   justify-content: flex-end;
   font-size: $font-size-s;
-  margin-right: $space-common;
+  margin-right: $space-common * 2;
   & > a {
     line-height: $std-height;
     margin: 0 $space-common;
