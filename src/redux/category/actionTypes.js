@@ -1,0 +1,1 @@
+export const LOAD_ALL = 'CATEGORIES/LOAD_ALL';

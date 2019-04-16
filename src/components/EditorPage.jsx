@@ -4,13 +4,17 @@ import { connect } from 'react-redux';
 import { GoX } from 'react-icons/go'
 import Editor from './Editor';
 import CategorySelector from './CategorySelector';
+import ClickOutside from 'react-click-outside';
 import terms from '../config/terms';
-import { blog } from '../mock/data';
+// import logger from '../utilities/logger';
 
 class EditorPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      allCategories: [],
+      isSettingCategories: false,
+      categorySelectorButtonId: 'category-selector-button',
       undesiredCategory: '',
       newTag: '',
       undesiredTag: ''
@@ -19,8 +23,8 @@ class EditorPage extends Component {
 
   blogPost = {
     article: '',
-    categories: ['Development', 'Study'],
-    tags: ['React', 'Design', 'UI', 'TypeScript', 'ES2015'],
+    categories: [],
+    tags: [],
     publishState: 0
   }
 
@@ -45,6 +49,12 @@ class EditorPage extends Component {
 
     this.blogPost.categories.splice(index, 1);
     this.setState({ undesiredCategory: '' });
+  }
+
+  displayCategorySelector = (event) => {
+    this.setState({
+      isSettingCategories: event.target.id === this.state.categorySelectorButtonId
+    });
   }
 
   addTag = () => {
@@ -77,8 +87,22 @@ class EditorPage extends Component {
     }
   }
 
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    if (nextProps.allCategories !== prevState.allCategories) {
+      return { allCategories: nextProps.allCategories };
+    }
+
+    return null;
+  };
+
   render = () => {
     const { isNew, post } = this.props;
+
+    const categorySelector = (
+      <ClickOutside onClickOutside={this.displayCategorySelector}>
+        <CategorySelector items={this.state.allCategories} id='category-selector' />
+      </ClickOutside>
+    );
 
     const categoryList = this.blogPost.categories.map((category, index) => (
       <li key={index}>
@@ -113,9 +137,9 @@ class EditorPage extends Component {
               {categoryList}
             </ul>
             <p>
-              <button type='button'>{terms.label.setCategories}</button>
+              <button type='button' id='category-selector-button' onClick={this.displayCategorySelector}>{terms.label.setCategories}</button>
             </p>
-            <CategorySelector items={blog.categories} />
+            {this.state.isSettingCategories ? categorySelector : null}
           </div>
           <div className='side-block'>
             <h2>Tags</h2>
@@ -143,9 +167,19 @@ class EditorPage extends Component {
 EditorPage.propTypes = {
   isNew: PropTypes.bool,
   post: PropTypes.string,
+  allCategories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    order_id: PropTypes.number,
+    label: PropTypes.string,
+    count: PropTypes.number
+  })),
   undesiredCategory: PropTypes.string,
   newTag: PropTypes.string,
   undesiredTag: PropTypes.string
 }
 
-export default connect()(EditorPage);
+const mapStateToProps = state => ({
+  allCategories: state.category.categories
+});
+
+export default connect(mapStateToProps, null)(EditorPage);

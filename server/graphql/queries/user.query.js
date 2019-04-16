@@ -40,7 +40,7 @@ const userQueries = {
         }
 
         // Token
-        const token = jwt.sign({userId: user._id, email: user.mail }, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign({userId: user._id, email: user.mail }, secretKey, { expiresIn: '12h' });
 
         const authorizationData = {
           userId: user ? user._id : null,

@@ -1,9 +1,9 @@
-const logger = require('../../middleware/logger');
 const { GraphQLString } = require('graphql');
 const { UserType } = require('../types/user.type');
 const User = require('../../entities/user');
 const jwt = require('jsonwebtoken');
 const { secretKey } = require('../../keys');
+const logger = require('../../middleware/logger');
 
 const authorizationQueries = {
   authorization: {

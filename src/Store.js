@@ -2,9 +2,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { SIGN_OUT } from './redux/authorization/actionTypes';
 import AuthorizationReducer from './redux/authorization/reducer';
+import CategoryReducer from './redux/category/reducer';
 
 const appReducer = combineReducers({
-  authorization: AuthorizationReducer
+  authorization: AuthorizationReducer,
+  category: CategoryReducer
 });
 
 const rootReducer = (state, action) => {

@@ -5,6 +5,7 @@ const categorySchema = new mongoose.Schema({
   _id: ObjectId,
   order_id: Number,
   label: String,
+  count: Number
 },
 {
   collection: 'categories'

@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(signOut());
   },
   onCheck: (result) => {
-    logger.trace(result);
+    // logger.trace(result);
     dispatch(check(result));
   }
 });
