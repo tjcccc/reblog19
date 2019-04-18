@@ -2,30 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GoX } from 'react-icons/go'
+import { FaCheck } from 'react-icons/fa';
 import Editor from './Editor';
-import CategorySelector from './CategorySelector';
 import ClickOutside from 'react-click-outside';
 import terms from '../config/terms';
-// import logger from '../utilities/logger';
+import logger from '../utilities/logger';
 
 class EditorPage extends Component {
   constructor(props) {
     super(props);
+    const { isNew, post } = this.props;
+
+    const newPost = {
+      article: '',
+      categories: [],
+      tags: [],
+      publishState: 0
+    }
+
     this.state = {
       allCategories: [],
       isSettingCategories: false,
       categorySelectorButtonId: 'category-selector-button',
-      undesiredCategory: '',
       newTag: '',
-      undesiredTag: ''
+      post: isNew ? newPost : post
     };
-  }
-
-  blogPost = {
-    article: '',
-    categories: [],
-    tags: [],
-    publishState: 0
   }
 
   handleSubmit= (event) => {
@@ -36,19 +37,35 @@ class EditorPage extends Component {
     this.setState({ newTag: event.target.value });
   }
 
+  addCategory = (post, category) => {
+    if (post.categories === undefined || post.categories.includes(category)) {
+      return;
+    }
+    // this.state.post.categories.push(category);
+    this.setState(state => {
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          categories: state.post.categories.concat(category)
+        }
+      }
+    });
+    logger.info(this.state.post);
+  }
+
   removeCategory = (event) => {
-    const id = event.currentTarget.id;
-    this.setState({ undesiredCategory: id });
+    const categoryId = event.currentTarget.id;
+    const existentCategory = this.state.post.categories.find(category => category._id === categoryId);
 
-    const index = this.blogPost.categories.indexOf(id);
-
-    if (index === -1) {
-      this.setState({ undesiredCategory: '' });
+    if (existentCategory === undefined) {
       return;
     }
 
-    this.blogPost.categories.splice(index, 1);
-    this.setState({ undesiredCategory: '' });
+    const index = this.state.post.categories.indexOf(existentCategory);
+
+    this.state.post.categories.splice(index, 1);
+    this.setState({});
   }
 
   displayCategorySelector = (event) => {
@@ -58,27 +75,38 @@ class EditorPage extends Component {
   }
 
   addTag = () => {
-    if (this.state.newTag === '' || this.blogPost.tags.indexOf(this.state.newTag) !== -1) {
+    if (this.state.newTag === '' || this.state.post.tags.indexOf(this.state.newTag) !== -1) {
       this.setState({ newTag: '' });
       return;
     }
-    this.blogPost.tags.push(this.state.newTag);
-    this.setState({ newTag: '' });
+    // this.state.post.tags.push(this.state.newTag);
+    this.setState(state => {
+      return {
+        newTag: '',
+        post: {
+          ...state.post,
+          tags: state.post.tags.concat(this.state.newTag)
+        }
+      }
+   });
   };
 
   removeTag = (event) => {
-    const id = event.currentTarget.id;
-    this.setState({ undesiredTag: id });
+    const targetTag = event.currentTarget.id;
 
-    const index = this.blogPost.tags.indexOf(id);
-
-    if (index === -1) {
-      this.setState({ undesiredTag: '' });
+    if (this.state.post.tags.indexOf(targetTag) === -1) {
       return;
     }
 
-    this.blogPost.tags.splice(index, 1);
-    this.setState({ undesiredTag: '' });
+    this.setState(state => {
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          tags: state.post.tags.filter(tag => tag !== targetTag)
+        }
+      }
+    });
   }
 
   handleTagInputReturnKey = (event) => {
@@ -91,37 +119,65 @@ class EditorPage extends Component {
     if (nextProps.allCategories !== prevState.allCategories) {
       return { allCategories: nextProps.allCategories };
     }
-
     return null;
   };
 
   render = () => {
-    const { isNew, post } = this.props;
+
+    const selectedMark = (<FaCheck className='selected-mark' />);
+
+    const allCategories = this.state.allCategories !== undefined ? this.state.allCategories.map((category, index) => {
+      const isInPostCategories = this.state.post.categories.includes(category);
+      return (
+        <li className={isInPostCategories ? 'selected' : ''}
+          key={index}
+          id={category._id}
+          onClick={(event) => isInPostCategories ? this.removeCategory(event) : this.addCategory(this.state.post, category)}>
+          {isInPostCategories ? selectedMark : null}
+          {category.label}
+        </li>
+      );
+    }) : null;
 
     const categorySelector = (
       <ClickOutside onClickOutside={this.displayCategorySelector}>
-        <CategorySelector items={this.state.allCategories} id='category-selector' />
+        <div className='category-selector'>
+          <h3>Apply categories to this post</h3>
+          <div className='filter-bar'>
+            <input type='text' placeholder='Filter categories...' />
+            <button type='button'>Create new category</button>
+          </div>
+          <ul className='aside-optional-list'>
+            {allCategories}
+          </ul>
+        </div>
       </ClickOutside>
     );
 
-    const categoryList = this.blogPost.categories.map((category, index) => (
-      <li key={index}>
-        <span>{category}</span>
-        <button type='button' id={category} onClick={this.removeCategory}><GoX /></button>
-      </li>
-    ));
+    // const categorySelector = (
+    //   <ClickOutside onClickOutside={this.displayCategorySelector}>
+    //     <CategorySelector categories={this.state.allCategories} post={this.state.post} id='category-selector' />
+    //   </ClickOutside>
+    // );
 
-    const tagList = this.blogPost.tags.map((tag, index) => (
+    const categoryList = this.state.post.categories !== undefined ? this.state.post.categories.map((category, index) => (
+      <li key={index}>
+        <span>{category.label}</span>
+        <button type='button' id={category._id} onClick={this.removeCategory}><GoX /></button>
+      </li>
+    )) : null;
+
+    const tagList = this.state.post.tags !== undefined ? this.state.post.tags.map((tag, index) => (
       <li key={index}>
         <span>{tag}</span>
         <button type='button' id={tag} onClick={this.removeTag}><GoX /></button>
       </li>
-    ));
+    )): null;
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
-          <Editor post={isNew ? '' : post} formId='blog-post' />
+          <Editor post={this.state.post} formId='blog-post' />
         </article>
         <aside className='editor-options'>
           <div className='side-block'>
@@ -166,16 +222,23 @@ class EditorPage extends Component {
 
 EditorPage.propTypes = {
   isNew: PropTypes.bool,
-  post: PropTypes.string,
+  post: PropTypes.shape({
+    article: PropTypes.string,
+    categories: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string,
+      order_id: PropTypes.number,
+      label: PropTypes.string,
+      count: PropTypes.number
+    })),
+    tags: PropTypes.arrayOf(PropTypes.string),
+    publishState: PropTypes.number
+  }),
   allCategories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    _id: PropTypes.string,
     order_id: PropTypes.number,
     label: PropTypes.string,
     count: PropTypes.number
-  })),
-  undesiredCategory: PropTypes.string,
-  newTag: PropTypes.string,
-  undesiredTag: PropTypes.string
+  }))
 }
 
 const mapStateToProps = state => ({

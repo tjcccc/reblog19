@@ -5,12 +5,18 @@ import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
 import terms from '../config/terms';
+import logger from '../utilities/logger';
 
 class Editor extends Component {
   constructor(props) {
     super(props);
+
+    const { post, formId } = this.props;
+
     this.state = {
-      isWriting: true
+      isWriting: true,
+      post: post,
+      formId: formId
     }
   }
 
@@ -18,20 +24,46 @@ class Editor extends Component {
     this.setState({ isWriting: !this.state.isWriting });
   };
 
-  render = () => {
-    const { post, formId } = this.props;
+  handleTextareaChange = (event) => {
+    const textValue = event.target.value;
+    logger.info(textValue);
+    this.setState(state => {
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          article: textValue
+        }
+      }
+    })
+  }
 
-    const wroteContent = '# test\n\ntest preview';
+  save = () => {
+    logger.info(this.state.post);
+  }
+
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    if (nextProps.post !== prevState.post) {
+      return {
+        ...prevState,
+        post: {
+          ...nextProps.post,
+          article: prevState.article
+        }
+      };
+    }
+    return null;
+  };
+
+  render = () => {
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.'>
-          {post}
-        </textarea>
+        <textarea id='editor-body-content' placeholder='Write your blog post.' defaultValue={this.state.post.article} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
-            <button className='commit' type='submit' htmlFor={formId}>{terms.label.save}</button>
+            <button className='commit' type='submit' htmlFor={this.state.formId} onClick={this.save}>{terms.label.save}</button>
           </div>
         </div>
       </div>
@@ -39,7 +71,7 @@ class Editor extends Component {
 
     const previewContent = (
       <article className='editor-preview markdown-body post'>
-        <ReactMarkdown source={wroteContent} />
+        <ReactMarkdown source={this.state.post.article} />
       </article>
     );
 
@@ -78,7 +110,17 @@ class Editor extends Component {
 
 Editor.propTypes = {
   isWriting: PropTypes.bool,
-  post: PropTypes.string,
+  post: PropTypes.shape({
+    article: PropTypes.string,
+    categories: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string,
+      order_id: PropTypes.number,
+      label: PropTypes.string,
+      count: PropTypes.number
+    })),
+    tags: PropTypes.arrayOf(PropTypes.string),
+    publishState: PropTypes.number
+  }),
   formId: PropTypes.string
 }
 

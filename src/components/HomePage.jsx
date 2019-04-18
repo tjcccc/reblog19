@@ -20,7 +20,7 @@ class HomePage extends Component {
       <div className='container responsive-container'>
         <PostCollection data={posts} count={10} />
         <aside>
-          <CategoryCollection items={categories} selectedId='bbb' />
+          <CategoryCollection categories={categories} selectedId='bbb' />
           <TagCollection items={tags} />
           <p className='aside-option'>
             <FaRss />

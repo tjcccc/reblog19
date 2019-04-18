@@ -5,21 +5,21 @@ import terms from '../config/terms';
 
 class CategoryCollection extends Component {
   render = () => {
-    const { items, selectedId } = this.props;
-    const categories = items.map((category, index) =>
-    (<a href='/' key={index} className={category.id === selectedId ? 'disabled' : ''}>{category.label} ({category.postCount})</a>)
+    const { categories, selectedId } = this.props;
+    const categoryList = categories.map((category, index) =>
+      (<a href='/' key={index} className={category.id === selectedId ? 'disabled' : ''}>{category.label} ({category.postCount})</a>)
     );
     return (
       <nav className='side-block category-collection'>
         <h2>{terms.title.categoryCollection}</h2>
-        {categories}
+        {categoryList}
       </nav>
     );
   }
 }
 
 CategoryCollection.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
+  categories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     label: PropTypes.string
   })),

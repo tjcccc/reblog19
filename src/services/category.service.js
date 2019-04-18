@@ -6,6 +6,7 @@ const fetchCategories = async () => {
     query: `
       query {
         categories {
+          _id
           order_id,
           label,
           count

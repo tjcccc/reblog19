@@ -16,7 +16,7 @@ const initializationPage = () => (<InitializationPage />);
 const loginPage = () => (<LoginPage />);
 const settingPage = () => (<SettingPage />);
 const postPage = () => (<PostPage post={blog.posts[0]} />);
-const editorPage = () => (<EditorPage />);
+const editorPage = () => (<EditorPage isNew={true} />);
 
 const Routes = () => (
   <BrowserRouter>
