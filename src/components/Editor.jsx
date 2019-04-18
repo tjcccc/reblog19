@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { updateArticle } from '../redux/editing-post/actions';
 import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
@@ -10,12 +11,10 @@ import logger from '../utilities/logger';
 class Editor extends Component {
   constructor(props) {
     super(props);
-
-    const { post, formId } = this.props;
+    const { formId } = this.props;
 
     this.state = {
       isWriting: true,
-      post: post,
       formId: formId
     }
   }
@@ -24,42 +23,34 @@ class Editor extends Component {
     this.setState({ isWriting: !this.state.isWriting });
   };
 
+  updateArticle = (article) => {
+    this.props.onUpdateArticle(article);
+  };
+
   handleTextareaChange = (event) => {
     const textValue = event.target.value;
-    logger.info(textValue);
-    this.setState(state => {
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          article: textValue
-        }
-      }
-    })
+    this.updateArticle(textValue);
   }
 
   save = () => {
-    logger.info(this.state.post);
+    const { article, categories, tags, postState } = this.props;
+    const post = {
+      article: article,
+      categories: categories,
+      tags: tags,
+      postState: postState
+    };
+    logger.info(post);
+
+    // TODO: POST to server.
   }
 
-  static getDerivedStateFromProps = (nextProps, prevState) => {
-    if (nextProps.post !== prevState.post) {
-      return {
-        ...prevState,
-        post: {
-          ...nextProps.post,
-          article: prevState.article
-        }
-      };
-    }
-    return null;
-  };
-
   render = () => {
+    const { article } = this.props;
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.' defaultValue={this.state.post.article} onChange={this.handleTextareaChange} />
+        <textarea id='editor-body-content' placeholder='Write your blog post.' defaultValue={article} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
@@ -71,7 +62,7 @@ class Editor extends Component {
 
     const previewContent = (
       <article className='editor-preview markdown-body post'>
-        <ReactMarkdown source={this.state.post.article} />
+        <ReactMarkdown source={article} />
       </article>
     );
 
@@ -110,18 +101,30 @@ class Editor extends Component {
 
 Editor.propTypes = {
   isWriting: PropTypes.bool,
-  post: PropTypes.shape({
-    article: PropTypes.string,
-    categories: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string,
-      order_id: PropTypes.number,
-      label: PropTypes.string,
-      count: PropTypes.number
-    })),
-    tags: PropTypes.arrayOf(PropTypes.string),
-    publishState: PropTypes.number
-  }),
-  formId: PropTypes.string
+  formId: PropTypes.string,
+  article: PropTypes.string,
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    order_id: PropTypes.number,
+    label: PropTypes.string,
+    count: PropTypes.number
+  })),
+  tags: PropTypes.arrayOf(PropTypes.string),
+  postState: PropTypes.number,
+  onUpdateArticle: PropTypes.func.isRequired
 }
 
-export default connect()(Editor);
+const mapStateToProps = state => ({
+  article: state.editingPost.article,
+  postState: state.editingPost.postState,
+  categories: state.editingPost.categories,
+  tags: state.editingPost.tags
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onUpdateArticle: (article) => {
+    dispatch(updateArticle(article));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);
