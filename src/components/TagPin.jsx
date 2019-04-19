@@ -6,7 +6,6 @@ import { GoX } from 'react-icons/go'
 import terms from '../config/terms';
 
 class TagPin extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
