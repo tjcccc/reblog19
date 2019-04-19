@@ -12,7 +12,7 @@ class EditorPage extends Component {
     const { isNew, post } = this.props;
 
     const newPost = {
-      article: '',
+      content: '',
       categories: [],
       tags: [],
       publishState: 0
@@ -36,10 +36,10 @@ class EditorPage extends Component {
         </article>
         <aside className='editor-options'>
           <div className='side-block'>
-            <h2>Post State</h2>
+            <h2>Post Status</h2>
             <select>
-              <option>{terms.label.draftState}</option>
-              <option>{terms.label.publishState}</option>
+              <option>{terms.label.draftStatus}</option>
+              <option>{terms.label.publishStatus}</option>
             </select>
           </div>
           <CategorySelector />
@@ -53,16 +53,15 @@ class EditorPage extends Component {
 EditorPage.propTypes = {
   isNew: PropTypes.bool,
   post: PropTypes.shape({
-    article: PropTypes.string,
-    postState: PropTypes.number,
+    content: PropTypes.string,
+    status: PropTypes.number,
     categories: PropTypes.arrayOf(PropTypes.shape({
       _id: PropTypes.string,
       order_id: PropTypes.number,
       label: PropTypes.string,
       count: PropTypes.number
     })),
-    tags: PropTypes.arrayOf(PropTypes.string),
-    publishState: PropTypes.number
+    tags: PropTypes.arrayOf(PropTypes.string)
   })
 }
 

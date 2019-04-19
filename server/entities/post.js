@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
   post_time: Date,
   update_time: Date,
   content: String,
-  state: Number,
+  status: Number,
   categories: [ObjectId],
   tags: [ObjectId],
   view_count: Number,

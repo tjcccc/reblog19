@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateArticle } from '../redux/editing-post/actions';
+import { updateContent } from '../redux/editing-post/actions';
 import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
@@ -23,22 +23,22 @@ class Editor extends Component {
     this.setState({ isWriting: !this.state.isWriting });
   };
 
-  updateArticle = (article) => {
-    this.props.onUpdateArticle(article);
+  updateContent = (content) => {
+    this.props.onUpdateContent(content);
   };
 
   handleTextareaChange = (event) => {
     const textValue = event.target.value;
-    this.updateArticle(textValue);
+    this.updateContent(textValue);
   }
 
   save = () => {
-    const { article, categories, tags, postState } = this.props;
+    const { content, categories, tags, status } = this.props;
     const post = {
-      article: article,
+      content: content,
+      status: status,
       categories: categories,
-      tags: tags,
-      postState: postState
+      tags: tags
     };
     logger.info(post);
 
@@ -46,15 +46,16 @@ class Editor extends Component {
   }
 
   render = () => {
-    const { article } = this.props;
+    const { content } = this.props;
+    const { formId } = this.state;
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.' defaultValue={article} onChange={this.handleTextareaChange} />
+        <textarea id='editor-body-content' placeholder='Write your blog post.' defaultValue={content} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
-            <button className='commit' type='submit' htmlFor={this.state.formId} onClick={this.save}>{terms.label.save}</button>
+            <button className='commit' type='submit' htmlFor={formId} onClick={this.save}>{terms.label.save}</button>
           </div>
         </div>
       </div>
@@ -62,7 +63,7 @@ class Editor extends Component {
 
     const previewContent = (
       <article className='editor-preview markdown-body post'>
-        <ReactMarkdown source={article} />
+        <ReactMarkdown source={content} />
       </article>
     );
 
@@ -102,7 +103,8 @@ class Editor extends Component {
 Editor.propTypes = {
   isWriting: PropTypes.bool,
   formId: PropTypes.string,
-  article: PropTypes.string,
+  content: PropTypes.string,
+  status: PropTypes.number,
   categories: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     order_id: PropTypes.number,
@@ -110,20 +112,19 @@ Editor.propTypes = {
     count: PropTypes.number
   })),
   tags: PropTypes.arrayOf(PropTypes.string),
-  postState: PropTypes.number,
-  onUpdateArticle: PropTypes.func.isRequired
+  onUpdateContent: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  article: state.editingPost.article,
-  postState: state.editingPost.postState,
+  content: state.editingPost.content,
+  status: state.editingPost.status,
   categories: state.editingPost.categories,
   tags: state.editingPost.tags
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onUpdateArticle: (article) => {
-    dispatch(updateArticle(article));
+  onUpdateContent: (content) => {
+    dispatch(updateContent(content));
   }
 });
 

@@ -18,7 +18,7 @@ const postMutations = {
         post_time: new Date().toISOString(),
         update_time: new Date().toISOString(),
         content: args.newPost.content,
-        state: args.newPost.state,
+        status: args.newPost.status,
         categories: args.newPost.categories,
         tags: args.newPost.tags,
         view_count: 0,

@@ -10,7 +10,7 @@ const PostType = new GraphQLObjectType({
     post_time: { type: scalarTypes.Date },
     update_time: { type: scalarTypes.Date },
     content: { type: GraphQLString },
-    state: { type: GraphQLInt },
+    status: { type: GraphQLInt },
     categories: { type: new GraphQLList(GraphQLID) },
     tags: { type: new GraphQLList(GraphQLID) },
     view_count: { type: GraphQLInt },
@@ -22,7 +22,7 @@ const PostInput = new GraphQLInputObjectType({
   name: 'PostInput',
   fields: {
     content: { type: GraphQLString },
-    state: { type: GraphQLInt },
+    status: { type: GraphQLInt },
     categories: { type: new GraphQLList(GraphQLID) },
     tags: { type: new GraphQLList(GraphQLID) }
   }
