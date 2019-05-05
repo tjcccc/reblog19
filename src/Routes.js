@@ -11,7 +11,7 @@ import EditorPage from './components/EditorPage';
 
 import { blog } from './mock/data';
 
-const homePage = () => (<HomePage posts={blog.posts} categories={blog.categories} tags={blog.tags} />);
+const homePage = () => (<HomePage categories={blog.categories} tags={blog.tags} />);
 const initializationPage = () => (<InitializationPage />);
 const loginPage = () => (<LoginPage />);
 const settingPage = () => (<SettingPage />);

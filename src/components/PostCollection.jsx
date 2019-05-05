@@ -6,16 +6,20 @@ import terms from '../config/terms';
 
 class PostCollection extends Component {
   render = () => {
-    const { data, count } = this.props;
-    const posts = data.slice(0, count).map((post, index) =>
+    const { data, newerHandler, olderHandler } = this.props;
+    if (data === undefined || data.lenth === 0)
+    {
+      return;
+    }
+    const posts = data.map((post, index) =>
       <Post data={post} isCompact={true} key={index} />
     );
     return (
       <article className='post-collection'>
         {posts}
         <nav className='article-nav-group'>
-          <a className='disabled' href='/'>{terms.label.newer}</a>
-          <a href='/'>{terms.label.older}</a>
+          <button onClick={newerHandler}>{terms.label.newer}</button>
+          <button onClick={olderHandler}>{terms.label.older}</button>
         </nav>
       </article>
     );
@@ -34,7 +38,8 @@ PostCollection.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string)
   })),
   isCompact: PropTypes.bool,
-  count: PropTypes.number
+  newerHandler: PropTypes.func.isRequired,
+  olderHandler: PropTypes.func.isRequired
 }
 
 export default connect()(PostCollection);

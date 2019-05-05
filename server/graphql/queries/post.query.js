@@ -1,4 +1,4 @@
-const { GraphQLList } = require('graphql');
+const { GraphQLList, GraphQLInt } = require('graphql');
 const { PostType } = require('../types/post.type');
 const Post = require('../../entities/post');
 const logger = require('../../middleware/logger');
@@ -6,10 +6,13 @@ const logger = require('../../middleware/logger');
 const postQueries = {
   posts: {
     type: new GraphQLList(PostType),
-    args: null,
-    resolve: async () => {
+    args: {
+      skip: { type: GraphQLInt },
+      limit: { type: GraphQLInt }
+    },
+    resolve: async (_, args) => {
       try {
-        const result = await Post.find().limit(10);
+        const result = await Post.find().sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
           return { ...post._doc };
         });

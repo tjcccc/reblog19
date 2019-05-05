@@ -20,7 +20,7 @@ class Post extends Component {
         <section className='post-info'>
           <div>
             <label>{terms.label.postUpdateTime}</label>
-            <span>{data.updateTime}</span>
+            <span>{data.update_time}</span>
           </div>
         </section>
         <section className='post-actions'>
@@ -37,15 +37,15 @@ class Post extends Component {
         <section className='post-info'>
           <div>
             <label>{terms.label.postUpdateTime}</label>
-            <span>{data.updateTime}</span>
+            <span>{data.update_time}</span>
           </div>
           <div>
             <label>{terms.label.viewCount}</label>
-            <span>{data.viewCount}</span>
+            <span>{data.view_count}</span>
           </div>
           <div>
             <label>{terms.label.commentCount}</label>
-            <span>{23}</span>
+            <span>{0}</span>
           </div>
         </section>
         <section className='post-actions'>
@@ -71,13 +71,13 @@ Post.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
-    createTime: PropTypes.string,
-    postTime: PropTypes.string,
-    updateTime: PropTypes.string,
+    create_time: PropTypes.string,
+    post_time: PropTypes.string,
+    update_time: PropTypes.string,
     content: PropTypes.string,
     categories: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string),
-    viewCount: PropTypes.number
+    view_count: PropTypes.number
   }),
   isCompact: PropTypes.bool,
   key: PropTypes.number,

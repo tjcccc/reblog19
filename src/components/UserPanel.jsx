@@ -15,6 +15,25 @@ class UserPanel extends Component {
     this.props.onSignOut();
   };
 
+  componentDidMount = async () => {
+    const { cookies } = this.props;
+    // Get token
+    logger.trace(`token: ${cookies.get('token')}`);
+    const token = cookies.get('token');
+    const response = await checkAuthorization(token);
+    const user = response.data.data.authorization;
+    logger.info(user);
+    this.props.onCheck({
+      userId: user._id,
+      userLevel: user.level,
+      isLoginSuccessful: user.level > 0,
+      loginTime: new Date().toISOString()
+    });
+    this.setState({
+      isChecked: true
+    })
+  }
+
   render = () => {
     const { isAccountChecked, isSignedIn, isAdmin } = this.props;
 
@@ -40,25 +59,6 @@ class UserPanel extends Component {
     logger.info(`Is Login status checked: ${isAccountChecked}`);
 
     return isAccountChecked ? (isSignedIn ? (isAdmin ? adminOptions : readerOptions) : unsignedInOptions) : null;
-  }
-
-  componentDidMount = async () => {
-    const { cookies } = this.props;
-    // Get token
-    logger.trace(`token: ${cookies.get('token')}`);
-    const token = cookies.get('token');
-    const response = await checkAuthorization(token);
-    const user = response.data.data.authorization;
-    logger.info(user);
-    this.props.onCheck({
-      userId: user._id,
-      userLevel: user.level,
-      isLoginSuccessful: user.level > 0,
-      loginTime: new Date().toISOString()
-    });
-    this.setState({
-      isChecked: true
-    })
   }
 }
 

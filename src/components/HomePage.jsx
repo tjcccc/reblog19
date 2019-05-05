@@ -6,19 +6,62 @@ import PostCollection from './PostCollection';
 import CategoryCollection from './CategoryCollection';
 import TagCollection from './TagCollection';
 import terms from '../config/terms';
-// import gql from 'graphql-tag';
-// import { Query } from 'react-apollo';
-
-// const LAUNCHES_QUERY = gql`
-// `;
+import { fetchPosts } from '../services/post.service';
+import logger from '../utilities/logger';
+import { blog } from '../mock/data';
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.config = {
+      pageIndex: 0,
+      postsPerPage: 5
+    }
+
+    this.state = {
+      recentPosts: []
+    }
+  }
+
+  fetchRecentPosts = async () => {
+    const skip = this.config.pageIndex * this.config.postsPerPage;
+    const limit = this.config.postsPerPage;
+    const response = await fetchPosts(skip, limit);
+    const posts = response.data.data.posts;
+    this.setState({
+      recentPosts: posts
+    });
+  }
+
+  fetchNewerPosts = () => {
+    this.config.pageIndex = this.config.pageIndex - 1 < 0 ? 0 : this.config.pageIndex - 1;
+    this.fetchRecentPosts();
+    logger.trace(this.state.recentPosts);
+  }
+
+  fetchOlderPosts = () => {
+    this.config.pageIndex += 1;
+    this.fetchRecentPosts();
+    logger.trace(this.state.recentPosts);
+  }
+
+  componentDidMount = () => {
+    this.fetchRecentPosts();
+  }
+
+  test = () => {
+    this.setState({
+      recentPosts: blog.posts
+    })
+  }
+
   render = () => {
-    const { posts, categories, tags } = this.props;
+    const { categories, tags } = this.props;
 
     return (
       <div className='container responsive-container'>
-        <PostCollection data={posts} count={10} />
+        <PostCollection data={this.state.recentPosts} newerHandler={this.fetchNewerPosts} olderHandler={this.fetchOlderPosts} />
         <aside>
           <CategoryCollection categories={categories} selectedId='bbb' />
           <TagCollection items={tags} />
