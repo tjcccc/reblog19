@@ -20,7 +20,9 @@ class HomePage extends Component {
     }
 
     this.state = {
-      recentPosts: []
+      recentPosts: [],
+      noNewer: true,
+      noOlder: false
     }
   }
 
@@ -30,7 +32,9 @@ class HomePage extends Component {
     const response = await fetchPosts(skip, limit);
     const posts = response.data.data.posts;
     this.setState({
-      recentPosts: posts
+      recentPosts: posts,
+      noNewer: this.config.pageIndex === 0,
+      noOlder: posts.length !== limit
     });
   }
 
@@ -61,7 +65,12 @@ class HomePage extends Component {
 
     return (
       <div className='container responsive-container'>
-        <PostCollection data={this.state.recentPosts} newerHandler={this.fetchNewerPosts} olderHandler={this.fetchOlderPosts} />
+        <PostCollection
+          data={this.state.recentPosts}
+          newerHandler={this.fetchNewerPosts}
+          olderHandler={this.fetchOlderPosts}
+          noNewer={this.state.noNewer}
+          noOlder={this.state.noOlder} />
         <aside>
           <CategoryCollection categories={categories} selectedId='bbb' />
           <TagCollection items={tags} />

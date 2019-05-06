@@ -9,6 +9,18 @@ class Post extends Component {
   render = () => {
     const { data, isCompact, key, isAdmin } = this.props;
 
+    const post = {
+      id: data._id,
+      title: data.title,
+      createTime: data.create_time,
+      postTime: data.post_time,
+      updateTime: data.update_time,
+      content: data.content,
+      categories: data.categories,
+      tags: data.tags,
+      viewCount: data.view_count
+    }
+
     const adminActions = isAdmin ? (
       <a href='/'>
         <FaEdit />
@@ -20,7 +32,7 @@ class Post extends Component {
         <section className='post-info'>
           <div>
             <label>{terms.label.postUpdateTime}</label>
-            <span>{data.update_time}</span>
+            <span>{post.updateTime}</span>
           </div>
         </section>
         <section className='post-actions'>
@@ -37,11 +49,11 @@ class Post extends Component {
         <section className='post-info'>
           <div>
             <label>{terms.label.postUpdateTime}</label>
-            <span>{data.update_time}</span>
+            <span>{post.updateTime}</span>
           </div>
           <div>
             <label>{terms.label.viewCount}</label>
-            <span>{data.view_count}</span>
+            <span>{post.viewCount}</span>
           </div>
           <div>
             <label>{terms.label.commentCount}</label>
@@ -60,7 +72,7 @@ class Post extends Component {
     const postPanel = isCompact ? postPanelCompact : postPanelFull;
     return (
       <article className='markdown-body post' key={key}>
-        <ReactMarkdown source={data.content} />
+        <ReactMarkdown source={post.content} />
         {postPanel}
       </article>
     );
