@@ -7,8 +7,7 @@ import CategoryCollection from './CategoryCollection';
 import TagCollection from './TagCollection';
 import terms from '../config/terms';
 import { fetchPosts } from '../services/post.service';
-import logger from '../utilities/logger';
-import { blog } from '../mock/data';
+import { loadPosts } from '../redux/post/actions';
 
 class HomePage extends Component {
   constructor(props) {
@@ -20,7 +19,6 @@ class HomePage extends Component {
     }
 
     this.state = {
-      recentPosts: [],
       noNewer: true,
       noOlder: false
     }
@@ -31,49 +29,40 @@ class HomePage extends Component {
     const limit = this.config.postsPerPage;
     const response = await fetchPosts(skip, limit);
     const posts = response.data.data.posts;
+    this.props.onLoadPosts(posts);
     this.setState({
-      recentPosts: posts,
       noNewer: this.config.pageIndex === 0,
-      noOlder: posts.length !== limit
+      noOlder: posts.length === undefined || posts.length !== limit
     });
   }
 
   fetchNewerPosts = () => {
     this.config.pageIndex = this.config.pageIndex - 1 < 0 ? 0 : this.config.pageIndex - 1;
     this.fetchRecentPosts();
-    logger.trace(this.state.recentPosts);
   }
 
   fetchOlderPosts = () => {
     this.config.pageIndex += 1;
     this.fetchRecentPosts();
-    logger.trace(this.state.recentPosts);
   }
 
   componentDidMount = () => {
     this.fetchRecentPosts();
   }
 
-  test = () => {
-    this.setState({
-      recentPosts: blog.posts
-    })
-  }
-
   render = () => {
-    const { categories, tags } = this.props;
-
+    const { posts, categories, tags } = this.props;
     return (
       <div className='container responsive-container'>
         <PostCollection
-          data={this.state.recentPosts}
+          data={posts}
           newerHandler={this.fetchNewerPosts}
           olderHandler={this.fetchOlderPosts}
           noNewer={this.state.noNewer}
           noOlder={this.state.noOlder} />
         <aside>
-          <CategoryCollection categories={categories} selectedId='bbb' />
-          <TagCollection items={tags} />
+          <CategoryCollection categories={categories} />
+          <TagCollection tags={tags} />
           <p className='aside-option'>
             <FaRss />
             <a href='/'>{terms.label.subscribe}</a>
@@ -96,15 +85,29 @@ HomePage.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string)
   })),
   categories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    _id: PropTypes.string,
+    order_id: PropTypes.number,
     label: PropTypes.string,
-    postCount: PropTypes.number
+    count: PropTypes.number
   })),
   tags: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    _id: PropTypes.string,
     label: PropTypes.string,
-    postCount: PropTypes.number
-  }))
+    count: PropTypes.number
+  })),
+  onLoadPosts: PropTypes.func.isRequired
 }
 
-export default connect()(HomePage);
+const mapStateToProps = state => ({
+  posts: state.post.posts,
+  categories: state.category.categories,
+  tags: state.tag.tags
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadPosts: (posts) => {
+    dispatch(loadPosts(posts));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

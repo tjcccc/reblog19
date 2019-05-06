@@ -49,6 +49,7 @@ h6 {
 a {
   user-select: none;
   cursor: pointer;
+  color: $link-blue;
   @include a-common;
   @include a-common-hover;
   @include children-vertical-align-middle;

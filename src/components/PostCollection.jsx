@@ -18,8 +18,8 @@ class PostCollection extends Component {
       <article className='post-collection'>
         {posts}
         <nav className='article-nav-group'>
-          <button className={noNewer ? "disabled": ""} onClick={newerHandler}>{terms.label.newer}</button>
-          <button className={noOlder ? "disabled": ""} onClick={olderHandler}>{terms.label.older}</button>
+          <a href='#/' className={noNewer ? "disabled": ""} onClick={newerHandler}>{terms.label.newer}</a>
+          <a href='#/' className={noOlder ? "disabled": ""} onClick={olderHandler}>{terms.label.older}</a>
         </nav>
       </article>
     );

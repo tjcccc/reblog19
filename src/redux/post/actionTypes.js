@@ -1,0 +1,4 @@
+export const LOAD_BULK = 'POSTS/LOAD_BULK';
+export const LOAD_ONE = 'POSTS/LOAD_ONE';
+export const SELECT_CATEGORY = 'POSTS/SELECT_CATEGORY';
+export const SELECT_TAG = 'POSTS/SELECT_TAG';

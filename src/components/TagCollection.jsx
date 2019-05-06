@@ -4,23 +4,36 @@ import { connect } from 'react-redux';
 import terms from '../config/terms';
 
 class TagCollection extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedId: ''
+    };
+  }
+
+  selectTag = (id) => {
+    this.setState({
+      selectedId: id
+    });
+  }
+
   render = () => {
-    const { items } = this.props;
-    const tags = items.sort((a, b) => (b.postCount - a.postCount)).map((tag, index) =>
-      <a href='/' key={index}>{tag.label} ({tag.postCount})</a>
+    const { tags } = this.props;
+    const tagList = tags === undefined ? null : tags.sort((a, b) => (b.count - a.count)).map((tag, index) =>
+      <a href='#/' key={index} onClick={() => this.selectTag(tag._id)} className={tag._id === this.state.selectedId ? 'disabled' : ''}>{tag.label} ({tag.count})</a>
     );
     return (
       <nav className='side-block tag-collection'>
         <h2>{terms.title.tagCollection}</h2>
-        <div>{tags}</div>
+        <div>{tagList}</div>
       </nav>
     );
   }
 }
 
 TagCollection.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
     label: PropTypes.string,
     count: PropTypes.number
   }))
