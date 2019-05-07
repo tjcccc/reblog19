@@ -37,7 +37,7 @@ const fetchPostsByCategory = async (skip, limit, categoryId, status = null) => {
   const requestBody = {
     query: `
       query {
-        postsByCategory(skip: ${skip}, limit: ${limit}, categoryId: ${categoryId}, status: ${status}) {
+        postsByCategory(skip: ${skip}, limit: ${limit}, categoryId: "${categoryId}", status: ${status}) {
           _id
           title
           create_time
@@ -69,7 +69,7 @@ const fetchPostsByTag = async (skip, limit, tagId, status = null) => {
   const requestBody = {
     query: `
       query {
-        postsByTag(skip: ${skip}, limit: ${limit}, tagId: ${tagId}, status: ${status}) {
+        postsByTag(skip: ${skip}, limit: ${limit}, tagId: "${tagId}", status: ${status}) {
           _id
           title
           create_time

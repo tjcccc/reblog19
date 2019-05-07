@@ -1,14 +1,14 @@
-import { LOAD_BULK, LOAD_ONE, SELECT_CATEGORY, SELECT_TAG } from './actionTypes';
+import { LOAD_BULK, LOAD_ONE, SELECT_CATEGORY_ID_FOR_LIST, SELECT_TAG_ID_FOR_LIST } from './actionTypes';
 
 const initialState = {
   posts: [],
   post: {},
-  categoryId: '',
-  tagId: ''
+  listCategoryId: '',
+  listTagId: ''
 }
 
 export default (state = initialState, action) => {
-  const { posts, post, categoryId, tagId } = action;
+  const { posts, post, listCategoryId, listTagId } = action;
   switch (action.type) {
     case LOAD_BULK: {
       return {
@@ -22,16 +22,18 @@ export default (state = initialState, action) => {
         post: post
       };
     }
-    case SELECT_CATEGORY: {
+    case SELECT_CATEGORY_ID_FOR_LIST: {
       return {
         ...state,
-        categoryId: categoryId
+        listCategoryId: listCategoryId,
+        listTagId: ''
       };
     }
-    case SELECT_TAG: {
+    case SELECT_TAG_ID_FOR_LIST: {
       return {
         ...state,
-        tagId: tagId
+        listCategoryId: '',
+        listTagId: listTagId
       };
     }
     default: {

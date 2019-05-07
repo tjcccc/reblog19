@@ -39,8 +39,6 @@ class App extends Component {
     );
   }
 
-
-
 }
 
 App.propTypes = {

@@ -14,7 +14,7 @@ const postQueries = {
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          status: args.status !== 0 || args.status !== 1  ? { $ne: args.status } : args.status
+          status: args.status !== 0 && args.status !== 1  ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
           return { ...post._doc };
@@ -37,8 +37,8 @@ const postQueries = {
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          categories: { $elemMatch: args.categoryId },
-          status: args.status !== 0 || args.status !== 1 ? { $ne: args.status } : args.status
+          categories: { $all: [args.categoryId] },
+          status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
           return { ...post._doc };
@@ -61,8 +61,8 @@ const postQueries = {
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          tags: { $elemMatch: args.tagId },
-          status: args.status !== 0 || args.status !== 1 ? { $ne: args.status } : args.status
+          tags: { $all: [args.tagId] },
+          status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
           return { ...post._doc };

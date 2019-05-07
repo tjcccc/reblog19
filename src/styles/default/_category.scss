@@ -1,32 +1,6 @@
 @import "variables";
 @import "mixins";
 
-.category-collection {
-  font-size: $font-size-m;
-  & > a {
-    display: block;
-    line-height: $std-height * 2;
-    height: $std-height * 2;
-    border: $border-width solid $line-dim;
-    border-bottom-width: 0;
-    padding-left: $space-common * 2;
-    &:first-of-type {
-      border-radius: $std-radius-s $std-radius-s 0 0;
-    }
-    &:last-of-type {
-      border-radius: 0 0 $std-radius-s $std-radius-s;
-      border-bottom-width: $border-width;
-    }
-    &.disabled {
-      pointer-events: none;
-      font-weight: 600;
-      color: $value-dark !important;
-    }
-    @include a-common;
-    @include a-common-hover-block;
-  }
-}
-
 .category-selector {
   margin-top: -2.8rem;
   position: absolute;
@@ -44,6 +18,19 @@
     background: $bg-dim;
     border-bottom: $border-width solid $line-dim;
     border-radius: $std-radius-s $std-radius-s 0 0;
+  }
+  & > ul.aside-optional-list {
+    & > li {
+      border-left-width: 0;
+      border-right-width: 0;
+      &:last-of-type {
+        border-bottom-width: 0;
+        &,
+        &:hover {
+          border-radius: 0 0 $std-radius-s $std-radius-s !important;
+        }
+      }
+    }
   }
   & > .filter-bar {
     width: 100%;

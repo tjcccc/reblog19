@@ -1,4 +1,4 @@
-import { LOAD_BULK, LOAD_ONE, SELECT_CATEGORY, SELECT_TAG } from './actionTypes';
+import { LOAD_BULK, LOAD_ONE, SELECT_CATEGORY_ID_FOR_LIST, SELECT_TAG_ID_FOR_LIST } from './actionTypes';
 
 export const loadPosts = (posts) => ({
   type: LOAD_BULK,
@@ -10,12 +10,12 @@ export const loadOnePost = (post) => ({
   post: post
 });
 
-export const selectCategory = (categoryId) => ({
-  type: SELECT_CATEGORY,
-  categoryId: categoryId
+export const selectCategoryId = (categoryId) => ({
+  type: SELECT_CATEGORY_ID_FOR_LIST,
+  listCategoryId: categoryId
 })
 
-export const selectTag = (tagId) => ({
-  type: SELECT_TAG,
-  tagId: tagId
+export const selectTagId = (tagId) => ({
+  type: SELECT_TAG_ID_FOR_LIST,
+  listTagId: tagId
 })
