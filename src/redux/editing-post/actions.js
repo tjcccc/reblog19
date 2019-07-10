@@ -6,6 +6,7 @@ import { UPDATE_TAGS } from './actionTypes';
 
 export const intialize = () => ({
   type: INTIALIZE,
+  id: '',
   content: '',
   categories: [],
   tags: [],

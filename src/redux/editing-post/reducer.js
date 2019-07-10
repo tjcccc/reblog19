@@ -5,6 +5,7 @@ import { UPDATE_CATEGORIES } from './actionTypes';
 import { UPDATE_TAGS } from './actionTypes';
 
 const initialState = {
+  id: '',
   content: '',
   status: 0,
   categories: [],

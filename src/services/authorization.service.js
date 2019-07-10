@@ -21,7 +21,7 @@ const getAuthorization = async (mail, password) => {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
+    });
   }
   catch (error) {
     throw new Error(error);
@@ -44,7 +44,7 @@ const checkAuthorization = async (token) => {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
+    });
   }
   catch (error) {
     throw new Error(error);

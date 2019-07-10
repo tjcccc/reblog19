@@ -86,7 +86,9 @@ const postQueries = {
       }
       catch(err) {
         logger.info(err);
-        throw err;
+        // return empty
+        return {};
+        // throw err;
       }
     }
   }

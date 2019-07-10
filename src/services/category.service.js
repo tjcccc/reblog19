@@ -19,7 +19,7 @@ const fetchCategories = async () => {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
+    });
   }
   catch (error) {
     throw new Error(error);

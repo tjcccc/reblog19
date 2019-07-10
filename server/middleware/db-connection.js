@@ -5,6 +5,10 @@ const dbConfig = require('../db-config');
 mongoose.set('useFindAndModify', false);
 
 const dbConnection = (req, res, next) => {
+  if (mongoose.connection.readyState !== 0) {
+    next();
+    return;
+  }
   mongoose.connect(dbConfig.mongo.host, {
     auth: {
       user: dbConfig.mongo.user,

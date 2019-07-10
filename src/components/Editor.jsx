@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateContent } from '../redux/editing-post/actions';
+import { fetchPostById, createPost } from '../services/post.service';
 import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
@@ -32,9 +33,10 @@ class Editor extends Component {
     this.updateContent(textValue);
   }
 
-  save = () => {
-    const { content, categories, tags, status } = this.props;
+  save = async () => {
+    const { _id, content, categories, tags, status } = this.props;
     const post = {
+      _id: _id,
       content: content,
       status: status,
       categories: categories,
@@ -43,6 +45,14 @@ class Editor extends Component {
     logger.info(post);
 
     // TODO: POST to server.
+
+    const postChecking = await fetchPostById(post._id);
+
+    if (postChecking.data.post === undefined) {
+      // New post
+      const newPost = await createPost(post);
+      logger.info(newPost);
+    }
   }
 
   render = () => {
@@ -103,6 +113,7 @@ class Editor extends Component {
 Editor.propTypes = {
   isWriting: PropTypes.bool,
   formId: PropTypes.string,
+  _id: PropTypes.string,
   content: PropTypes.string,
   status: PropTypes.number,
   categories: PropTypes.arrayOf(PropTypes.shape({
@@ -116,6 +127,7 @@ Editor.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  id: state.editingPost.id,
   content: state.editingPost.content,
   status: state.editingPost.status,
   categories: state.editingPost.categories,

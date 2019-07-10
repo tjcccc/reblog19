@@ -10,7 +10,7 @@ const postMutations = {
     args: {
       newPost: { type: PostInput }
     },
-    resolve: (_, args) => {
+    resolve: async (_, args) => {
       const post = new Post({
         _id: new ObjectId(),
         title: 'New title',
@@ -19,7 +19,7 @@ const postMutations = {
         update_time: new Date().toISOString(),
         content: args.newPost.content,
         status: args.newPost.status,
-        categories: args.newPost.categories,
+        categories: args.newPost.categories.map(category => new ObjectId(category)),
         tags: args.newPost.tags,
         view_count: 0,
         like_count: 0
