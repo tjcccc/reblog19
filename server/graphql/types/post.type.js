@@ -21,6 +21,7 @@ const PostType = new GraphQLObjectType({
 const PostInput = new GraphQLInputObjectType({
   name: 'PostInput',
   fields: {
+    title: { type: GraphQLString },
     content: { type: GraphQLString },
     status: { type: GraphQLInt },
     categories: { type: new GraphQLList(GraphQLID) },

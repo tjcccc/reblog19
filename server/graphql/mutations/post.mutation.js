@@ -13,7 +13,7 @@ const postMutations = {
     resolve: async (_, args) => {
       const post = new Post({
         _id: new ObjectId(),
-        title: 'New title',
+        title: args.newPost.title,
         create_time: new Date().toISOString(),
         post_time: new Date().toISOString(),
         update_time: new Date().toISOString(),

@@ -1,4 +1,5 @@
-import { INTIALIZE } from './actionTypes';
+import { INITIALIZE } from './actionTypes';
+import { UPDATE_TITLE } from './actionTypes';
 import { UPDATE_CONTENT } from './actionTypes';
 import { UPDATE_STATUS } from './actionTypes';
 import { UPDATE_CATEGORIES } from './actionTypes';
@@ -6,6 +7,7 @@ import { UPDATE_TAGS } from './actionTypes';
 
 const initialState = {
   id: '',
+  title: '',
   content: '',
   status: 0,
   categories: [],
@@ -13,10 +15,16 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  const { content, status, categories, tags } = action;
+  const { title, content, status, categories, tags } = action;
   switch (action.type) {
-    case INTIALIZE: {
+    case INITIALIZE: {
       return state;
+    }
+    case UPDATE_TITLE: {
+      return {
+        ...state,
+        title: title
+      };
     }
     case UPDATE_CONTENT: {
       return {

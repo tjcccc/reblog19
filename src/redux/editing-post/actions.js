@@ -1,16 +1,23 @@
-import { INTIALIZE } from './actionTypes';
+import { INITIALIZE } from './actionTypes';
+import { UPDATE_TITLE } from './actionTypes';
 import { UPDATE_CONTENT } from './actionTypes';
 import { UPDATE_STATUS } from './actionTypes';
 import { UPDATE_CATEGORIES } from './actionTypes';
 import { UPDATE_TAGS } from './actionTypes';
 
-export const intialize = () => ({
-  type: INTIALIZE,
+export const initialize = () => ({
+  type: INITIALIZE,
   id: '',
+  title: '',
   content: '',
   categories: [],
   tags: [],
   status: 0
+});
+
+export const updateTitle = (title) => ({
+  type: UPDATE_TITLE,
+  title: title
 });
 
 export const updateContent = (content) => ({

@@ -33,10 +33,24 @@ class Editor extends Component {
     this.updateContent(textValue);
   }
 
+  extractTitle = (content) => {
+    let title = 'New Post';
+    if (content.charAt(0) === '#') {
+      const titleEndIndex = content.indexOf('\n');
+      title = content.slice(2, titleEndIndex);
+    } else if (content.length > 20) {
+      title = content.slice(0, 20) + '...';
+    } else {
+      title = content + '...';
+    }
+    return title;
+  }
+
   save = async () => {
     const { _id, content, categories, tags, status } = this.props;
     const post = {
       _id: _id,
+      title: this.extractTitle(content),
       content: content,
       status: status,
       categories: categories,
@@ -114,6 +128,7 @@ Editor.propTypes = {
   isWriting: PropTypes.bool,
   formId: PropTypes.string,
   _id: PropTypes.string,
+  title: PropTypes.string,
   content: PropTypes.string,
   status: PropTypes.number,
   categories: PropTypes.arrayOf(PropTypes.shape({
@@ -128,6 +143,7 @@ Editor.propTypes = {
 
 const mapStateToProps = state => ({
   id: state.editingPost.id,
+  title: state.editingPost.title,
   content: state.editingPost.content,
   status: state.editingPost.status,
   categories: state.editingPost.categories,

@@ -9,7 +9,7 @@ class PostCollection extends Component {
   constructor(props) {
     super(props);
 
-    this.pagenation = {
+    this.pagination = {
       index: 0
     }
 
@@ -22,7 +22,7 @@ class PostCollection extends Component {
 
   fetchRecentPosts = async () => {
     const { postsPerPage, listCategoryId, listTagId } = this.props;
-    const skip = this.pagenation.index * postsPerPage;
+    const skip = this.pagination.index * postsPerPage;
     const limit = postsPerPage;
 
     let posts;
@@ -42,18 +42,18 @@ class PostCollection extends Component {
 
     this.setState({
       posts: posts,
-      noNewer: this.pagenation.index === 0,
+      noNewer: this.pagination.index === 0,
       noOlder: posts.length === 0 || posts.length !== limit
     });
   };
 
   fetchNewerPosts = () => {
-    this.pagenation.index = this.pagenation.index - 1 < 0 ? 0 : this.pagenation.index - 1;
+    this.pagination.index = this.pagination.index - 1 < 0 ? 0 : this.pagination.index - 1;
     this.fetchRecentPosts();
   };
 
   fetchOlderPosts = () => {
-    this.pagenation.index += 1;
+    this.pagination.index += 1;
     this.fetchRecentPosts();
   };
 
@@ -66,7 +66,7 @@ class PostCollection extends Component {
     if ((prevProps.listCategoryId !== this.props.listCategoryId && this.props.listTagId === '')
       || (prevProps.listTagId !== this.props.listTagId && this.props.listCategoryId === '')) {
       this.fetchRecentPosts();
-      this.pagenation.index = 0;
+      this.pagination.index = 0;
     }
   };
 

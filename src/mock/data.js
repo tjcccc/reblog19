@@ -15,6 +15,11 @@ export const blog = {
       link: '/archive'
     },
     {
+      id: 'bb2',
+      label: 'DRAFTS',
+      link: '/drafts'
+    },
+    {
       id: 'cc',
       label: 'ABOUT',
       link: '/blog'

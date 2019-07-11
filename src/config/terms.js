@@ -18,6 +18,7 @@ const terms = {
     signOut: 'SIGN OUT',
     home: 'HOME',
     archive: 'ARCHIVE',
+    drafts: 'DRAFTS',
     about: 'ABOUT',
     newer: 'NEWER',
     older: 'OLDER',
