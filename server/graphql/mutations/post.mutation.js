@@ -1,8 +1,23 @@
 const { GraphQLID, GraphQLString } = require('graphql');
 const { PostType, PostInput } = require('../types/post.type');
 const Post = require('../../entities/post');
+const Category = require('../../entities/category')
 const ObjectId = require('mongoose').Types.ObjectId;
 const logger = require('../../middleware/logger');
+
+const updateCategories = async () => {
+  try {
+    const categoriesResult = await Category.find();
+    categoriesResult.map(async category => {
+      const postsCount = await Post.find({ status: 1, categories: { $in: category._id } }).countDocuments();
+      await Category.updateOne({ _id: category._id }, { $set: { count: postsCount } });
+    });
+  }
+  catch (err) {
+    logger.error(err);
+    throw err;
+  }
+}
 
 const postMutations = {
   createPost: {
@@ -25,8 +40,14 @@ const postMutations = {
         like_count: 0
       });
       return post.save()
-        .then(result => {
+        .then(async result => {
           logger.info(result);
+
+          // Update categories for count
+          await updateCategories();
+
+          // Update tags for count
+
           return { ...result._doc };
         }).catch(err => {
           logger.error(err);

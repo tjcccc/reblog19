@@ -1,7 +1,7 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt } = require('graphql');
 
 const CategoryType = new GraphQLObjectType({
-  name: 'CategoryType',
+  name: 'Category',
   fields: () => ({
     _id: { type: GraphQLID },
     order_id: { type: GraphQLInt },

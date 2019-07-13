@@ -66,6 +66,8 @@ class Editor extends Component {
       // New post
       const newPost = await createPost(post);
       logger.info(newPost);
+    } else {
+      // TODO: Update old post.
     }
   }
 

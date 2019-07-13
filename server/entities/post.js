@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
   content: String,
   status: Number,
   categories: [ObjectId],
-  tags: [ObjectId],
+  tags: [String],
   view_count: Number,
   like_count: Number
 },

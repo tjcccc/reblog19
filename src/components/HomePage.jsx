@@ -14,7 +14,7 @@ class HomePage extends Component {
 
     return (
       <div className='container responsive-container'>
-        <PostCollection postsPerPage={3} />
+        <PostCollection postsPerPage={10} />
         <aside>
           <CategoryCollection categories={categories} />
           <TagCollection tags={tags} />
