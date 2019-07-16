@@ -5,7 +5,7 @@ const links = {
   initialize: '/initialize',
   login: '/login',
   setting: '/setting',
-  post: '/post',
+  post: '/post/:id',
   editor: '/editor'
 }
 

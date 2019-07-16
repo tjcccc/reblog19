@@ -1,7 +1,8 @@
 const { GraphQLID, GraphQLString } = require('graphql');
 const { PostType, PostInput } = require('../types/post.type');
 const Post = require('../../entities/post');
-const Category = require('../../entities/category')
+const Category = require('../../entities/category');
+const Tag = require('../../entities/tag');
 const ObjectId = require('mongoose').Types.ObjectId;
 const logger = require('../../middleware/logger');
 
@@ -11,6 +12,20 @@ const updateCategories = async () => {
     categoriesResult.map(async category => {
       const postsCount = await Post.find({ status: 1, categories: { $in: category._id } }).countDocuments();
       await Category.updateOne({ _id: category._id }, { $set: { count: postsCount } });
+    });
+  }
+  catch (err) {
+    logger.error(err);
+    throw err;
+  }
+}
+
+const updateTags = async () => {
+  try {
+    const tagsResult = await Category.find();
+    tagsResult.map(async tag => {
+      const postsCount = await Post.find({ status: 1, tags: { $in: tag._id } }).countDocuments();
+      await Tag.updateOne({ _id: tag._id }, { $set: { count: postsCount } });
     });
   }
   catch (err) {

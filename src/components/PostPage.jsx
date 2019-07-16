@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
 import Post from './Post';
+import { fetchPostById } from '../services/post.service';
 
 class PostPage extends Component {
-  displayName = 'PostPage';
-  render = () => {
+  constructor(props) {
+    super(props);
     const { post } = this.props;
+    this.state = { post: post };
+  }
+  displayName = 'PostPage';
+
+  getPostById = async (id) => {
+    const fetchedPost = await fetchPostById(id)
+    return fetchedPost.data.data.post;
+  };
+
+  componentDidMount = async () => {
+    const { id } = this.props.routeData.match.params;
+    const remotePost = await this.getPostById(id);
+    this.setState({ post: remotePost });
+  };
+
+  render = () => {
+    const { post } = this.state;
     return (
       <div className='container'>
         <article className='post-single'>
-          <Post data={post} key={0} />
+          {(post === undefined || post === null) ? <h4>No content.</h4> : <Post data={post} key={0} />}
         </article>
         <aside>
           header list
@@ -30,7 +48,8 @@ PostPage.propTypes = {
     content: PropTypes.string,
     categories: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  routeData: any
 }
 
 PostPage.displayName = 'PostPage';

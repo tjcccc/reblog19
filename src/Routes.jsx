@@ -9,13 +9,11 @@ import SettingPage from './components/SettingPage';
 import PostPage from './components/PostPage';
 import EditorPage from './components/EditorPage';
 
-import { blog } from './mock/data';
-
 const homePage = () => (<HomePage />);
 const initializationPage = () => (<InitializationPage />);
 const loginPage = () => (<LoginPage />);
 const settingPage = () => (<SettingPage />);
-const postPage = () => (<PostPage post={blog.posts[0]} />);
+const postPage = (routeData) => (<PostPage routeData={routeData} />);
 const editorPage = () => (<EditorPage isNew={true} />);
 
 const Routes = () => (

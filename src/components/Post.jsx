@@ -21,6 +21,8 @@ class Post extends Component {
       viewCount: data.view_count
     }
 
+    const postPath = `/post/${post.id}`;
+
     const adminActions = isAdmin ? (
       <a href='/'>
         <FaEdit />
@@ -36,7 +38,7 @@ class Post extends Component {
           </div>
         </section>
         <section className='post-actions'>
-          <a href='/post'>
+          <a href={postPath}>
             <FaBookOpen />
             <span>{terms.label.read}</span>
           </a>
