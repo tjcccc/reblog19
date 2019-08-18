@@ -13,14 +13,14 @@ import Footer from './components/Footer';
 class App extends Component {
 
   fetchAllCategories = async () => {
-    const feitchCategoriesResponse = await fetchCategories();
-    const categories = feitchCategoriesResponse.data.data.categories;
+    const fetchCategoriesResponse = await fetchCategories();
+    const categories = fetchCategoriesResponse.data.data.categories;
     this.props.onLoadCategories(categories);
   }
 
   fetchAllTags = async () => {
-    const feitchTagsResponse = await fetchTags();
-    const tags = feitchTagsResponse.data.data.tags;
+    const fetchTagsResponse = await fetchTags();
+    const tags = fetchTagsResponse.data.data.tags;
     this.props.onLoadTags(tags);
   }
 

@@ -24,7 +24,7 @@ class Post extends Component {
     const postPath = `/post/${post.id}`;
 
     const adminActions = isAdmin ? (
-      <a href='/'>
+      <a href={`/post/${post.id}/edit`}>
         <FaEdit />
         <span>{terms.label.edit}</span>
       </a>
@@ -71,7 +71,9 @@ class Post extends Component {
         </section>
       </section>
     );
+
     const postPanel = isCompact ? postPanelCompact : postPanelFull;
+
     return (
       <article className='markdown-body post' key={key}>
         <ReactMarkdown source={post.content} />

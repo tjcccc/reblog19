@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateContent } from '../redux/editing-post/actions';
-import { fetchPostById, createPost } from '../services/post.service';
+// import { updateContent } from '../redux/editing-post/actions';
+// import { fetchPostById, createPost } from '../services/post.service';
 import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
 import terms from '../config/terms';
-import logger from '../utilities/logger';
+// import logger from '../utilities/logger';
 
 class Editor extends Component {
   constructor(props) {
     super(props);
-    const { formId } = this.props;
+    // const { formId, content } = this.props;
+    // const { content } = this.props;
 
     this.state = {
-      isWriting: true,
-      formId: formId
+      isWriting: true
+      // content: content ? content : ''
+      // formId: formId
     }
   }
 
@@ -25,7 +27,8 @@ class Editor extends Component {
   };
 
   updateContent = (content) => {
-    this.props.onUpdateContent(content);
+    // this.props.onUpdateContent(content);
+    this.setState({ content: content });
   };
 
   handleTextareaChange = (event) => {
@@ -46,42 +49,42 @@ class Editor extends Component {
     return title;
   }
 
-  save = async () => {
-    const { _id, content, categories, tags, status } = this.props;
-    const post = {
-      _id: _id,
-      title: this.extractTitle(content),
-      content: content,
-      status: status,
-      categories: categories,
-      tags: tags
-    };
-    logger.info(post);
+  // save = async () => {
+  //   const { _id, content, categories, tags, status } = this.props;
+  //   const post = {
+  //     _id: _id,
+  //     title: this.extractTitle(content),
+  //     content: content,
+  //     status: status,
+  //     categories: categories,
+  //     tags: tags
+  //   };
+  //   logger.info(post);
 
-    // TODO: POST to server.
+  //   // TODO: POST to server.
 
-    const postChecking = await fetchPostById(post._id);
+  //   const postChecking = await fetchPostById(post._id);
 
-    if (postChecking.data.post === undefined) {
-      // New post
-      const newPost = await createPost(post);
-      logger.info(newPost);
-    } else {
-      // TODO: Update old post.
-    }
-  }
+  //   if (postChecking.data.post === undefined) {
+  //     // New post
+  //     const newPost = await createPost(post);
+  //     logger.info(newPost);
+  //   } else {
+  //     // TODO: Update old post.
+  //   }
+  // }
 
   render = () => {
-    const { content } = this.props;
-    const { formId } = this.state;
+    const { formId, content } = this.props;
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.' defaultValue={content} onChange={this.handleTextareaChange} />
+        <textarea id='editor-body-content' placeholder='Write your blog post.' value={content} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
-            <button className='commit' type='submit' htmlFor={formId} onClick={this.save}>{terms.label.save}</button>
+            {/* <button className='commit' type='submit' htmlFor={formId} onClick={this.save}>{terms.label.save}</button> */}
+            <button className='commit' type='submit' htmlFor={formId}>{terms.label.save}</button>
           </div>
         </div>
       </div>
@@ -128,34 +131,46 @@ class Editor extends Component {
 
 Editor.propTypes = {
   isWriting: PropTypes.bool,
+  // post: PropTypes.shape({
+  //   id: PropTypes.string,
+  //   content: PropTypes.string,
+  //   status: PropTypes.number,
+  //   categories: PropTypes.arrayOf(PropTypes.shape({
+  //     _id: PropTypes.string,
+  //     order_id: PropTypes.number,
+  //     label: PropTypes.string,
+  //     count: PropTypes.number
+  //   })),
+  //   tags: PropTypes.arrayOf(PropTypes.string)
+  // })
   formId: PropTypes.string,
-  _id: PropTypes.string,
-  title: PropTypes.string,
-  content: PropTypes.string,
-  status: PropTypes.number,
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string,
-    order_id: PropTypes.number,
-    label: PropTypes.string,
-    count: PropTypes.number
-  })),
-  tags: PropTypes.arrayOf(PropTypes.string),
-  onUpdateContent: PropTypes.func.isRequired
+  // _id: PropTypes.string,
+  // title: PropTypes.string,
+  content: PropTypes.string
+  // status: PropTypes.number,
+  // categories: PropTypes.arrayOf(PropTypes.shape({
+  //   _id: PropTypes.string,
+  //   order_id: PropTypes.number,
+  //   label: PropTypes.string,
+  //   count: PropTypes.number
+  // })),
+  // tags: PropTypes.arrayOf(PropTypes.string),
+  // onUpdateContent: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  id: state.editingPost.id,
-  title: state.editingPost.title,
-  content: state.editingPost.content,
-  status: state.editingPost.status,
-  categories: state.editingPost.categories,
-  tags: state.editingPost.tags
-});
+// const mapStateToProps = state => ({
+//   id: state.editingPost.id,
+//   title: state.editingPost.title,
+//   content: state.editingPost.content,
+//   status: state.editingPost.status,
+//   categories: state.editingPost.categories,
+//   tags: state.editingPost.tags
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateContent: (content) => {
-    dispatch(updateContent(content));
-  }
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   onUpdateContent: (content) => {
+//     dispatch(updateContent(content));
+//   }
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect()(Editor);

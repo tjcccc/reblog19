@@ -14,19 +14,20 @@ const initializationPage = () => (<InitializationPage />);
 const loginPage = () => (<LoginPage />);
 const settingPage = () => (<SettingPage />);
 const postPage = (routeData) => (<PostPage routeData={routeData} />);
-const editorPage = () => (<EditorPage isNew={true} />);
+const editorPage = (routeData) => (<EditorPage routeData={routeData} />);
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Redirect from={links.index} to={links.default} exact />
-      <Route path={links.default} exact component={homePage} />
+      <Route exact path={links.default} component={homePage} />
       <Route path={links.home} component={homePage} />
       <Route path={links.initialize} component={initializationPage} />
       <Route path={links.login} component={loginPage} />
       <Route path={links.setting} component={settingPage} />
-      <Route path={links.post} component={postPage} />
-      <Route path={links.editor} component={editorPage} />
+      <Route exact path={links.post} component={postPage} />
+      <Route exact path={links.editPost} component={editorPage} />
+      <Route exact path={links.createPost} component={editorPage} />
     </Switch>
   </BrowserRouter>
 );

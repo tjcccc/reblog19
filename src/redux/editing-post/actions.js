@@ -4,6 +4,7 @@ import { UPDATE_CONTENT } from './actionTypes';
 import { UPDATE_STATUS } from './actionTypes';
 import { UPDATE_CATEGORIES } from './actionTypes';
 import { UPDATE_TAGS } from './actionTypes';
+import { LOAD_POST } from './actionTypes';
 
 export const initialize = () => ({
   type: INITIALIZE,
@@ -38,4 +39,14 @@ export const updateCategories = (categories) => ({
 export const updateTags = (tags) => ({
   type: UPDATE_TAGS,
   tags: tags
+});
+
+export const loadPost = (post) => ({
+  type: LOAD_POST,
+  id: post.id,
+  title: post.title,
+  content: post.content,
+  categories: post.categories,
+  tags: post.tags,
+  status: post.status
 });

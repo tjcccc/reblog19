@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
+import { loadPost } from '../redux/editing-post/actions';
 import Editor from './Editor';
 import StatusSelector from './StatusSelector';
 import CategorySelector from './CategorySelector';
 import TagPin from './TagPin';
+import { fetchPostById } from '../services/post.service';
 
 class EditorPage extends Component {
   constructor(props) {
     super(props);
-    const { isNew, post } = this.props;
 
     const newPost = {
       content: '',
@@ -19,20 +20,52 @@ class EditorPage extends Component {
     }
 
     this.state = {
-      post: isNew ? newPost : post
+      isNew: false,
+      post: newPost,
+      content: ''
     };
   }
+
+  getPostById = async (id) => {
+    const fetchedPost = await fetchPostById(id)
+    return fetchedPost.data.data.post;
+  };
+
+  loadPost = (post) => {
+    this.setState({
+      isNew: true,
+      post: post
+    });
+    this.props.onLoadPost(post);
+  };
 
   handleSubmit= (event) => {
     event.preventDefault();
   }
 
+  componentDidMount = async () => {
+    const { id } = this.props.routeData.match.params;
+
+    if (!id) {
+      return;
+    }
+
+    const remotePost = await this.getPostById(id);
+    this.loadPost(remotePost);
+    console.log(remotePost);
+  };
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return nextState.post.content !== this.state.post.content;
+  };
+
   render = () => {
+    const { post } = this.state;
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
-          <Editor formId='blog-post' />
+          <Editor content={post.content} formId='blog-post' />
         </article>
         <aside className='editor-options'>
           <StatusSelector />
@@ -47,6 +80,7 @@ class EditorPage extends Component {
 EditorPage.propTypes = {
   isNew: PropTypes.bool,
   post: PropTypes.shape({
+    id: PropTypes.string,
     content: PropTypes.string,
     status: PropTypes.number,
     categories: PropTypes.arrayOf(PropTypes.shape({
@@ -56,7 +90,17 @@ EditorPage.propTypes = {
       count: PropTypes.number
     })),
     tags: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  routeData: any,
+  onLoadPost: PropTypes.func.isRequired
 }
 
-export default connect()(EditorPage);
+const mapDispatchToProps = (dispatch) => ({
+  onLoadPost: (post) => {
+    dispatch(loadPost(post));
+  }
+});
+
+EditorPage.displayName = 'EditorPage';
+
+export default connect(null, mapDispatchToProps)(EditorPage);

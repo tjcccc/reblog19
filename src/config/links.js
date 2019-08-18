@@ -6,7 +6,8 @@ const links = {
   login: '/login',
   setting: '/setting',
   post: '/post/:id',
-  editor: '/editor'
+  editPost: '/post/:id/edit',
+  createPost: '/new'
 }
 
 export default links;
