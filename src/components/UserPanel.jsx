@@ -3,7 +3,7 @@ import PropTypes, { instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
 import { checkAuthorization } from '../services/authorization.service';
-import logger from '../utilities/logger';
+// import logger from '../utilities/logger';
 import { signOut, check } from '../redux/authorization/actions';
 import links from '../config/links';
 
@@ -18,11 +18,11 @@ class UserPanel extends Component {
   componentDidMount = async () => {
     const { cookies } = this.props;
     // Get token
-    logger.trace(`token: ${cookies.get('token')}`);
+    // logger.trace(`token: ${cookies.get('token')}`);
     const token = cookies.get('token');
     const response = await checkAuthorization(token);
     const user = response.data.data.authorization;
-    logger.info(user);
+    // logger.info(user);
     this.props.onCheck({
       userId: user._id,
       userLevel: user.level,
@@ -39,7 +39,7 @@ class UserPanel extends Component {
 
     const adminOptions = (
       <nav className='user-panel'>
-        <a href={links.editor} className='special'>+ NEW POST</a>
+        <a href={links.createPost} className='special'>+ NEW POST</a>
         <a href={links.setting}>SETTING</a>
         <a href='/' onClick={this.signUserOut}>SIGN OUT</a>
       </nav>
@@ -56,7 +56,7 @@ class UserPanel extends Component {
       </nav>
     );
 
-    logger.info(`Is Login status checked: ${isAccountChecked}`);
+    // logger.info(`Is Login status checked: ${isAccountChecked}`);
 
     return isAccountChecked ? (isSignedIn ? (isAdmin ? adminOptions : readerOptions) : unsignedInOptions) : null;
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes, { instanceOf } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
 import logger from '../utilities/logger';
@@ -51,9 +52,16 @@ class LoginPage extends Component {
     const authorization = await getAuthorization(mail, password);
     const [loginData] = [authorization.data.data.login];
 
-    logger.info(loginData.token);
+    // logger.info(loginData);
+    // logger.info(loginData.token);
 
-    this.signUserIn(loginData);
+    if (loginData.isLoginSuccessful) {
+      this.signUserIn(loginData);
+      this.props.history.goBack();
+    } else {
+      // TODO: Real warning.
+      logger.warn('Login failed.');
+    }
 
     return authorization.data;
   }
@@ -93,7 +101,10 @@ LoginPage.propTypes = {
     password: PropTypes.bool
   }),
   isValidationChecked: PropTypes.bool,
-  onSignIn: PropTypes.func.isRequired
+  onSignIn: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    goBack: PropTypes.func.isRequired
+  })
 }
 
 const mapDispatchToProps = (dispatch) => ({
@@ -102,4 +113,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default withCookies(connect(null, mapDispatchToProps)(LoginPage));
+export default withRouter(withCookies(connect(null, mapDispatchToProps)(LoginPage)));
