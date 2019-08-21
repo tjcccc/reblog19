@@ -13,7 +13,7 @@ class Editor extends Component {
 
     this.state = {
       isWriting: true,
-      editingContent: ''
+      editingContent: props.content
     }
   }
 
@@ -23,6 +23,11 @@ class Editor extends Component {
 
   updateContent = (content) => {
     const { handleUpdating } = this.props;
+
+    if (!handleUpdating) {
+      return;
+    }
+
     handleUpdating(content);
   };
 
@@ -34,25 +39,21 @@ class Editor extends Component {
 
   save = () => {
     const { handleSaving } = this.props;
+
+    if (!handleSaving) {
+      return;
+    }
+
     handleSaving();
   };
 
-  static getDerivedStateFromProps = (props, state) => {
-    if (state.editingContent === props.content) {
-      return null;
-    }
-    return {
-      editingContent: props.content
-    };
-  };
-
   render = () => {
-    const { formId } = this.props;
+    const { formId, content } = this.props;
     const { editingContent } = this.state;
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.' value={editingContent} onChange={this.handleTextareaChange} />
+        <textarea id='editor-body-content' placeholder='Write your blog post.' value={editingContent ? content : editingContent} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
@@ -103,32 +104,10 @@ class Editor extends Component {
 
 Editor.propTypes = {
   isWriting: PropTypes.bool,
-  // post: PropTypes.shape({
-  //   id: PropTypes.string,
-  //   content: PropTypes.string,
-  //   status: PropTypes.number,
-  //   categories: PropTypes.arrayOf(PropTypes.shape({
-  //     _id: PropTypes.string,
-  //     order_id: PropTypes.number,
-  //     label: PropTypes.string,
-  //     count: PropTypes.number
-  //   })),
-  //   tags: PropTypes.arrayOf(PropTypes.string)
-  // })
   formId: PropTypes.string,
-  // _id: PropTypes.string,
-  // title: PropTypes.string,
   content: PropTypes.string,
+  handleUpdating: PropTypes.func.isRequired,
   handleSaving: PropTypes.func.isRequired
-  // status: PropTypes.number,
-  // categories: PropTypes.arrayOf(PropTypes.shape({
-  //   _id: PropTypes.string,
-  //   order_id: PropTypes.number,
-  //   label: PropTypes.string,
-  //   count: PropTypes.number
-  // })),
-  // tags: PropTypes.arrayOf(PropTypes.string),
-  // onUpdateContent: PropTypes.func.isRequired
 }
 
 // const mapStateToProps = state => ({

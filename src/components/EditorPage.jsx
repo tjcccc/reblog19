@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
-import { loadPost } from '../redux/editing-post/actions';
+// import { loadPost } from '../redux/editing-post/actions';
 import { fetchPostById, createPost } from '../services/post.service';
 import Editor from './Editor';
 import StatusSelector from './StatusSelector';
 import CategorySelector from './CategorySelector';
 import TagPin from './TagPin';
+import terms from '../config/terms';
 import logger from '../utilities/logger';
 
 class EditorPage extends Component {
@@ -21,8 +22,10 @@ class EditorPage extends Component {
     }
 
     this.state = {
-      isNew: false,
+
+      isNew: true,
       editingPost: newPost,
+      id: '',
       content: '',
       status: 0,
       categories: [],
@@ -37,7 +40,7 @@ class EditorPage extends Component {
 
   loadPost = (post) => {
     this.setState({
-      isNew: true,
+      isNew: false,
       editingPost: post,
       id: post._id ? post._id : '',
       content: post.content,
@@ -45,27 +48,12 @@ class EditorPage extends Component {
       categories: post.categories,
       tags: post.tags
     });
-    this.props.onLoadPost(post);
+    // this.props.onLoadPost(post);
   };
 
   handleSubmit= (event) => {
     event.preventDefault();
   }
-
-  componentDidMount = async () => {
-    const { id } = this.props.routeData.match.params;
-
-    if (!id) {
-      return;
-    }
-
-    const remotePost = await this.getPostById(id);
-    this.loadPost(remotePost);
-  };
-
-  shouldComponentUpdate = (nextProps, nextState) => {
-    return nextState.editingPost.content !== this.state.editingPost.content;
-  };
 
   extractTitle = (content) => {
     let title = 'New Post';
@@ -93,10 +81,15 @@ class EditorPage extends Component {
   updateTags = () => {};
 
   save = async () => {
-    const { editingPost } = this.state;
+    const { editingPost, id, content, status, categories, tags } = this.state;
     const post = {
       ...editingPost,
-      title: this.extractTitle(editingPost.content)
+      id: id,
+      title: this.extractTitle(editingPost.content),
+      content: content,
+      status: status,
+      categories: categories,
+      tags: tags
     }
 
     logger.info(post);
@@ -104,25 +97,36 @@ class EditorPage extends Component {
 
     // TODO: POST to server.
 
-    const postChecking = await fetchPostById(post._id);
+    // const postChecking = await fetchPostById(post._id);
 
-    if (postChecking.data.post === undefined) {
-      // New post
-      const newPost = await createPost(post);
-      logger.info(newPost);
-    } else {
-      // TODO: Update old post.
-    }
+    // if (postChecking.data.post === undefined) {
+    //   // New post
+    //   const newPost = await createPost(post);
+    //   logger.info(newPost);
+    // } else {
+    //   // TODO: Update old post.
+    // }
   }
 
+  componentDidMount = async () => {
+    const { id } = this.props.routeData.match.params;
+
+    if (!id) {
+      return;
+    }
+
+    const remotePost = await this.getPostById(id);
+    this.loadPost(remotePost);
+  };
+
   render = () => {
-    const { content, status, categories, tags } = this.state;
-    logger.info(`post status: ${status}`);
+    const { isNew, content, status, categories, tags } = this.state;
+    const loadingLabel = terms.placeholder.loading;
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
-          <Editor content={content} formId='blog-post' handleUpdating={this.updateContent} handleSaving={this.save} />
+          <Editor content={isNew ? loadingLabel : content} formId='blog-post' handleUpdating={this.updateContent} handleSaving={this.save} />
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
@@ -146,28 +150,16 @@ EditorPage.propTypes = {
   //   count: PropTypes.number
   // })),
   // tags: PropTypes.arrayOf(PropTypes.string),
-  editingPost: PropTypes.shape({
-    id: PropTypes.string,
-    content: PropTypes.string,
-    status: PropTypes.number,
-    categories: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string,
-      order_id: PropTypes.number,
-      label: PropTypes.string,
-      count: PropTypes.number
-    })),
-    tags: PropTypes.arrayOf(PropTypes.string)
-  }),
-  routeData: any,
-  onLoadPost: PropTypes.func.isRequired
+  routeData: any
+  // onLoadPost: PropTypes.func.isRequired
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onLoadPost: (post) => {
-    dispatch(loadPost(post));
-  }
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   onLoadPost: (post) => {
+//     dispatch(loadPost(post));
+//   }
+// });
 
 EditorPage.displayName = 'EditorPage';
 
-export default connect(null, mapDispatchToProps)(EditorPage);
+export default connect()(EditorPage);

@@ -56,7 +56,8 @@ const terms = {
     setPassword: 'Set password for the acccount.',
     confirmSetPassword: 'Input the password again for confirming.',
     emailForLogin: 'Email, not username',
-    passwordForLogin: 'Input your password.'
+    passwordForLogin: 'Input your password.',
+    loading: 'Loading...'
   },
   validation: {
     blogName: 'A Blog Name is necessary.',
