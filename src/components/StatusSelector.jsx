@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateStatus } from '../redux/editing-post/actions';
 import terms from '../config/terms';
 
 class StatusSelector extends Component {
@@ -9,6 +8,7 @@ class StatusSelector extends Component {
     super(props);
 
     this.state = {
+      status: this.statusCode.draft,
       draftLabel: terms.label.draftStatus,
       publishLabel: terms.label.publishStatus
     }
@@ -20,13 +20,25 @@ class StatusSelector extends Component {
   };
 
   handleOptionChange = (event) => {
-    const { onUpdateStatus } = this.props;
-    var status = parseInt(event.target.value, 10);
-    onUpdateStatus(status);
+    const { handleUpdating } = this.props;
+    const status = parseInt(event.target.value, 10);
+    this.setState({ status: status });
+    handleUpdating(status);
+    console.log(status);
   }
 
-  render = () => {
+  componentDidMount = () => {
     const { status } = this.props;
+    console.log(`component: ${status}`);
+    this.setState({ status });
+  };
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return nextProps.status !== this.state.status;
+  };
+
+  render = () => {
+    const { status } = this.state;
     const { draftLabel, publishLabel } = this.state;
 
     return (
@@ -39,22 +51,11 @@ class StatusSelector extends Component {
       </div>
     );
   }
-
 }
 
 StatusSelector.propTypes = {
   status: PropTypes.number,
-  onUpdateStatus: PropTypes.func.isRequired
+  handleUpdating: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  status: state.editingPost.status
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateStatus: (statusCode) => {
-    dispatch(updateStatus(statusCode));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(StatusSelector);
+export default connect()(StatusSelector);

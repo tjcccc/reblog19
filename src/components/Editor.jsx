@@ -49,30 +49,10 @@ class Editor extends Component {
     return title;
   }
 
-  // save = async () => {
-  //   const { _id, content, categories, tags, status } = this.props;
-  //   const post = {
-  //     _id: _id,
-  //     title: this.extractTitle(content),
-  //     content: content,
-  //     status: status,
-  //     categories: categories,
-  //     tags: tags
-  //   };
-  //   logger.info(post);
-
-  //   // TODO: POST to server.
-
-  //   const postChecking = await fetchPostById(post._id);
-
-  //   if (postChecking.data.post === undefined) {
-  //     // New post
-  //     const newPost = await createPost(post);
-  //     logger.info(newPost);
-  //   } else {
-  //     // TODO: Update old post.
-  //   }
-  // }
+  save = () => {
+    const { handleSaving } = this.props;
+    handleSaving();
+  };
 
   render = () => {
     const { formId, content } = this.props;
@@ -83,8 +63,7 @@ class Editor extends Component {
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
-            {/* <button className='commit' type='submit' htmlFor={formId} onClick={this.save}>{terms.label.save}</button> */}
-            <button className='commit' type='submit' htmlFor={formId}>{terms.label.save}</button>
+            <button className='commit' type='submit' htmlFor={formId} onClick={this.save}>{terms.label.save}</button>
           </div>
         </div>
       </div>
@@ -146,7 +125,8 @@ Editor.propTypes = {
   formId: PropTypes.string,
   // _id: PropTypes.string,
   // title: PropTypes.string,
-  content: PropTypes.string
+  content: PropTypes.string,
+  handleSaving: PropTypes.func.isRequired
   // status: PropTypes.number,
   // categories: PropTypes.arrayOf(PropTypes.shape({
   //   _id: PropTypes.string,
