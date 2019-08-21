@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { updateContent } from '../redux/editing-post/actions';
-// import { fetchPostById, createPost } from '../services/post.service';
 import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
@@ -12,13 +10,10 @@ import terms from '../config/terms';
 class Editor extends Component {
   constructor(props) {
     super(props);
-    // const { formId, content } = this.props;
-    // const { content } = this.props;
 
     this.state = {
-      isWriting: true
-      // content: content ? content : ''
-      // formId: formId
+      isWriting: true,
+      editingContent: ''
     }
   }
 
@@ -27,26 +22,14 @@ class Editor extends Component {
   };
 
   updateContent = (content) => {
-    // this.props.onUpdateContent(content);
-    this.setState({ content: content });
+    const { handleUpdating } = this.props;
+    handleUpdating(content);
   };
 
   handleTextareaChange = (event) => {
     const textValue = event.target.value;
+    this.setState({ editingContent: textValue });
     this.updateContent(textValue);
-  }
-
-  extractTitle = (content) => {
-    let title = 'New Post';
-    if (content.charAt(0) === '#') {
-      const titleEndIndex = content.indexOf('\n');
-      title = content.slice(2, titleEndIndex);
-    } else if (content.length > 20) {
-      title = content.slice(0, 20) + '...';
-    } else {
-      title = content + '...';
-    }
-    return title;
   }
 
   save = () => {
@@ -54,12 +37,22 @@ class Editor extends Component {
     handleSaving();
   };
 
+  static getDerivedStateFromProps = (props, state) => {
+    if (state.editingContent === props.content) {
+      return null;
+    }
+    return {
+      editingContent: props.content
+    };
+  };
+
   render = () => {
-    const { formId, content } = this.props;
+    const { formId } = this.props;
+    const { editingContent } = this.state;
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.' value={content} onChange={this.handleTextareaChange} />
+        <textarea id='editor-body-content' placeholder='Write your blog post.' value={editingContent} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
@@ -71,7 +64,7 @@ class Editor extends Component {
 
     const previewContent = (
       <article className='editor-preview markdown-body post'>
-        <ReactMarkdown source={content} />
+        <ReactMarkdown source={editingContent} />
       </article>
     );
 

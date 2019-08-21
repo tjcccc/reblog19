@@ -24,7 +24,9 @@ class EditorPage extends Component {
       isNew: false,
       editingPost: newPost,
       content: '',
-      status: 0
+      status: 0,
+      categories: [],
+      tags: []
     };
   }
 
@@ -37,7 +39,11 @@ class EditorPage extends Component {
     this.setState({
       isNew: true,
       editingPost: post,
-      status: post.status
+      id: post._id ? post._id : '',
+      content: post.content,
+      status: post.status,
+      categories: post.categories,
+      tags: post.tags
     });
     this.props.onLoadPost(post);
   };
@@ -74,14 +80,12 @@ class EditorPage extends Component {
     return title;
   }
 
+  updateContent = (content) => {
+    this.setState({ content: content });
+  };
+
   updateStatus = (status) => {
-    const { editingPost } = this.state;
-    this.setState({
-      editingPost: {
-        ...editingPost,
-        status: status
-      }
-    })
+    this.setState({ status: status });
   };
 
   updateCategories = () => {};
@@ -94,6 +98,7 @@ class EditorPage extends Component {
       ...editingPost,
       title: this.extractTitle(editingPost.content)
     }
+
     logger.info(post);
     return;
 
@@ -111,18 +116,18 @@ class EditorPage extends Component {
   }
 
   render = () => {
-    const { editingPost, status } = this.state;
-    console.log(`post status: ${status}`);
+    const { content, status, categories, tags } = this.state;
+    logger.info(`post status: ${status}`);
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
-          <Editor content={editingPost.content} formId='blog-post' handleSaving={this.save} />
+          <Editor content={content} formId='blog-post' handleUpdating={this.updateContent} handleSaving={this.save} />
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
-          <CategorySelector categories={editingPost.categories} handleUpdating={this.updateCategories} />
-          <TagPin tags={editingPost.tags} handleUpdating={this.updateTags} />
+          <CategorySelector categories={categories} handleUpdating={this.updateCategories} />
+          <TagPin tags={tags} handleUpdating={this.updateTags} />
         </aside>
       </form>
     );
@@ -131,18 +136,16 @@ class EditorPage extends Component {
 
 EditorPage.propTypes = {
   isNew: PropTypes.bool,
-  post: PropTypes.shape({
-    id: PropTypes.string,
-    content: PropTypes.string,
-    status: PropTypes.number,
-    categories: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string,
-      order_id: PropTypes.number,
-      label: PropTypes.string,
-      count: PropTypes.number
-    })),
-    tags: PropTypes.arrayOf(PropTypes.string)
-  }),
+  // id: PropTypes.string,
+  // content: PropTypes.string,
+  // status: PropTypes.number,
+  // categories: PropTypes.arrayOf(PropTypes.shape({
+  //   _id: PropTypes.string,
+  //   order_id: PropTypes.number,
+  //   label: PropTypes.string,
+  //   count: PropTypes.number
+  // })),
+  // tags: PropTypes.arrayOf(PropTypes.string),
   editingPost: PropTypes.shape({
     id: PropTypes.string,
     content: PropTypes.string,
@@ -155,7 +158,6 @@ EditorPage.propTypes = {
     })),
     tags: PropTypes.arrayOf(PropTypes.string)
   }),
-  status: PropTypes.number,
   routeData: any,
   onLoadPost: PropTypes.func.isRequired
 }
