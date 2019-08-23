@@ -72,10 +72,17 @@ class EditorPage extends Component {
   }
 
   getCategoryCollection = (allCategories, categoryIds) => {
+    if (!Array.isArray(categoryIds) || categoryIds.length < 1 ) {
+      return undefined;
+    }
+
+    // If allCategories is none (not fetched), categoryCollection must be none, because it cannot get full category data by its ids.
     if (!Array.isArray(allCategories) || allCategories.length < 1) {
       return undefined;
     }
-    return Array.isArray(categoryIds) && categoryIds.length > 0 ? categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)) : undefined;
+
+    // If categoryId not match any element in allCategories, do not add undefined to result array.
+    return categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
   };
 
   updateContent = (content) => {
@@ -135,16 +142,18 @@ class EditorPage extends Component {
 
   render = () => {
     const { allCategories } = this.props;
-    const { isNew, content, status, categories, tags } = this.state;
+    const { content, status, categories, tags } = this.state;
     const loadingLabel = terms.placeholder.loading;
-    logger.info(categories);
-    const categoryCollection = Array.isArray(categories) && categories.length > 0 ? categories.map(categoryId => getCategoryById(allCategories, categoryId)) : undefined;
+    // logger.info('post category ids: ');
+    // logger.info(categories);
 
-    logger.info('all category: ')
-    logger.info(allCategories);
+    const categoryCollection = this.getCategoryCollection(allCategories, categories);
 
-    logger.info('category collection: ')
-    logger.info(categoryCollection);
+    // logger.info('all category: ')
+    // logger.info(allCategories);
+
+    // logger.info('category collection: ')
+    // logger.info(categoryCollection);
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>

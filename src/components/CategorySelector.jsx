@@ -7,7 +7,7 @@ import { GoX } from 'react-icons/go'
 import { FaCheck } from 'react-icons/fa';
 import ClickOutside from 'react-click-outside';
 import terms from '../config/terms';
-import logger from '../utilities/logger';
+// import logger from '../utilities/logger';
 
 class CategorySelector extends Component {
 
@@ -65,10 +65,10 @@ class CategorySelector extends Component {
     const { categories } = this.props;
     const { allCategories, editingCategories } = this.state;
 
-    logger.info('to selector: ')
-    logger.info(categories);
-    logger.info('editing: ');
-    logger.info(editingCategories);
+    // logger.info('to selector: ')
+    // logger.info(categories);
+    // logger.info('editing: ');
+    // logger.info(editingCategories);
 
     const selectedMark = (<FaCheck className='selected-mark' />);
 
@@ -87,8 +87,8 @@ class CategorySelector extends Component {
 
     const selectedCategories = editingCategories ? editingCategories : categories;
 
-    logger.info('selected: ');
-    logger.info(selectedCategories);
+    // logger.info('selected: ');
+    // logger.info(selectedCategories);
 
     const categoryList = Array.isArray(selectedCategories) && selectedCategories.length > 0 ? selectedCategories.map((category, index) => (
       <li key={index}>
