@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateCategories } from '../redux/editing-post/actions';
+// import { updateCategories } from '../redux/editing-post/actions';
+import { getCategoryById } from '../services/category.service';
 import { GoX } from 'react-icons/go'
 import { FaCheck } from 'react-icons/fa';
 import ClickOutside from 'react-click-outside';
 import terms from '../config/terms';
+import logger from '../utilities/logger';
 
 class CategorySelector extends Component {
 
   constructor(props) {
     super(props);
     const { allCategories } = this.props;
+
     this.state = {
       allCategories: allCategories,
       isSettingCategories: false,
@@ -20,26 +23,26 @@ class CategorySelector extends Component {
   }
 
   addCategory = (category) => {
-    const { categories, onUpdateCategoires } = this.props;
+    // const { categoryIds } = this.props;
 
-    if (categories === undefined || categories.includes(category)) {
-      return;
-    }
+    // if (categories === undefined || categories.includes(category)) {
+    //   return;
+    // }
 
-    onUpdateCategoires(categories.concat(category));
+    // onUpdateCategories(categories.concat(category));
   }
 
   removeCategory = (event) => {
-    const { categories, onUpdateCategoires } = this.props;
+    // const { categories } = this.props;
 
-    const categoryId = event.currentTarget.id;
-    const existentCategory = categories.find(category => category._id === categoryId);
+    // const categoryId = event.currentTarget.id;
+    // const existentCategory = categories.find(category => category._id === categoryId);
 
-    if (existentCategory === undefined) {
-      return;
-    }
+    // if (existentCategory === undefined) {
+    //   return;
+    // }
 
-    onUpdateCategoires(categories.filter(category => category !== existentCategory));
+    // onUpdateCategories(categories.filter(category => category !== existentCategory));
   }
 
   displaySelectorPopup = (event) => {
@@ -60,12 +63,17 @@ class CategorySelector extends Component {
   render = () => {
 
     const { categories } = this.props;
-    const { allCategories } = this.state;
+    const { allCategories, editingCategories } = this.state;
+
+    logger.info('to selector: ')
+    logger.info(categories);
+    logger.info('editing: ');
+    logger.info(editingCategories);
 
     const selectedMark = (<FaCheck className='selected-mark' />);
 
-    const allCategoriesList = allCategories !== null ? allCategories.map((category, index) => {
-      const isInPostCategories = categories.includes(category);
+    const allCategoriesList = allCategories && allCategories.length > 0 ? allCategories.map((category, index) => {
+      const isInPostCategories = Array.isArray(editingCategories) ? editingCategories.includes(category) : false;
       return (
         <li className={isInPostCategories ? 'selected' : ''}
           key={index}
@@ -77,7 +85,12 @@ class CategorySelector extends Component {
       );
     }) : null;
 
-    const categoryList = categories !== undefined ? categories.map((category, index) => (
+    const selectedCategories = editingCategories ? editingCategories : categories;
+
+    logger.info('selected: ');
+    logger.info(selectedCategories);
+
+    const categoryList = Array.isArray(selectedCategories) && selectedCategories.length > 0 ? selectedCategories.map((category, index) => (
       <li key={index}>
         <span>{category.label}</span>
         <button type='button' id={category._id} onClick={this.removeCategory}><GoX /></button>
@@ -127,19 +140,19 @@ CategorySelector.propTypes = {
     order_id: PropTypes.number,
     label: PropTypes.string,
     count: PropTypes.number
-  })),
-  onUpdateCategoires: PropTypes.func.isRequired
+  }))
+  // onUpdateCategories: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  allCategories: state.category.categories,
-  categories: state.editingPost.categories
+  allCategories: state.category.categories
+  // categories: state.editingPost.categories
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateCategoires: (categories) => {
-    dispatch(updateCategories(categories));
-  }
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   onUpdateCategories: (categories) => {
+//     dispatch(updateCategories(categories));
+//   }
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategorySelector);
+export default connect(mapStateToProps, null)(CategorySelector);

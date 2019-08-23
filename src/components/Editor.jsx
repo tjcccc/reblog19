@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
 import terms from '../config/terms';
+import logger from '../utilities/logger';
 // import logger from '../utilities/logger';
 
 class Editor extends Component {
@@ -12,8 +13,7 @@ class Editor extends Component {
     super(props);
 
     this.state = {
-      isWriting: true,
-      editingContent: props.content
+      isWriting: true
     }
   }
 
@@ -53,7 +53,7 @@ class Editor extends Component {
 
     const editorContent = (
       <div className='editor-body'>
-        <textarea id='editor-body-content' placeholder='Write your blog post.' value={editingContent ? content : editingContent} onChange={this.handleTextareaChange} />
+        <textarea id='editor-body-content' placeholder={terms.placeholder.writeYourPost} value={editingContent ? editingContent : content} onChange={this.handleTextareaChange} />
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
@@ -65,7 +65,7 @@ class Editor extends Component {
 
     const previewContent = (
       <article className='editor-preview markdown-body post'>
-        <ReactMarkdown source={editingContent} />
+        <ReactMarkdown source={editingContent ? editingContent : content} />
       </article>
     );
 

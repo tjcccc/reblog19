@@ -3,6 +3,7 @@ import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
 // import { loadPost } from '../redux/editing-post/actions';
 import { fetchPostById, createPost } from '../services/post.service';
+import { getCategoryById } from '../services/category.service';
 import Editor from './Editor';
 import StatusSelector from './StatusSelector';
 import CategorySelector from './CategorySelector';
@@ -22,7 +23,6 @@ class EditorPage extends Component {
     }
 
     this.state = {
-
       isNew: true,
       editingPost: newPost,
       id: '',
@@ -39,6 +39,7 @@ class EditorPage extends Component {
   };
 
   loadPost = (post) => {
+    logger.info(post);
     this.setState({
       isNew: false,
       editingPost: post,
@@ -48,6 +49,8 @@ class EditorPage extends Component {
       categories: post.categories,
       tags: post.tags
     });
+    // logger.info(this.state.categories);
+    // logger.info(`post categories: ${this.state.categories}`);
     // this.props.onLoadPost(post);
   };
 
@@ -68,6 +71,13 @@ class EditorPage extends Component {
     return title;
   }
 
+  getCategoryCollection = (allCategories, categoryIds) => {
+    if (!Array.isArray(allCategories) || allCategories.length < 1) {
+      return undefined;
+    }
+    return Array.isArray(categoryIds) && categoryIds.length > 0 ? categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)) : undefined;
+  };
+
   updateContent = (content) => {
     this.setState({ content: content });
   };
@@ -76,9 +86,13 @@ class EditorPage extends Component {
     this.setState({ status: status });
   };
 
-  updateCategories = () => {};
+  updateCategories = (categories) => {
+    this.setState({ categories: categories });
+  };
 
-  updateTags = () => {};
+  updateTags = (tags) => {
+    this.setState({ tags: tags });
+  };
 
   save = async () => {
     const { editingPost, id, content, status, categories, tags } = this.state;
@@ -120,17 +134,26 @@ class EditorPage extends Component {
   };
 
   render = () => {
+    const { allCategories } = this.props;
     const { isNew, content, status, categories, tags } = this.state;
     const loadingLabel = terms.placeholder.loading;
+    logger.info(categories);
+    const categoryCollection = Array.isArray(categories) && categories.length > 0 ? categories.map(categoryId => getCategoryById(allCategories, categoryId)) : undefined;
+
+    logger.info('all category: ')
+    logger.info(allCategories);
+
+    logger.info('category collection: ')
+    logger.info(categoryCollection);
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
-          <Editor content={isNew ? loadingLabel : content} formId='blog-post' handleUpdating={this.updateContent} handleSaving={this.save} />
+          <Editor content={content ? content: loadingLabel} formId='blog-post' handleUpdating={this.updateContent} handleSaving={this.save} />
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
-          <CategorySelector categories={categories} handleUpdating={this.updateCategories} />
+          <CategorySelector categories={categoryCollection} handleUpdating={this.updateCategories} />
           <TagPin tags={tags} handleUpdating={this.updateTags} />
         </aside>
       </form>
@@ -150,7 +173,13 @@ EditorPage.propTypes = {
   //   count: PropTypes.number
   // })),
   // tags: PropTypes.arrayOf(PropTypes.string),
-  routeData: any
+  routeData: any,
+  allCategories: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    order_id: PropTypes.number,
+    label: PropTypes.string,
+    count: PropTypes.number
+  }))
   // onLoadPost: PropTypes.func.isRequired
 }
 
@@ -160,6 +189,11 @@ EditorPage.propTypes = {
 //   }
 // });
 
+const mapStateToProps = state => ({
+  allCategories: state.category.categories
+  // categories: state.editingPost.categories
+});
+
 EditorPage.displayName = 'EditorPage';
 
-export default connect()(EditorPage);
+export default connect(mapStateToProps, null)(EditorPage);

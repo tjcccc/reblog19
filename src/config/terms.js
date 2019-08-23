@@ -53,11 +53,12 @@ const terms = {
     setAuthorName: 'Set the author name of this blog.',
     setUsername: 'Set username for the account',
     setEmail: 'Set the E-mail for login.',
-    setPassword: 'Set password for the acccount.',
+    setPassword: 'Set password for the account.',
     confirmSetPassword: 'Input the password again for confirming.',
     emailForLogin: 'Email, not username',
     passwordForLogin: 'Input your password.',
-    loading: 'Loading...'
+    loading: 'Loading...',
+    writeYourPost: 'Write your blog post.'
   },
   validation: {
     blogName: 'A Blog Name is necessary.',
