@@ -13,8 +13,8 @@ const fetchPosts = async (skip, limit, status = null) => {
           update_time
           content
           status
-          categories
-          tags
+          category_ids
+          tag_ids
           view_count
           like_count
         }
@@ -45,8 +45,8 @@ const fetchPostsByCategory = async (skip, limit, categoryId, status = null) => {
           update_time
           content
           status
-          categories
-          tags
+          category_ids
+          tag_ids
           view_count
           like_count
         }
@@ -77,8 +77,8 @@ const fetchPostsByTag = async (skip, limit, tagId, status = null) => {
           update_time
           content
           status
-          categories
-          tags
+          category_ids
+          tag_ids
           view_count
           like_count
         }
@@ -109,10 +109,21 @@ const fetchPostById = async (id) => {
           update_time
           content
           status
-          categories
-          tags
+          category_ids
+          tag_ids
           view_count
-          like_count
+          like_count,
+          categories {
+            _id
+            order_id
+            label
+            count
+          },
+          tags {
+            _id
+            label
+            count
+          }
         }
       }
     `

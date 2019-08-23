@@ -6,7 +6,7 @@ const fetchTags = async () => {
     query: `
       query {
         tags {
-          _id
+          _id,
           label,
           count
         }
@@ -25,6 +25,31 @@ const fetchTags = async () => {
   }
 };
 
+const fetchTagById = async (id) => {
+  const requestBody = {
+    query: `
+      query {
+        tag(id: ${id}) {
+          _id,
+          label,
+          count
+        }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
 export {
-  fetchTags
+  fetchTags,
+  fetchTagById
 };

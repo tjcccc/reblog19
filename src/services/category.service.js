@@ -27,7 +27,7 @@ const fetchCategories = async () => {
 };
 
 const getCategoryById = (categories, id) => {
-  return categories && categories.length > 0 ? categories.find(category => category._id === id) : undefined;
+  return Array.isArray(categories) && categories.length > 0 ? categories.find(category => category._id === id) : undefined;
 }
 
 export {

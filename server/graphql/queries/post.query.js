@@ -37,7 +37,7 @@ const postQueries = {
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          categories: { $all: [args.categoryId] },
+          category_ids: { $all: [args.categoryId] },
           status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
@@ -61,7 +61,7 @@ const postQueries = {
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          tags: { $all: [args.tagId] },
+          tag_ids: { $all: [args.tagId] },
           status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
@@ -81,8 +81,10 @@ const postQueries = {
     },
     resolve: async (_, args) => {
       try {
-        const result = await Post.findOne({ _id: args.id });
-        return result._doc;
+        const result = await Post.findOne({ _id: args.id }).populate('categories').populate('tags');
+
+        // result._doc doesn't have vitural fields, use result.
+        return result;
       }
       catch(err) {
         logger.info(err);

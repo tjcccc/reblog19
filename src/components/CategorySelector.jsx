@@ -51,17 +51,16 @@ class CategorySelector extends Component {
     });
   }
 
-  static getDerivedStateFromProps = (nextProps, prevState) => {
-    if (nextProps.allCategories !== prevState.allCategories) {
-      return {
-        allCategories: nextProps.allCategories
-      };
-    }
-    return null;
-  };
+  // static getDerivedStateFromProps = (nextProps, prevState) => {
+  //   if (nextProps.allCategories !== prevState.allCategories) {
+  //     return {
+  //       allCategories: nextProps.allCategories
+  //     };
+  //   }
+  //   return null;
+  // };
 
   render = () => {
-
     const { categories } = this.props;
     const { allCategories, editingCategories } = this.state;
 

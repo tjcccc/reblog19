@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateTags } from '../redux/editing-post/actions';
+// import { updateTags } from '../redux/editing-post/actions';
 import { GoX } from 'react-icons/go'
 import terms from '../config/terms';
 
@@ -14,27 +14,27 @@ class TagPin extends Component {
   }
 
   addTag = () => {
-    const { tags, onUpdateTags } = this.props;
-    const { newTag } = this.state;
+    // const { tags, onUpdateTags } = this.props;
+    // const { newTag } = this.state;
 
-    if (newTag === '' || tags.indexOf(newTag) !== -1) {
-      this.setState({ newTag: '' });
-      return;
-    }
+    // if (newTag === '' || tags.indexOf(newTag) !== -1) {
+    //   this.setState({ newTag: '' });
+    //   return;
+    // }
 
-    onUpdateTags(tags.concat(newTag));
-    this.setState({ newTag: '' });
+    // onUpdateTags(tags.concat(newTag));
+    // this.setState({ newTag: '' });
   };
 
   removeTag = (event) => {
-    const { tags, onUpdateTags } = this.props;
-    const targetTag = event.currentTarget.id;
+    // const { tags, onUpdateTags } = this.props;
+    // const targetTag = event.currentTarget.id;
 
-    if (tags.indexOf(targetTag) === -1) {
-      return;
-    }
+    // if (tags.indexOf(targetTag) === -1) {
+    //   return;
+    // }
 
-    onUpdateTags(tags.filter(tag => tag !== targetTag));
+    // onUpdateTags(tags.filter(tag => tag !== targetTag));
   }
 
   handleTagChange = (event) => {
@@ -48,13 +48,15 @@ class TagPin extends Component {
   }
 
   render = () => {
-
     const { tags } = this.props;
+    const { editingTags } = this.state;
 
-    const tagList = tags !== undefined ? tags.map((tag, index) => (
+    const pinnedTags = editingTags ? editingTags : tags;
+
+    const tagList = Array.isArray(pinnedTags) && pinnedTags.length > 0 ? pinnedTags.map((tag, index) => (
       <li key={index}>
-        <span>{tag}</span>
-        <button type='button' id={tag} onClick={this.removeTag}><GoX /></button>
+        <span>{tag.label}</span>
+        <button type='button' id={tag.label} onClick={this.removeTag}><GoX /></button>
       </li>
     )) : null;
 
@@ -82,18 +84,22 @@ class TagPin extends Component {
 }
 
 TagPin.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string),
-  onUpdateTags: PropTypes.func.isRequired
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    label: PropTypes.string,
+    count: PropTypes.number
+  }))
+  // onUpdateTags: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  tags: state.editingPost.tags
-});
+// const mapStateToProps = state => ({
+//   tags: state.editingPost.tags
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateTags: (tags) => {
-    dispatch(updateTags(tags));
-  }
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   onUpdateTags: (tags) => {
+//     dispatch(updateTags(tags));
+//   }
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TagPin);
+export default connect()(TagPin);

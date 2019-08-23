@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // import { loadPost } from '../redux/editing-post/actions';
 import { fetchPostById, createPost } from '../services/post.service';
 import { getCategoryById } from '../services/category.service';
+import { fetchTagById } from '../services/tag.service';
 import Editor from './Editor';
 import StatusSelector from './StatusSelector';
 import CategorySelector from './CategorySelector';
@@ -28,6 +29,8 @@ class EditorPage extends Component {
       id: '',
       content: '',
       status: 0,
+      category_ids: [],
+      tag_ids: [],
       categories: [],
       tags: []
     };
@@ -46,6 +49,8 @@ class EditorPage extends Component {
       id: post._id ? post._id : '',
       content: post.content,
       status: post.status,
+      category_ids: post.category_ids,
+      tag_ids: post.tag_ids,
       categories: post.categories,
       tags: post.tags
     });
@@ -71,7 +76,7 @@ class EditorPage extends Component {
     return title;
   }
 
-  getCategoryCollection = (allCategories, categoryIds) => {
+  getPostCategories = (allCategories, categoryIds) => {
     if (!Array.isArray(categoryIds) || categoryIds.length < 1 ) {
       return undefined;
     }
@@ -83,6 +88,10 @@ class EditorPage extends Component {
 
     // If categoryId not match any element in allCategories, do not add undefined to result array.
     return categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
+  };
+
+  getPostTags = async (tagIds) => {
+    return tagIds.map(async (tagId) => await fetchTagById(tagId));
   };
 
   updateContent = (content) => {
@@ -137,17 +146,18 @@ class EditorPage extends Component {
     }
 
     const remotePost = await this.getPostById(id);
-    this.loadPost(remotePost);
+    await this.loadPost(remotePost);
   };
 
   render = () => {
-    const { allCategories } = this.props;
+    // const { allCategories } = this.props;
     const { content, status, categories, tags } = this.state;
     const loadingLabel = terms.placeholder.loading;
-    // logger.info('post category ids: ');
-    // logger.info(categories);
+    logger.info('post category: ');
+    logger.info(categories);
 
-    const categoryCollection = this.getCategoryCollection(allCategories, categories);
+    // const postCategories = this.getPostCategories(allCategories, categories);
+    // const postTags = this.getPostTags(tags);
 
     // logger.info('all category: ')
     // logger.info(allCategories);
@@ -162,7 +172,7 @@ class EditorPage extends Component {
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
-          <CategorySelector categories={categoryCollection} handleUpdating={this.updateCategories} />
+          <CategorySelector categories={categories} handleUpdating={this.updateCategories} />
           <TagPin tags={tags} handleUpdating={this.updateTags} />
         </aside>
       </form>

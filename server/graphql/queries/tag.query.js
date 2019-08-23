@@ -1,4 +1,4 @@
-const { GraphQLList } = require('graphql');
+const { GraphQLList, GraphQLString } = require('graphql');
 const { TagType } = require('../types/tag.type');
 const Tag = require('../../entities/tag');
 const logger = require('../../middleware/logger');
@@ -17,6 +17,24 @@ const tagQueries = {
       catch (err) {
         logger.error(err);
         throw err;
+      }
+    }
+  },
+  tag: {
+    type: TagType,
+    args: {
+      id: { type: GraphQLString }
+    },
+    resolve: async (_, args) => {
+      try {
+        const result = await Tag.findOne({ _id: args.id });
+        return result._doc;
+      }
+      catch(err) {
+        logger.info(err);
+        // return empty
+        return {};
+        // throw err;
       }
     }
   }

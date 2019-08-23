@@ -19,8 +19,8 @@ const scalarTypes = {
         return new Date(ast.value)
       }
       return null;
-    },
-  }),
+    }
+  })
 };
 
 module.exports = scalarTypes;
