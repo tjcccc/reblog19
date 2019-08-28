@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { updateCategories } from '../redux/editing-post/actions';
-import { getCategoryById } from '../services/category.service';
-import { GoX } from 'react-icons/go'
+import { GoX } from 'react-icons/go';
 import { FaCheck } from 'react-icons/fa';
 import ClickOutside from 'react-click-outside';
 import terms from '../config/terms';
-// import logger from '../utilities/logger';
 
 class CategorySelector extends Component {
 
@@ -22,27 +19,41 @@ class CategorySelector extends Component {
     }
   }
 
+  updatePostCategories = (categories) => {
+    const { handleUpdating } = this.props;
+
+    if (!handleUpdating) {
+      return;
+    }
+
+    this.setState({
+      editingCategories: categories
+    })
+
+    handleUpdating(categories);
+  }
+
   addCategory = (category) => {
-    // const { categoryIds } = this.props;
+    const { categories } = this.props;
 
-    // if (categories === undefined || categories.includes(category)) {
-    //   return;
-    // }
+    if (!categories || categories.includes(category)) {
+      return;
+    }
 
-    // onUpdateCategories(categories.concat(category));
+    this.updatePostCategories(categories.concat(category));
   }
 
   removeCategory = (event) => {
-    // const { categories } = this.props;
+    const { categories } = this.props;
 
-    // const categoryId = event.currentTarget.id;
-    // const existentCategory = categories.find(category => category._id === categoryId);
+    const categoryId = event.currentTarget.id;
+    const existentCategory = categories.find(category => category._id === categoryId);
 
-    // if (existentCategory === undefined) {
-    //   return;
-    // }
+    if (!existentCategory) {
+      return;
+    }
 
-    // onUpdateCategories(categories.filter(category => category !== existentCategory));
+    this.updatePostCategories(categories.filter(category => category !== existentCategory));
   }
 
   displaySelectorPopup = (event) => {
@@ -51,28 +62,25 @@ class CategorySelector extends Component {
     });
   }
 
-  // static getDerivedStateFromProps = (nextProps, prevState) => {
-  //   if (nextProps.allCategories !== prevState.allCategories) {
-  //     return {
-  //       allCategories: nextProps.allCategories
-  //     };
-  //   }
-  //   return null;
-  // };
+  // Update all categories list from redux state.
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    if (nextProps.allCategories !== prevState.allCategories) {
+      return {
+        allCategories: nextProps.allCategories
+      };
+    }
+    return null;
+  };
 
   render = () => {
     const { categories } = this.props;
     const { allCategories, editingCategories } = this.state;
 
-    // logger.info('to selector: ')
-    // logger.info(categories);
-    // logger.info('editing: ');
-    // logger.info(editingCategories);
-
     const selectedMark = (<FaCheck className='selected-mark' />);
+    const selectedCategories = editingCategories ? editingCategories : categories;
 
-    const allCategoriesList = allCategories && allCategories.length > 0 ? allCategories.map((category, index) => {
-      const isInPostCategories = Array.isArray(editingCategories) ? editingCategories.includes(category) : false;
+    const allCategoriesList = Array.isArray(allCategories) && allCategories.length > 0 ? allCategories.map((category, index) => {
+      const isInPostCategories = Array.isArray(selectedCategories) ? selectedCategories.some(selectedCategory => category._id === selectedCategory._id) : false;
       return (
         <li className={isInPostCategories ? 'selected' : ''}
           key={index}
@@ -83,11 +91,6 @@ class CategorySelector extends Component {
         </li>
       );
     }) : null;
-
-    const selectedCategories = editingCategories ? editingCategories : categories;
-
-    // logger.info('selected: ');
-    // logger.info(selectedCategories);
 
     const categoryList = Array.isArray(selectedCategories) && selectedCategories.length > 0 ? selectedCategories.map((category, index) => (
       <li key={index}>
@@ -139,7 +142,8 @@ CategorySelector.propTypes = {
     order_id: PropTypes.number,
     label: PropTypes.string,
     count: PropTypes.number
-  }))
+  })),
+  handleUpdating: PropTypes.func.isRequired
   // onUpdateCategories: PropTypes.func.isRequired
 }
 

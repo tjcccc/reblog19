@@ -16,8 +16,8 @@ class Post extends Component {
       postTime: data.post_time,
       updateTime: data.update_time,
       content: data.content,
-      categories: data.categories,
-      tags: data.tags,
+      category_ids: data.categoriy_ids,
+      tag_ids: data.tag_ids,
       viewCount: data.view_count
     }
 
@@ -91,8 +91,8 @@ Post.propTypes = {
     post_time: PropTypes.string,
     update_time: PropTypes.string,
     content: PropTypes.string,
-    categories: PropTypes.arrayOf(PropTypes.string),
-    tags: PropTypes.arrayOf(PropTypes.string),
+    category_ids: PropTypes.arrayOf(PropTypes.string),
+    tag_ids: PropTypes.arrayOf(PropTypes.string),
     view_count: PropTypes.number
   }),
   isCompact: PropTypes.bool,

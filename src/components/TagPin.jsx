@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { updateTags } from '../redux/editing-post/actions';
 import { GoX } from 'react-icons/go'
 import terms from '../config/terms';
 
@@ -9,36 +8,64 @@ class TagPin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newTag: ''
+      newTag: {
+        label: ''
+      }
     }
   }
 
+  updatePostTags = (tags) => {
+    const { handleUpdating } = this.props;
+
+    if (!handleUpdating) {
+      return;
+    }
+
+    this.setState({
+      editingTags: tags
+    })
+
+    handleUpdating(tags);
+  }
+
   addTag = () => {
-    // const { tags, onUpdateTags } = this.props;
-    // const { newTag } = this.state;
+    const { tags } = this.props;
+    const { newTag } = this.state;
+    const trimedNewTag = {
+      ...newTag,
+      label: newTag.label.trim()
+    };
 
-    // if (newTag === '' || tags.indexOf(newTag) !== -1) {
-    //   this.setState({ newTag: '' });
-    //   return;
-    // }
+    this.setState({
+      newTag: {
+        label: ''
+      }
+    });
 
-    // onUpdateTags(tags.concat(newTag));
-    // this.setState({ newTag: '' });
+    if (!newTag || tags.some(tag => tag.label === trimedNewTag.label)) {
+      return;
+    }
+
+    this.updatePostTags(tags.concat(newTag));
   };
 
   removeTag = (event) => {
-    // const { tags, onUpdateTags } = this.props;
-    // const targetTag = event.currentTarget.id;
+    const { tags } = this.props;
+    const targetTag = event.currentTarget.id;
 
-    // if (tags.indexOf(targetTag) === -1) {
-    //   return;
-    // }
+    if (!tags.some(tag => tag.label === targetTag)) {
+      return;
+    }
 
-    // onUpdateTags(tags.filter(tag => tag !== targetTag));
+    this.updatePostTags(tags.filter(tag => tag.label !== targetTag));
   }
 
-  handleTagChange = (event) => {
-    this.setState({ newTag: event.target.value });
+  handleTagInputChange = (event) => {
+    this.setState({
+      newTag:{
+        label: event.target.value
+      }
+    });
   }
 
   handleTagInputReturnKey = (event) => {
@@ -71,8 +98,8 @@ class TagPin extends Component {
             id='post-tags'
             type='text'
             placeholder={terms.label.setTags}
-            value={this.state.newTag}
-            onChange={this.handleTagChange}
+            value={this.state.newTag.label || ''}
+            onChange={this.handleTagInputChange}
             onKeyPress={this.handleTagInputReturnKey}
           />
           <button type='button' onClick={this.addTag}>{terms.label.add}</button>
@@ -80,7 +107,6 @@ class TagPin extends Component {
       </div>
     );
   }
-
 }
 
 TagPin.propTypes = {
@@ -88,18 +114,8 @@ TagPin.propTypes = {
     _id: PropTypes.string,
     label: PropTypes.string,
     count: PropTypes.number
-  }))
-  // onUpdateTags: PropTypes.func.isRequired
+  })),
+  handleUpdating: PropTypes.func.isRequired
 }
-
-// const mapStateToProps = state => ({
-//   tags: state.editingPost.tags
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onUpdateTags: (tags) => {
-//     dispatch(updateTags(tags));
-//   }
-// });
 
 export default connect()(TagPin);

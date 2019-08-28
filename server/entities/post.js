@@ -24,12 +24,12 @@ postSchema.virtual('categories', {
   ref: 'Category',
   localField: 'category_ids',
   foreignField: '_id'
-})
+});
 
 postSchema.virtual('tags', {
   ref: 'Tag',
   localField: 'tag_ids',
   foreignField: '_id'
-})
+});
 
 module.exports = mongoose.model('Post', postSchema);

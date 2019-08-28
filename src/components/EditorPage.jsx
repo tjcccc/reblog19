@@ -103,7 +103,10 @@ class EditorPage extends Component {
   };
 
   updateCategories = (categories) => {
-    this.setState({ categories: categories });
+    this.setState({
+      category_ids: categories.map(category => (category._id)),
+      categories: categories
+    });
   };
 
   updateTags = (tags) => {
@@ -111,13 +114,15 @@ class EditorPage extends Component {
   };
 
   save = async () => {
-    const { editingPost, id, content, status, categories, tags } = this.state;
+    const { editingPost, id, content, status, category_ids, tag_ids, categories, tags } = this.state;
     const post = {
       ...editingPost,
       id: id,
       title: this.extractTitle(editingPost.content),
       content: content,
       status: status,
+      category_ids: category_ids,
+      tag_ids: tag_ids,
       categories: categories,
       tags: tags
     }
