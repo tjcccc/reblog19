@@ -101,7 +101,7 @@ const fetchPostById = async (id) => {
   const requestBody = {
     query: `
       query {
-        post(id: "${id}") {
+        post(_id: "${id}") {
           _id
           title
           create_time
@@ -110,21 +110,36 @@ const fetchPostById = async (id) => {
           content
           status
           category_ids
-          tag_ids
+          tags
           view_count
-          like_count,
+          like_count
           categories {
             _id
             order_id
             label
             count
-          },
-          tags {
-            _id
-            label
-            count
           }
         }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+};
+
+const checkIfPostExistsById = async (id) => {
+  const requestBody = {
+    query: `
+      query {
+        postExistence(_id: "${id}")
       }
     `
   };
@@ -145,12 +160,12 @@ const createPost = async (newPost) => {
   console.log(newPost.tags);
   const requestBody = {
     query: `
-      mutation($title: String, $content: String, $status: Int, $categories: [ID], $tags: [ID]) {
+      mutation($title: String, $content: String, $status: Int, $category_ids: [ID], $tag_ids: [ID]) {
         createPost(newPost: {
           title: $title,
           content: $content,
           status: $status,
-          categories: $categories,
+          category_ids: $category_ids,
           tags: $tags}) {
           _id
         }
@@ -160,12 +175,51 @@ const createPost = async (newPost) => {
       title: newPost.title,
       content: newPost.content,
       status: newPost.status,
-      categories: newPost.categories.map(category => category._id),
-      tags: newPost.tags
+      category_ids: newPost.category_ids,
+      tag_ids: newPost.tag_ids
     }
   };
   console.log(newPost.categories.map(category => category._id));
   console.log(JSON.stringify(requestBody));
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
+const updatePost = async (post) => {
+  const requestBody = {
+    query: `
+      mutation($_id: ID, $title: String, $content: String, $status: Int, $category_ids: [ID], $tags: [String]) {
+        updatePost(post: {
+          _id: $_id,
+          title: $title,
+          content: $content,
+          status: $status,
+          category_ids: $category_ids,
+          tags: $tags
+        }) {
+          _id
+          title
+          content
+        }
+      }
+    `,
+    variables: {
+      _id: post._id,
+      title: post.title,
+      content: post.content,
+      status: post.status,
+      category_ids: post.category_ids,
+      tags: post.tags
+    }
+  };
   try {
     return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
       headers: {
@@ -183,5 +237,7 @@ export {
   fetchPostsByCategory,
   fetchPostsByTag,
   fetchPostById,
-  createPost
+  checkIfPostExistsById,
+  createPost,
+  updatePost
 };

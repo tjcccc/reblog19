@@ -22,7 +22,7 @@ const updateCategories = async () => {
 
 const updateTags = async () => {
   try {
-    const tagsResult = await Category.find();
+    const tagsResult = await Tag.find();
     tagsResult.map(async tag => {
       const postsCount = await Post.find({ status: 1, tags: { $in: tag._id } }).countDocuments();
       await Tag.updateOne({ _id: tag._id }, { $set: { count: postsCount } });
@@ -49,7 +49,7 @@ const postMutations = {
         update_time: new Date().toISOString(),
         content: args.newPost.content,
         status: args.newPost.status,
-        categories: args.newPost.categories.map(category => new ObjectId(category)),
+        category_ids: args.newPost.category_ids,
         tags: args.newPost.tags,
         view_count: 0,
         like_count: 0
@@ -62,12 +62,36 @@ const postMutations = {
           await updateCategories();
 
           // Update tags for count
+          // await updateTags();
 
           return { ...result._doc };
         }).catch(err => {
           logger.error(err);
           throw err;
         });
+    }
+  },
+  updatePost: {
+    type: PostType,
+    args: {
+      post: { type: PostInput }
+    },
+    resolve: async (_, args) => {
+      try {
+        const result = await Post.findOneAndUpdate({ _id: args.post._id }, {
+          title: args.post.title,
+          content: args.post.content,
+          status: args.post.status,
+          category_ids: args.post.category_ids,
+          tags: args.post.tags
+        });
+        logger.info(result._doc);
+        return { ...result._doc };
+      }
+      catch (err) {
+        logger.error(err);
+        throw err;
+      }
     }
   },
   updateTitle: {

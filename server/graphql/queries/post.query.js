@@ -1,4 +1,4 @@
-const { GraphQLList, GraphQLInt, GraphQLString } = require('graphql');
+const { GraphQLList, GraphQLInt, GraphQLString, GraphQLBoolean } = require('graphql');
 const { PostType } = require('../types/post.type');
 const Post = require('../../entities/post');
 const logger = require('../../middleware/logger');
@@ -21,7 +21,7 @@ const postQueries = {
         });
       }
       catch(err) {
-        logger.info(err);
+        logger.error(err);
         throw err;
       }
     }
@@ -45,7 +45,7 @@ const postQueries = {
         });
       }
       catch(err) {
-        logger.info(err);
+        logger.error(err);
         throw err;
       }
     }
@@ -69,7 +69,7 @@ const postQueries = {
         });
       }
       catch(err) {
-        logger.info(err);
+        logger.error(err);
         throw err;
       }
     }
@@ -77,20 +77,36 @@ const postQueries = {
   post: {
     type: PostType,
     args: {
-      id: { type: GraphQLString }
+      _id: { type: GraphQLString }
     },
     resolve: async (_, args) => {
       try {
-        const result = await Post.findOne({ _id: args.id }).populate('categories').populate('tags');
+        const result = await Post.findOne({ _id: args._id }).populate('categories');
 
         // result._doc doesn't have vitural fields, use result.
         return result;
       }
       catch(err) {
-        logger.info(err);
+        logger.error(err);
         // return empty
         return {};
         // throw err;
+      }
+    }
+  },
+  postExistence: {
+    type: GraphQLBoolean,
+    args: {
+      _id: { type: GraphQLString }
+    },
+    resolve: async (_, args) => {
+      try {
+        const result = await Post.count({ _id: args._id });
+        return result > 0;
+      }
+      catch(err) {
+        logger.error(err);
+        return false;
       }
     }
   }

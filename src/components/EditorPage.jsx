@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
-// import { loadPost } from '../redux/editing-post/actions';
-import { fetchPostById, createPost } from '../services/post.service';
+import { fetchPostById, checkIfPostExistsById, createPost, updatePost } from '../services/post.service';
 import { getCategoryById } from '../services/category.service';
-import { fetchTagById } from '../services/tag.service';
 import Editor from './Editor';
 import StatusSelector from './StatusSelector';
 import CategorySelector from './CategorySelector';
@@ -30,9 +28,9 @@ class EditorPage extends Component {
       content: '',
       status: 0,
       category_ids: [],
-      tag_ids: [],
+      tags: [],
       categories: [],
-      tags: []
+      isAbleToSave: false
     };
   }
 
@@ -50,17 +48,15 @@ class EditorPage extends Component {
       content: post.content,
       status: post.status,
       category_ids: post.category_ids,
-      tag_ids: post.tag_ids,
+      tags: post.tags,
       categories: post.categories,
-      tags: post.tags
+      isAbleToSave: true
     });
-    // logger.info(this.state.categories);
-    // logger.info(`post categories: ${this.state.categories}`);
-    // this.props.onLoadPost(post);
   };
 
-  handleSubmit= (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
+    logger.info('Submit!');
   }
 
   extractTitle = (content) => {
@@ -90,9 +86,9 @@ class EditorPage extends Component {
     return categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
   };
 
-  getPostTags = async (tagIds) => {
-    return tagIds.map(async (tagId) => await fetchTagById(tagId));
-  };
+  // getPostTags = async (tagIds) => {
+  //   return tagIds.map(async (tagId) => await fetchTagById(tagId));
+  // };
 
   updateContent = (content) => {
     this.setState({ content: content });
@@ -114,33 +110,34 @@ class EditorPage extends Component {
   };
 
   save = async () => {
-    const { editingPost, id, content, status, category_ids, tag_ids, categories, tags } = this.state;
+    const { editingPost, id, content, status, category_ids, tags, categories } = this.state;
     const post = {
       ...editingPost,
-      id: id,
+      _id: id,
       title: this.extractTitle(editingPost.content),
       content: content,
       status: status,
       category_ids: category_ids,
-      tag_ids: tag_ids,
-      categories: categories,
-      tags: tags
+      tags: tags,
+      categories: categories
     }
 
     logger.info(post);
-    return;
 
-    // TODO: POST to server.
+    const postChecking = await checkIfPostExistsById(post._id);
+    logger.info(postChecking);
+    logger.info(postChecking.data.data.postExistence);
 
-    // const postChecking = await fetchPostById(post._id);
-
-    // if (postChecking.data.post === undefined) {
-    //   // New post
-    //   const newPost = await createPost(post);
-    //   logger.info(newPost);
-    // } else {
-    //   // TODO: Update old post.
-    // }
+    if (postChecking.data.data.postExistence === undefined) {
+      // New post
+      const newPost = await createPost(post);
+      logger.info(newPost);
+    } else {
+      // Update old post.
+      logger.info(post);
+      const updatedPost = await updatePost(post);
+      logger.info(updatedPost);
+    }
   }
 
   componentDidMount = async () => {
@@ -155,25 +152,18 @@ class EditorPage extends Component {
   };
 
   render = () => {
-    // const { allCategories } = this.props;
-    const { content, status, categories, tags } = this.state;
+    const { content, status, categories, tags, isAbleToSave } = this.state;
     const loadingLabel = terms.placeholder.loading;
-    logger.info('post category: ');
-    logger.info(categories);
-
-    // const postCategories = this.getPostCategories(allCategories, categories);
-    // const postTags = this.getPostTags(tags);
-
-    // logger.info('all category: ')
-    // logger.info(allCategories);
-
-    // logger.info('category collection: ')
-    // logger.info(categoryCollection);
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
-          <Editor content={content ? content: loadingLabel} formId='blog-post' handleUpdating={this.updateContent} handleSaving={this.save} />
+          <Editor
+            content={content ? content: loadingLabel}
+            formId='blog-post'
+            handleUpdating={this.updateContent}
+            handleSaving={this.save}
+            trigger={isAbleToSave} />
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
@@ -187,16 +177,6 @@ class EditorPage extends Component {
 
 EditorPage.propTypes = {
   isNew: PropTypes.bool,
-  // id: PropTypes.string,
-  // content: PropTypes.string,
-  // status: PropTypes.number,
-  // categories: PropTypes.arrayOf(PropTypes.shape({
-  //   _id: PropTypes.string,
-  //   order_id: PropTypes.number,
-  //   label: PropTypes.string,
-  //   count: PropTypes.number
-  // })),
-  // tags: PropTypes.arrayOf(PropTypes.string),
   routeData: any,
   allCategories: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
@@ -204,18 +184,10 @@ EditorPage.propTypes = {
     label: PropTypes.string,
     count: PropTypes.number
   }))
-  // onLoadPost: PropTypes.func.isRequired
 }
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onLoadPost: (post) => {
-//     dispatch(loadPost(post));
-//   }
-// });
 
 const mapStateToProps = state => ({
   allCategories: state.category.categories
-  // categories: state.editingPost.categories
 });
 
 EditorPage.displayName = 'EditorPage';

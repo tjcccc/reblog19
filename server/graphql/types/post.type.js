@@ -1,7 +1,6 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType } = require('graphql');
 const scalarTypes = require('./scalarTypes');
 const { CategoryType } = require('./category.type');
-const { TagType } = require('./tag.type');
 
 const PostType = new GraphQLObjectType({
   name: 'Post',
@@ -14,22 +13,22 @@ const PostType = new GraphQLObjectType({
     content: { type: GraphQLString },
     status: { type: GraphQLInt },
     category_ids: { type: new GraphQLList(GraphQLID) },
-    tag_ids: { type: new GraphQLList(GraphQLID) },
+    tags: { type: new GraphQLList(GraphQLString) },
     view_count: { type: GraphQLInt },
     like_count: { type: GraphQLInt },
-    categories: { type: new GraphQLList(CategoryType) },
-    tags: { type: new GraphQLList(TagType) }
+    categories: { type: new GraphQLList(CategoryType) }
   })
 });
 
 const PostInput = new GraphQLInputObjectType({
   name: 'PostInput',
   fields: {
+    _id: { type: GraphQLID },
     title: { type: GraphQLString },
     content: { type: GraphQLString },
     status: { type: GraphQLInt },
     category_ids: { type: new GraphQLList(GraphQLID) },
-    tag_ids: { type: new GraphQLList(GraphQLID) }
+    tags: { type: new GraphQLList(GraphQLString) }
   }
 });
 

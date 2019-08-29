@@ -74,7 +74,14 @@ form.config-form button {
       background: $success-green;
       border-color: darken($success-green, $darken-shadow);
       &:hover {
+        cursor: default;
         background: darken($success-green, $darken-shadow);
+      }
+      &:disabled {
+        pointer-events: none;
+        border: $border-width solid $input-line;
+        background: $bg-dim;
+        color: $value-disabled;
       }
     }
   }

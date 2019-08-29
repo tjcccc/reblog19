@@ -48,7 +48,7 @@ class Editor extends Component {
   };
 
   render = () => {
-    const { formId, content } = this.props;
+    const { formId, content, trigger } = this.props;
     const { editingContent } = this.state;
 
     const editorContent = (
@@ -57,7 +57,7 @@ class Editor extends Component {
         <div className='editor-actions'>
           <p><FaMarkdown size='2em' /><a rel='noopener noreferrer' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>Styling with Markdown is supported</a></p>
           <div className='editor-actions-button-group'>
-            <button className='commit' type='submit' htmlFor={formId} onClick={this.save}>{terms.label.save}</button>
+            <button className='commit' type='submit' htmlFor={formId} onClick={this.save} disabled={!trigger}>{terms.label.save}</button>
           </div>
         </div>
       </div>
@@ -107,7 +107,8 @@ Editor.propTypes = {
   formId: PropTypes.string,
   content: PropTypes.string,
   handleUpdating: PropTypes.func.isRequired,
-  handleSaving: PropTypes.func.isRequired
+  handleSaving: PropTypes.func.isRequired,
+  trigger: PropTypes.bool
 }
 
 // const mapStateToProps = state => ({
