@@ -101,6 +101,9 @@ const postQueries = {
     },
     resolve: async (_, args) => {
       try {
+        if (!args._id || args._id === undefined) {
+          return false;
+        }
         const result = await Post.count({ _id: args._id });
         return result > 0;
       }

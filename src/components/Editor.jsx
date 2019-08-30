@@ -5,8 +5,6 @@ import ReactMarkdown from 'react-markdown';
 import '@github/markdown-toolbar-element';
 import { FaHeading, FaBold, FaItalic, FaQuoteLeft, FaCode, FaLink, FaListUl, FaListOl, FaTasks, FaMarkdown } from 'react-icons/fa'
 import terms from '../config/terms';
-import logger from '../utilities/logger';
-// import logger from '../utilities/logger';
 
 class Editor extends Component {
   constructor(props) {

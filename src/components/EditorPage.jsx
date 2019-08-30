@@ -56,7 +56,6 @@ class EditorPage extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    logger.info('Submit!');
   }
 
   extractTitle = (content) => {
@@ -86,12 +85,12 @@ class EditorPage extends Component {
     return categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
   };
 
-  // getPostTags = async (tagIds) => {
-  //   return tagIds.map(async (tagId) => await fetchTagById(tagId));
-  // };
-
   updateContent = (content) => {
-    this.setState({ content: content });
+    const prevContent = this.state.content;
+    this.setState({
+      isAbleToSave: (content !== '' && content !== prevContent),
+      content: content
+    });
   };
 
   updateStatus = (status) => {
@@ -114,7 +113,7 @@ class EditorPage extends Component {
     const post = {
       ...editingPost,
       _id: id,
-      title: this.extractTitle(editingPost.content),
+      title: this.extractTitle(content),
       content: content,
       status: status,
       category_ids: category_ids,
@@ -122,19 +121,20 @@ class EditorPage extends Component {
       categories: categories
     }
 
+    logger.info('post: ');
     logger.info(post);
 
     const postChecking = await checkIfPostExistsById(post._id);
-    logger.info(postChecking);
-    logger.info(postChecking.data.data.postExistence);
+    logger.info(`Is this post already exist? ${postChecking.data.data.postExistence}`);
 
-    if (postChecking.data.data.postExistence === undefined) {
+    if (!postChecking.data.data.postExistence) {
       // New post
+      logger.info('Creating...');
       const newPost = await createPost(post);
       logger.info(newPost);
     } else {
       // Update old post.
-      logger.info(post);
+      logger.info('Updating...');
       const updatedPost = await updatePost(post);
       logger.info(updatedPost);
     }
@@ -147,19 +147,20 @@ class EditorPage extends Component {
       return;
     }
 
+    this.setState({ content: terms.placeholder.loading })
+
     const remotePost = await this.getPostById(id);
     await this.loadPost(remotePost);
   };
 
   render = () => {
     const { content, status, categories, tags, isAbleToSave } = this.state;
-    const loadingLabel = terms.placeholder.loading;
 
     return (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
           <Editor
-            content={content ? content: loadingLabel}
+            content={content ? content: '' }
             formId='blog-post'
             handleUpdating={this.updateContent}
             handleSaving={this.save}

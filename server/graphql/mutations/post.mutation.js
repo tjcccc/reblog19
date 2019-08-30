@@ -10,7 +10,10 @@ const updateCategories = async () => {
   try {
     const categoriesResult = await Category.find();
     categoriesResult.map(async category => {
-      const postsCount = await Post.find({ status: 1, categories: { $in: category._id } }).countDocuments();
+      if (!category) {
+        return;
+      }
+      const postsCount = await Post.find({ status: 1, category_ids: { $in: category._id } }).countDocuments();
       await Category.updateOne({ _id: category._id }, { $set: { count: postsCount } });
     });
   }

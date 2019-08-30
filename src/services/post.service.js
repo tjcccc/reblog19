@@ -14,7 +14,7 @@ const fetchPosts = async (skip, limit, status = null) => {
           content
           status
           category_ids
-          tag_ids
+          tags
           view_count
           like_count
         }
@@ -46,7 +46,7 @@ const fetchPostsByCategory = async (skip, limit, categoryId, status = null) => {
           content
           status
           category_ids
-          tag_ids
+          tags
           view_count
           like_count
         }
@@ -78,7 +78,7 @@ const fetchPostsByTag = async (skip, limit, tagId, status = null) => {
           content
           status
           category_ids
-          tag_ids
+          tags
           view_count
           like_count
         }
@@ -156,17 +156,17 @@ const checkIfPostExistsById = async (id) => {
 };
 
 const createPost = async (newPost) => {
-  console.log(newPost.categories);
-  console.log(newPost.tags);
+  // console.log(newPost.categories);
+  // console.log(newPost.tags);
   const requestBody = {
     query: `
-      mutation($title: String, $content: String, $status: Int, $category_ids: [ID], $tag_ids: [ID]) {
+      mutation($title: String, $content: String, $status: Int, $category_ids: [ID], $tags: [String]) {
         createPost(newPost: {
           title: $title,
           content: $content,
           status: $status,
           category_ids: $category_ids,
-          tags: $tags}) {
+          tags: $tags }) {
           _id
         }
       }
@@ -176,11 +176,11 @@ const createPost = async (newPost) => {
       content: newPost.content,
       status: newPost.status,
       category_ids: newPost.category_ids,
-      tag_ids: newPost.tag_ids
+      tags: newPost.tags
     }
   };
-  console.log(newPost.categories.map(category => category._id));
-  console.log(JSON.stringify(requestBody));
+  // console.log(newPost.categories.map(category => category._id));
+  // console.log(JSON.stringify(requestBody));
   try {
     return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
       headers: {
