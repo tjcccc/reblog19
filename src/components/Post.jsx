@@ -74,9 +74,22 @@ class Post extends Component {
 
     const postPanel = isCompact ? postPanelCompact : postPanelFull;
 
+    const flatten = (text, child) => {
+      return typeof child === 'string'
+        ? text + child
+        : React.Children.toArray(child.props.children).reduce(flatten, text)
+    }
+
+    const headingRenderer = (props) => {
+      var children = React.Children.toArray(props.children)
+      var text = children.reduce(flatten, '')
+      var slug = text.toLowerCase().replace(/\s+/g, '-')
+      return React.createElement('h' + props.level, {id: slug}, props.children)
+    }
+
     return (
       <article className='markdown-body post' key={key}>
-        <ReactMarkdown source={post.content} />
+        <ReactMarkdown source={post.content} renderers={{ heading: headingRenderer }} />
         {postPanel}
       </article>
     );

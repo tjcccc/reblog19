@@ -3,6 +3,7 @@ import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
 import Post from './Post';
 import { fetchPostById } from '../services/post.service';
+import ReactMarkdown from 'react-markdown';
 
 class PostPage extends Component {
   constructor(props) {
@@ -25,13 +26,34 @@ class PostPage extends Component {
 
   render = () => {
     const { post } = this.state;
+    const content = post && post.content ? post.content : '';
+
+    // Reference: https://github.com/rexxars/react-markdown/issues/69#issuecomment-289860367
+
+    const flatten = (text, child) => {
+      return typeof child === 'string'
+        ? text + child
+        : React.Children.toArray(child.props.children).reduce(flatten, text)
+    }
+
+    const headingRenderer = (props) => {
+      var children = React.Children.toArray(props.children)
+      var text = children.reduce(flatten, '')
+      var slug = text.toLowerCase().replace(/\s+/g, '-')
+      return React.createElement('a', { className: `toc-list-${props.level}`, href: `#${slug}` }, props.children)
+    }
+
     return (
       <div className='container'>
         <article className='post-single'>
           {(post === undefined || post === null) ? <h4>No content.</h4> : <Post data={post} key={0} />}
         </article>
-        <aside>
-          header list
+        <aside className='post-toc'>
+          <h2>Table of content</h2>
+          <ReactMarkdown
+            source={content}
+            disallowedTypes={['paragraph', 'listItem', 'code']}
+            renderers={ { heading: headingRenderer } } />
         </aside>
       </div>
     );

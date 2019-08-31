@@ -97,11 +97,11 @@ const fetchPostsWithNoCategory = async (skip, limit, status = null) => {
   }
 };
 
-const fetchUncategorizedPostsCount = async () => {
+const fetchUncategorizedPostsCount = async (status = null) => {
   const requestBody = {
     query: `
       query {
-        uncategorizedPostsCount
+        uncategorizedPostsCount(status: ${status})
       }
     `
   };

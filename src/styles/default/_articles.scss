@@ -52,3 +52,29 @@ article.post-collection {
     border: $border-width solid $line-dim;
   }
 }
+
+.post-toc {
+  position: sticky;
+  top: $space-screen-margin;
+  & > h2 {
+    padding: 4rem 0 2rem 0;
+    font-size: $font-size-l;
+  }
+  & > a {
+    display: block;
+    padding: $space-tight 0;
+    font-size: $font-size-m;
+  }
+  & > .toc-list-1 {
+    padding-left: $space-common;
+  }
+  & > .toc-list-2 {
+    padding-left: $space-common * 2;
+  }
+  & > .toc-list-3 {
+    padding-left: $space-common * 3;
+  }
+  & > .toc-list-4 {
+    padding-left: $space-common * 4;
+  }
+}

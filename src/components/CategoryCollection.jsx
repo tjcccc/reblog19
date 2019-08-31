@@ -32,7 +32,7 @@ class CategoryCollection extends Component {
   };
 
   componentDidMount = async () => {
-    const result = await fetchUncategorizedPostsCount();
+    const result = await fetchUncategorizedPostsCount(1);
     this.setState({
       uncategorizedPostCount: result.data.data.uncategorizedPostsCount
     });

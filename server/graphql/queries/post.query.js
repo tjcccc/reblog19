@@ -75,10 +75,15 @@ const postQueries = {
   },
   uncategorizedPostsCount: {
     type: GraphQLInt,
-    args: null,
+    args: {
+      status: { type: GraphQLInt }
+    },
     resolve: async (_, args) => {
       try {
-        const result = await Post.count({ category_ids: { $size: 0 } });
+        const result = await Post.count({
+          category_ids: { $size: 0 },
+          status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
+        });
         return result;
       }
       catch(err) {
