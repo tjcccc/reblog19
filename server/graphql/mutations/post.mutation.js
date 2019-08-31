@@ -89,6 +89,10 @@ const postMutations = {
           tags: args.post.tags
         });
         logger.info(result._doc);
+
+        // Update categories for count
+        await updateCategories();
+
         return { ...result._doc };
       }
       catch (err) {

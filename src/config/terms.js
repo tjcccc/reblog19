@@ -46,7 +46,8 @@ const terms = {
     confirmPassword: 'CONFIRM PASSWORD',
     submitCreatingAccount: 'CREATE IT',
     rememberMe: 'Remember me',
-    update: 'UPDATE'
+    update: 'UPDATE',
+    uncategorized: '...Others'
   },
   placeholder: {
     setBlogName: 'Set your blog name.',

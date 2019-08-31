@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { selectCategoryId } from '../redux/post/actions';
+import { fetchUncategorizedPostsCount } from '../services/post.service';
 import terms from '../config/terms';
 
 class CategoryCollection extends Component {
@@ -9,7 +10,8 @@ class CategoryCollection extends Component {
     super(props);
 
     this.state = {
-      selectedId: ''
+      selectedId: '',
+      uncategorizedPostCount: 0
     };
   }
 
@@ -29,8 +31,17 @@ class CategoryCollection extends Component {
     }
   };
 
+  componentDidMount = async () => {
+    const result = await fetchUncategorizedPostsCount();
+    this.setState({
+      uncategorizedPostCount: result.data.data.uncategorizedPostsCount
+    });
+  }
+
   render = () => {
     const { categories } = this.props;
+    const { uncategorizedPostCount } = this.state;
+
     const categoryList = categories === undefined ? null : categories.map((category, index) =>
       (<a href='#/' key={index} onClick={() => this.selectCategory(category._id)} className={this.state.selectedId === category._id ? 'selected' : ''}>{category.label} ({category.count})</a>)
     );
@@ -38,6 +49,7 @@ class CategoryCollection extends Component {
       <nav className='side-block category-collection'>
         <h2>{terms.title.categoryCollection}</h2>
         {categoryList}
+        <a href='#/' onClick={() => this.selectCategory(terms.label.uncategorized)} className={this.state.selectedId === terms.label.uncategorized ? 'selected' : ''}>{terms.label.uncategorized} ({uncategorizedPostCount})</a>
       </nav>
     );
   };

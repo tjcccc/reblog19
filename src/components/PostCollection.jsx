@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Post from './Post';
-import { fetchPosts, fetchPostsByCategory, fetchPostsByTag } from '../services/post.service';
+import { fetchPosts, fetchPostsByCategory, fetchPostsWithNoCategory, fetchPostsByTag } from '../services/post.service';
 import terms from '../config/terms';
 
 class PostCollection extends Component {
@@ -24,12 +24,16 @@ class PostCollection extends Component {
     const { postsPerPage, listCategoryId, listTagId } = this.props;
     const skip = this.pagination.index * postsPerPage;
     const limit = postsPerPage;
+    const isUncategorized = listCategoryId === terms.label.uncategorized;
 
     let posts;
 
     if (listCategoryId !== undefined && listCategoryId !== '') {
-      const postsResponse = await fetchPostsByCategory(skip, limit, listCategoryId, 1);
-      posts = postsResponse.data.data.postsByCategory;
+      const postsResponse = isUncategorized ?
+        await fetchPostsWithNoCategory(skip, limit, 1) :
+        await fetchPostsByCategory(skip, limit, listCategoryId, 1);
+
+      posts = isUncategorized ? postsResponse.data.data.postsWithNoCategory : postsResponse.data.data.postsByCategory;
     } else if (listTagId !== undefined && listTagId !== '') {
       const postsResponse = await fetchPostsByTag(skip, limit, listTagId, 1);
       posts = postsResponse.data.data.postsByTag;

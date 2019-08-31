@@ -50,6 +50,43 @@ const postQueries = {
       }
     }
   },
+  postsWithNoCategory: {
+    type: new GraphQLList(PostType),
+    args: {
+      skip: { type: GraphQLInt },
+      limit: { type: GraphQLInt },
+      status: { type: GraphQLInt }
+    },
+    resolve: async (_, args) => {
+      try {
+        const result = await Post.find({
+          category_ids: { $size: 0 },
+          status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
+        }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
+        return result.map(post => {
+          return { ...post._doc };
+        });
+      }
+      catch(err) {
+        logger.error(err);
+        throw err;
+      }
+    }
+  },
+  uncategorizedPostsCount: {
+    type: GraphQLInt,
+    args: null,
+    resolve: async (_, args) => {
+      try {
+        const result = await Post.count({ category_ids: { $size: 0 } });
+        return result;
+      }
+      catch(err) {
+        logger.error(err);
+        throw err;
+      }
+    }
+  },
   postsByTag: {
     type: new GraphQLList(PostType),
     args: {

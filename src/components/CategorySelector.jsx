@@ -36,7 +36,12 @@ class CategorySelector extends Component {
   addCategory = (category) => {
     const { categories } = this.props;
 
-    if (!categories || categories.includes(category)) {
+    if (categories === null) {
+      this.updatePostCategories([].concat(category));
+      return;
+    }
+
+    if (categories.includes(category)) {
       return;
     }
 

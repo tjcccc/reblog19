@@ -32,7 +32,7 @@ class TagCollection extends Component {
   render = () => {
     const { tags } = this.props;
     const tagList = tags === undefined ? null : tags.sort((a, b) => (b.count - a.count)).map((tag, index) =>
-      <a href='#/' key={index} onClick={() => this.selectTag(tag._id)} className={this.state.selectedId === tag._id ? 'selected' : ''}>{tag.label} ({tag.count})</a>
+      <a href='#/' key={index} onClick={() => this.selectTag(tag._id)} className={this.state.selectedId === tag._id ? 'selected' : ''}>{tag.label}</a>
     );
     return (
       <nav className='side-block tag-collection'>

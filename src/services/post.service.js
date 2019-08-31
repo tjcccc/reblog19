@@ -65,6 +65,58 @@ const fetchPostsByCategory = async (skip, limit, categoryId, status = null) => {
   }
 };
 
+const fetchPostsWithNoCategory = async (skip, limit, status = null) => {
+  const requestBody = {
+    query: `
+      query {
+        postsWithNoCategory(skip: ${skip}, limit: ${limit}, status: ${status}) {
+          _id
+          title
+          create_time
+          post_time
+          update_time
+          content
+          status
+          category_ids
+          tags
+          view_count
+          like_count
+        }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+};
+
+const fetchUncategorizedPostsCount = async () => {
+  const requestBody = {
+    query: `
+      query {
+        uncategorizedPostsCount
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
 const fetchPostsByTag = async (skip, limit, tagId, status = null) => {
   const requestBody = {
     query: `
@@ -235,6 +287,8 @@ const updatePost = async (post) => {
 export {
   fetchPosts,
   fetchPostsByCategory,
+  fetchPostsWithNoCategory,
+  fetchUncategorizedPostsCount,
   fetchPostsByTag,
   fetchPostById,
   checkIfPostExistsById,
