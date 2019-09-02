@@ -46,7 +46,7 @@ class PostPage extends Component {
     return (
       <div className='container'>
         <article className='post-single'>
-          {(post === undefined || post === null) ? <h4>No content.</h4> : <Post data={post} key={0} />}
+          {(!post || post === undefined) ? <h4>No content.</h4> : <Post data={post} key={0} />}
         </article>
         <aside className='post-toc'>
           <h2>Table of content</h2>

@@ -67,6 +67,9 @@ const terms = {
     email: 'Input E-Mail is invalid.',
     password: 'Password contains invalid characters.',
     confirmPassword: 'Not the same password.'
+  },
+  warning: {
+    noAuthorized: 'Sorry, You have no permission to use it.'
   }
 };
 

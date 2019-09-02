@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import links from './config/links';
-
+import { connect } from 'react-redux';
 import HomePage from './components/HomePage';
 import InitializationPage from './components/InitializationPage';
 import LoginPage from './components/LoginPage';
@@ -32,4 +32,4 @@ const Routes = () => (
   </BrowserRouter>
 );
 
-export default Routes;
+export default connect()(Routes);

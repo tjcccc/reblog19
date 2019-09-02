@@ -40,6 +40,10 @@ class EditorPage extends Component {
   };
 
   loadPost = (post) => {
+    if (!this.props.isAdmin) {
+      return;
+    }
+
     logger.info(post);
     this.setState({
       isNew: false,
@@ -154,9 +158,16 @@ class EditorPage extends Component {
   };
 
   render = () => {
+    const { isAdmin } = this.props;
     const { content, status, categories, tags, isAbleToSave } = this.state;
+    // logger.info(`Is Admin: ${isAdmin}`);
 
-    return (
+    const noAuthorizedPage = (
+      <div className='warning'>
+        <h3>{terms.warning.noAuthorized}</h3>
+      </div>
+    );
+    const editorPage = (
       <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
         <article>
           <Editor
@@ -173,10 +184,13 @@ class EditorPage extends Component {
         </aside>
       </form>
     );
+
+    return isAdmin ? editorPage : noAuthorizedPage;
   }
 }
 
 EditorPage.propTypes = {
+  isAdmin: PropTypes.bool,
   isNew: PropTypes.bool,
   routeData: any,
   allCategories: PropTypes.arrayOf(PropTypes.shape({
@@ -188,6 +202,7 @@ EditorPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  isAdmin: state.authorization.isAdmin,
   allCategories: state.category.categories
 });
 
