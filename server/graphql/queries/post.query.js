@@ -97,13 +97,13 @@ const postQueries = {
     args: {
       skip: { type: GraphQLInt },
       limit: { type: GraphQLInt },
-      tagId: { type: GraphQLString },
+      tag: { type: GraphQLString },
       status: { type: GraphQLInt }
     },
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          tag_ids: { $all: [args.tagId] },
+          tags: { $all: [args.tag] },
           status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {

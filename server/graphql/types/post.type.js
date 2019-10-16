@@ -16,7 +16,7 @@ const PostType = new GraphQLObjectType({
     tags: { type: new GraphQLList(GraphQLString) },
     view_count: { type: GraphQLInt },
     like_count: { type: GraphQLInt },
-    categories: { type: new GraphQLList(CategoryType) }
+    categories: { type: new GraphQLList(CategoryType) },
   })
 });
 

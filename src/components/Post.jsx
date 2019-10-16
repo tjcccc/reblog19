@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { FaBookOpen, FaShare, FaEdit } from 'react-icons/fa'
+import converter from '../utilities/converter';
 import terms from '../config/terms';
 
 class Post extends Component {
+  getLocalDate = converter.getLocalDate;
+
   render = () => {
     const { data, isCompact, key, isAdmin } = this.props;
 
@@ -16,12 +19,14 @@ class Post extends Component {
       postTime: data.post_time,
       updateTime: data.update_time,
       content: data.content,
-      category_ids: data.categoriy_ids,
-      tag_ids: data.tag_ids,
+      category_ids: data.category_ids,
+      tags: data.tags,
       viewCount: data.view_count
     }
 
     const postPath = `/post/${post.id}`;
+
+    const updateTime = this.getLocalDate(post.updateTime);
 
     const adminActions = isAdmin ? (
       <a href={`/post/${post.id}/edit`}>
@@ -34,7 +39,7 @@ class Post extends Component {
         <section className='post-info'>
           <div>
             <label>{terms.label.postUpdateTime}</label>
-            <span>{post.updateTime}</span>
+            <span>{updateTime}</span>
           </div>
         </section>
         <section className='post-actions'>
@@ -51,7 +56,7 @@ class Post extends Component {
         <section className='post-info'>
           <div>
             <label>{terms.label.postUpdateTime}</label>
-            <span>{post.updateTime}</span>
+            <span>{updateTime}</span>
           </div>
           <div>
             <label>{terms.label.viewCount}</label>
@@ -80,11 +85,12 @@ class Post extends Component {
         : React.Children.toArray(child.props.children).reduce(flatten, text)
     }
 
+    // Add id tag to '#' heading.
     const headingRenderer = (props) => {
-      var children = React.Children.toArray(props.children)
-      var text = children.reduce(flatten, '')
-      var slug = text.toLowerCase().replace(/\s+/g, '-')
-      return React.createElement('h' + props.level, {id: slug}, props.children)
+      const children = React.Children.toArray(props.children)
+      const text = children.reduce(flatten, '')
+      const slug = text.toLowerCase().replace(/\s+/g, '-')
+      return React.createElement('h' + props.level, { id: slug }, props.children)
     }
 
     return (
@@ -98,14 +104,14 @@ class Post extends Component {
 
 Post.propTypes = {
   data: PropTypes.shape({
-    id: PropTypes.string,
+    _id: PropTypes.string,
     title: PropTypes.string,
     create_time: PropTypes.string,
     post_time: PropTypes.string,
     update_time: PropTypes.string,
     content: PropTypes.string,
     category_ids: PropTypes.arrayOf(PropTypes.string),
-    tag_ids: PropTypes.arrayOf(PropTypes.string),
+    tags: PropTypes.arrayOf(PropTypes.string),
     view_count: PropTypes.number
   }),
   isCompact: PropTypes.bool,
