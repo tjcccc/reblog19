@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../services/post.service';
 import PostListItem from '../components/PostListItem';
 import Chronicle from '../components/Chronicle';
-import terms from '../config/terms';
+import { fetchPostsByDate } from '../services/post.service';
+// import terms from '../config/terms';
 
 class ArchivePage extends Component {
   constructor(props) {
@@ -18,11 +18,12 @@ class ArchivePage extends Component {
   displayName = 'ArchivePage';
 
   fetchRecentPosts = async () => {
-    const skip = 0;
-    const limit = 0;
+    const currentTime = new Date();
+    const year = currentTime.getFullYear();
+    const month = currentTime.getMonth() + 1;
 
-    const postsResponse = await fetchPosts(skip, limit);
-    let posts = postsResponse.data.data.posts;
+    const postsResponse = await fetchPostsByDate(year, month);
+    let posts = postsResponse.data.data.postsByDate;
     posts = posts === undefined || posts === null ? [] : posts;
 
     this.setState({

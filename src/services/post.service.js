@@ -33,6 +33,38 @@ const fetchPosts = async (skip, limit, status = null) => {
   }
 };
 
+const fetchPostsByDate = async (year, month, day = null) => {
+  const requestBody = {
+    query: `
+      query {
+        postsByDate(year: ${year}, month: ${month}, day: ${day == null ? 0 : day}) {
+          _id
+          title
+          create_time
+          post_time
+          update_time
+          content
+          status
+          category_ids
+          tags
+          view_count
+          like_count
+        }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+};
+
 const fetchPostsByCategory = async (skip, limit, categoryId, status = null) => {
   const requestBody = {
     query: `
@@ -187,6 +219,29 @@ const fetchPostById = async (id) => {
   }
 };
 
+const fetchEarliestPost = async () => {
+  const requestBody = {
+    query: `
+      query {
+        earliestPost {
+          _id,
+          post_time
+        }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
 const checkIfPostExistsById = async (id) => {
   const requestBody = {
     query: `
@@ -286,11 +341,13 @@ const updatePost = async (post) => {
 
 export {
   fetchPosts,
+  fetchPostsByDate,
   fetchPostsByCategory,
   fetchPostsWithNoCategory,
   fetchUncategorizedPostsCount,
   fetchPostsByTag,
   fetchPostById,
+  fetchEarliestPost,
   checkIfPostExistsById,
   createPost,
   updatePost

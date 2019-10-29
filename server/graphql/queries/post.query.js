@@ -26,6 +26,38 @@ const postQueries = {
       }
     }
   },
+  postsByDate: {
+    type: new GraphQLList(PostType),
+    args: {
+      year: { type: GraphQLInt },
+      month: { type: GraphQLInt },
+      day: { type: GraphQLInt }
+    },
+    resolve: async (_, args) => {
+      try {
+        const year = args.year;
+        const month = args.month;
+        const day = args.day;
+        const isDayGiven = day !== undefined && day > 0 && day < 32;
+        const startDate = new Date(year, month - 1, isDayGiven ? day : 1);
+        const endDate = new Date(year, month - 1, isDayGiven ? day + 1 : 31);
+        console.log(startDate);
+        console.log(endDate);
+        const result = await Post.find({
+          'post_time': {
+            $gte: startDate,
+            $lt: endDate
+          }
+        }).sort({ post_time: -1 });
+        return result.map(post => {
+          return { ...post._doc }
+        });
+      }
+      catch(err) {
+        logger.error(err);
+      }
+    }
+  },
   postsByCategory: {
     type: new GraphQLList(PostType),
     args: {
@@ -125,7 +157,7 @@ const postQueries = {
       try {
         const result = await Post.findOne({ _id: args._id }).populate('categories');
 
-        // result._doc doesn't have vitural fields, use result.
+        // result._doc doesn't have virtual fields, use result.
         return result;
       }
       catch(err) {
@@ -152,6 +184,19 @@ const postQueries = {
       catch(err) {
         logger.error(err);
         return false;
+      }
+    }
+  },
+  earliestPost: {
+    type: PostType,
+    args: null,
+    resolve: async (_, args) => {
+      try {
+        const result = await Post.findOne().sort({ post_time: 1});
+        return result;
+      }
+      catch(err) {
+        logger.error(err);
       }
     }
   }
