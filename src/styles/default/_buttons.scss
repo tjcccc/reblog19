@@ -86,3 +86,24 @@ form.config-form button {
     }
   }
 }
+
+.date-list {
+  & button {
+    font-size: $font-size-m;
+    border: none;
+    background: none;
+    display: block;
+    padding: $space-tight 0;
+    font-size: $font-size-m;
+    &.year {
+      letter-spacing: $letter-spacing-s;
+      &::before {
+        content: '\2022\a0';
+      }
+    }
+    &:hover {
+      background: none;
+      color: darken($link-blue, $darken-shadow);
+    }
+  }
+}

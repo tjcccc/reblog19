@@ -192,7 +192,7 @@ const postQueries = {
     args: null,
     resolve: async (_, args) => {
       try {
-        const result = await Post.findOne().sort({ post_time: 1});
+        const result = await Post.findOne().sort({ post_time: 1 });
         return result;
       }
       catch(err) {

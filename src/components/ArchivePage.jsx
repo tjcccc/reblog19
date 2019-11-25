@@ -11,23 +11,27 @@ class ArchivePage extends Component {
     super(props);
 
     this.state = {
-      posts: []
+      posts: [],
+      year: 0,
+      month: 0
     }
   }
 
   displayName = 'ArchivePage';
 
   fetchRecentPosts = async () => {
-    const currentTime = new Date();
-    const year = currentTime.getFullYear();
-    const month = currentTime.getMonth() + 1;
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
 
     const postsResponse = await fetchPostsByDate(year, month);
     let posts = postsResponse.data.data.postsByDate;
     posts = posts === undefined || posts === null ? [] : posts;
 
     this.setState({
-      posts: posts
+      posts: posts,
+      year: year,
+      month: month
     });
   };
 
@@ -36,10 +40,17 @@ class ArchivePage extends Component {
   };
 
   render = () => {
-    const { posts } = this.state;
+    const { posts, year, month } = this.state;
 
     if (posts === undefined || posts.length === 0) {
-      return (<article className='post-collection'><h4>No Post.</h4></article>);
+      return (
+        <div className='container'>
+          <article className='post-collection'><h4>No Post.</h4></article>
+          <aside className='date-list'>
+            <Chronicle firstYear={2014} />
+          </aside>
+        </div>
+      );
     }
 
     const postList = posts.map((post, index) =>
@@ -49,7 +60,7 @@ class ArchivePage extends Component {
     return (
       <div className='container'>
         <article className='post-single'>
-          <h2>Archive of 2019-07</h2>
+          <h2>Archive of {year}-{month}</h2>
           <ul className='post-list'>
             {postList}
           </ul>
