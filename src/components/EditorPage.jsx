@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import { fetchPostById, checkIfPostExistsById, createPost, updatePost } from '../services/post.service';
 import { getCategoryById } from '../services/category.service';
 import Editor from './Editor';
@@ -30,9 +31,12 @@ class EditorPage extends Component {
       category_ids: [],
       tags: [],
       categories: [],
-      isAbleToSave: false
+      isAbleToSave: false,
+      shouldRedirect: false
     };
   }
+
+  redirectPostPath = '';
 
   getPostById = async (id) => {
     const fetchedPost = await fetchPostById(id)
@@ -44,7 +48,7 @@ class EditorPage extends Component {
       return;
     }
 
-    logger.info(post);
+    // logger.info(post);
     this.setState({
       isNew: false,
       editingPost: post,
@@ -112,6 +116,14 @@ class EditorPage extends Component {
     this.setState({ tags: tags });
   };
 
+  redirectToPost = (postId) => {
+    logger.info('Redireting the post...');
+    this.setState({
+      shouldRedirect: true,
+      id: postId
+    });
+  };
+
   save = async () => {
     const { editingPost, id, content, status, category_ids, tags, categories } = this.state;
     const post = {
@@ -125,6 +137,8 @@ class EditorPage extends Component {
       categories: categories
     }
 
+    let postId = id;
+
     logger.info('post: ');
     logger.info(post);
 
@@ -134,14 +148,20 @@ class EditorPage extends Component {
     if (!postChecking.data.data.postExistence) {
       // New post
       logger.info('Creating...');
-      const newPost = await createPost(post);
-      logger.info(newPost);
+      const newPostResponse = await createPost(post);
+      const newPost = newPostResponse.data.data.createPost;
+      // logger.info(newPostResponse.data.data.createPost);
+      postId = newPost._id;
     } else {
       // Update old post.
       logger.info('Updating...');
-      const updatedPost = await updatePost(post);
-      logger.info(updatedPost);
+      // const updatedPost = await updatePost(post);
+      await updatePost(post);
+      // logger.info(updatedPost);
+      postId = id;
     }
+
+    this.redirectToPost(postId);
   }
 
   componentDidMount = async () => {
@@ -154,13 +174,18 @@ class EditorPage extends Component {
     this.setState({ content: terms.placeholder.loading })
 
     const remotePost = await this.getPostById(id);
-    await this.loadPost(remotePost);
+    this.loadPost(remotePost);
   };
 
   render = () => {
     const { isAdmin } = this.props;
-    const { content, status, categories, tags, isAbleToSave } = this.state;
+    const { id, content, status, categories, tags, isAbleToSave, shouldRedirect } = this.state;
     // logger.info(`Is Admin: ${isAdmin}`);
+
+    if (shouldRedirect) {
+      const postPath = `/post/${id}`;
+      return <Redirect to={postPath} />;
+    }
 
     const noAuthorizedPage = (
       <div className='warning'>
