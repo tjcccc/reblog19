@@ -1,6 +1,6 @@
 {
   "name": "reblog19-server",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "API Server for reblog19.",
   "main": "app.js",
@@ -18,7 +18,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "3.0.6",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
