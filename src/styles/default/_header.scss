@@ -22,6 +22,8 @@ header {
         float: left;
         width: 4rem;
         height: 4rem;
+        -webkit-filter: opacity(0.6) drop-shadow(0 0 0 rgb(255, 174, 0));
+        filter: opacity(0.6) drop-shadow(0 0 0 rgb(255, 174, 0));
       }
     }
   }

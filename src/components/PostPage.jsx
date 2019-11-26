@@ -14,8 +14,8 @@ class PostPage extends Component {
   displayName = 'PostPage';
 
   getPostById = async (id) => {
-    const fetchedPost = await fetchPostById(id)
-    return fetchedPost.data.data.post;
+    const fetchedPostResponse = await fetchPostById(id)
+    return fetchedPostResponse.data.data.post;
   };
 
   componentDidMount = async () => {

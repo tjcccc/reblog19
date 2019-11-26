@@ -31,7 +31,8 @@ const postQueries = {
     args: {
       year: { type: GraphQLInt },
       month: { type: GraphQLInt },
-      day: { type: GraphQLInt }
+      day: { type: GraphQLInt },
+      status: { type: GraphQLInt }
     },
     resolve: async (_, args) => {
       try {
@@ -43,11 +44,13 @@ const postQueries = {
         const endDate = new Date(year, month - 1, isDayGiven ? day + 1 : 31);
         console.log(startDate);
         console.log(endDate);
+        console.log(args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status);
         const result = await Post.find({
-          'post_time': {
+          post_time: {
             $gte: startDate,
             $lt: endDate
-          }
+          },
+          status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 });
         return result.map(post => {
           return { ...post._doc }

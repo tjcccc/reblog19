@@ -4,6 +4,7 @@ import links from './config/links';
 import { connect } from 'react-redux';
 import HomePage from './components/HomePage';
 import ArchivePage from './components/ArchivePage';
+import DraftsPage from './components/DraftsPage';
 import InitializationPage from './components/InitializationPage';
 import LoginPage from './components/LoginPage';
 import SettingPage from './components/SettingPage';
@@ -24,6 +25,7 @@ const Routes = () => (
       <Route exact path={links.default} component={homePage} />
       <Route path={links.home} component={homePage} />
       <Route path={links.archive} component={ArchivePage} />
+      <Route path={links.drafts} component={DraftsPage} />
       <Route path={links.initialize} component={initializationPage} />
       <Route path={links.login} component={loginPage} />
       <Route path={links.setting} component={settingPage} />

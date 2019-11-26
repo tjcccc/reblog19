@@ -58,14 +58,14 @@ class Post extends Component {
             <label>{terms.label.postUpdateTime}</label>
             <span>{updateTime}</span>
           </div>
-          <div>
+          {/* <div>
             <label>{terms.label.viewCount}</label>
             <span>{post.viewCount}</span>
           </div>
           <div>
             <label>{terms.label.commentCount}</label>
             <span>{0}</span>
-          </div>
+          </div> */}
         </section>
         <section className='post-actions'>
           <a href='/'>

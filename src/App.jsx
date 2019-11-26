@@ -8,7 +8,7 @@ import { fetchCategories } from './services/category.service';
 import { fetchTags } from './services/tag.service';
 import { loadCategories } from './redux/category/actions';
 import { loadTags } from './redux/tag/actions';
-import { blog } from './mock/data';
+import headerMenu from './config/header-menu';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -53,6 +53,10 @@ class App extends Component {
   render = () => {
     const { blogName, authorName } = this.state;
     const title = `${authorName}: ${blogName}`;
+    const blogInfo = {
+      name: blogName,
+      author: authorName
+    }
     return (
       <HelmetProvider context={this.helmetContext}>
         <div className="app">
@@ -60,9 +64,9 @@ class App extends Component {
               <meta charSet='utf-8' />
               <title>{title}</title>
             </Helmet>
-            <Header blogInfo={blog.info} menuItems={blog.menuItems} />
+            <Header blogInfo={blogInfo} menuItems={headerMenu.items} />
             <Routes />
-            <Footer blogInfo={blog.info} />
+            <Footer blogInfo={blogInfo} />
           </div>
       </HelmetProvider>
     );

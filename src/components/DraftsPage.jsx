@@ -8,7 +8,7 @@ import months from '../config/months';
 // import logger from '../utilities/logger';
 // import terms from '../config/terms';
 
-class ArchivePage extends Component {
+class DraftsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,14 +18,14 @@ class ArchivePage extends Component {
     }
   }
 
-  displayName = 'ArchivePage';
+  displayName = 'DraftsPage';
 
   fetchRecentPosts = async () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1;
 
-    const postsResponse = await fetchPostsByDate(year, month, 0, 1);
+    const postsResponse = await fetchPostsByDate(year, month, 0, 0);
     let posts = postsResponse.data.data.postsByDate;
     posts = posts === undefined || posts === null ? [] : posts;
 
@@ -37,7 +37,7 @@ class ArchivePage extends Component {
   };
 
   fetchPostsByChronicle = async (year, month) => {
-    const postsResponse = await fetchPostsByDate(year, month, 0, 1);
+    const postsResponse = await fetchPostsByDate(year, month, 0, 0);
     const fetchedPosts = postsResponse.data.data.postsByDate;
     this.setState({
       posts: fetchedPosts,
@@ -79,7 +79,7 @@ class ArchivePage extends Component {
     return (
       <div className='container'>
         <article className='post-single'>
-          <h2>Archive of {monthName} {year}</h2>
+          <h2>Drafts of {monthName} {year}</h2>
           <ul className='post-list'>
             {postList}
           </ul>
@@ -93,4 +93,4 @@ class ArchivePage extends Component {
 
 }
 
-export default connect()(ArchivePage);
+export default connect()(DraftsPage);

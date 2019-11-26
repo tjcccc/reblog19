@@ -3,6 +3,7 @@ const links = {
   index: '/index',
   home: '/home',
   archive: '/archive',
+  drafts: '/drafts',
   initialize: '/initialize',
   login: '/login',
   setting: '/setting',

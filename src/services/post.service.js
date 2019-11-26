@@ -33,11 +33,13 @@ const fetchPosts = async (skip, limit, status = null) => {
   }
 };
 
-const fetchPostsByDate = async (year, month, day = null) => {
+const fetchPostsByDate = async (year, month, day = null, status = null) => {
+  const requestDay = day === null || day === undefined ? 0 : day;
+  const requestStatus = status === null || status === undefined ? 1 : status;
   const requestBody = {
     query: `
       query {
-        postsByDate(year: ${year}, month: ${month}, day: ${day === null || day === undefined ? 0 : day}) {
+        postsByDate(year: ${year}, month: ${month}, day: ${requestDay}, status: ${requestStatus}) {
           _id
           title
           create_time

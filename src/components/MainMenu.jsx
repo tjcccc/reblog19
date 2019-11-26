@@ -12,7 +12,7 @@ class MainMenu extends Component {
     return (
       <div className='main-menu responsive-container'>
         <nav>{menuItems}</nav>
-        <SearchBar placeholder='Search the blog...' />
+        <SearchBar placeholder='Don&#39;t use it...' />
       </div>
     );
   }
