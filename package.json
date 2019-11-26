@@ -16,6 +16,7 @@
     "react-click-outside": "tj/react-click-outside",
     "react-cookie": "^4.0.1",
     "react-dom": "^16.12.0",
+    "react-helmet-async": "^1.0.4",
     "react-icons": "^3.8.0",
     "react-markdown": "^4.2.2",
     "react-redux": "^7.1.3",

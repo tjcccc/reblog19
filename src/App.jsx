@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Routes from './Routes';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { fetchConfig } from './services/config.service';
 import { fetchCategories } from './services/category.service';
 import { fetchTags } from './services/tag.service';
 import { loadCategories } from './redux/category/actions';
@@ -11,6 +13,22 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      blogName: ')',
+      authorName: ''
+    }
+  }
+
+  fetchBlogConfig = async () => {
+    const configResponse = await fetchConfig();
+    const config = configResponse.data.data.config;
+    this.setState({
+      blogName: config.blog_name,
+      authorName: config.author_name
+    })
+  };
 
   fetchAllCategories = async () => {
     const fetchCategoriesResponse = await fetchCategories();
@@ -25,17 +43,28 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    this.fetchBlogConfig();
     this.fetchAllCategories();
     this.fetchAllTags();
   }
 
+  helmetContext = {};
+
   render = () => {
+    const { blogName, authorName } = this.state;
+    const title = `${authorName}: ${blogName}`;
     return (
-      <div className="app">
-        <Header blogInfo={blog.info} menuItems={blog.menuItems} />
-        <Routes />
-        <Footer blogInfo={blog.info} />
-      </div>
+      <HelmetProvider context={this.helmetContext}>
+        <div className="app">
+            <Helmet>
+              <meta charSet='utf-8' />
+              <title>{title}</title>
+            </Helmet>
+            <Header blogInfo={blog.info} menuItems={blog.menuItems} />
+            <Routes />
+            <Footer blogInfo={blog.info} />
+          </div>
+      </HelmetProvider>
     );
   }
 
