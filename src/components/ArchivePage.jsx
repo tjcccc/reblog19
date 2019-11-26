@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import PostListItem from '../components/PostListItem';
 import Chronicle from '../components/Chronicle';
 import { fetchPostsByDate } from '../services/post.service';
+import months from '../config/months';
+// import logger from '../utilities/logger';
 // import terms from '../config/terms';
 
 class ArchivePage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       posts: [],
       year: 0,
-      month: 0
+      monthId: 0
     }
   }
 
@@ -31,8 +32,18 @@ class ArchivePage extends Component {
     this.setState({
       posts: posts,
       year: year,
-      month: month
+      monthId: month
     });
+  };
+
+  fetchPostsByChronicle = async (year, month) => {
+    const postsResponse = await fetchPostsByDate(year, month);
+    const fetchedPosts = postsResponse.data.data.postsByDate;
+    this.setState({
+      posts: fetchedPosts,
+      year: year,
+      monthId: month
+    })
   };
 
   componentDidMount = () => {
@@ -40,14 +51,22 @@ class ArchivePage extends Component {
   };
 
   render = () => {
-    const { posts, year, month } = this.state;
+    const { posts, year, monthId } = this.state;
+
+    const month = months.find(m => m.id === parseInt(monthId));
+    const monthName = month !== undefined ? month.name : '(Unknown month)';
 
     if (posts === undefined || posts.length === 0) {
       return (
         <div className='container'>
-          <article className='post-collection'><h4>No Post.</h4></article>
+          <article className='post-collection'>
+            <h2>Archive of {monthName} {year}</h2>
+            <ul className='post-list'>
+              <h4>No Post.</h4>
+            </ul>
+          </article>
           <aside className='date-list'>
-            <Chronicle firstYear={2014} />
+            <Chronicle firstYear={2014} fetchPosts={this.fetchPostsByChronicle} />
           </aside>
         </div>
       );
@@ -60,13 +79,13 @@ class ArchivePage extends Component {
     return (
       <div className='container'>
         <article className='post-single'>
-          <h2>Archive of {year}-{month}</h2>
+          <h2>Archive of {monthName} {year}</h2>
           <ul className='post-list'>
             {postList}
           </ul>
         </article>
         <aside className='date-list'>
-          <Chronicle firstYear={2014} />
+          <Chronicle firstYear={2014} fetchPosts={this.fetchPostsByChronicle} />
         </aside>
       </div>
     );

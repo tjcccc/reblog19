@@ -89,6 +89,7 @@ form.config-form button {
 
 .date-list {
   & button {
+    font-weight: normal;
     font-size: $font-size-m;
     border: none;
     background: none;
@@ -103,7 +104,7 @@ form.config-form button {
     }
     &:hover {
       background: none;
-      color: darken($link-blue, $darken-shadow);
+      color: darken($value-dark, $darken-shadow);
     }
   }
 }

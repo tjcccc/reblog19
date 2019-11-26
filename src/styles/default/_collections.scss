@@ -128,8 +128,12 @@ ul.aside-optional-list {
     padding: $space-common;
   }
   & .reveal {
-    & > button::after {
-      content: '...';
+    & > button {
+      color: $value-dark;
+      font-weight: bold;
+      &::after {
+        content: '...';
+      }
     }
     & > ul {
       display: block;
@@ -141,4 +145,11 @@ ul.aside-optional-list {
       display: none;
     }
   }
+  // & .selected > button {
+  //   color: $value-dark;
+  //   font-weight: bold;
+  //   &::after {
+  //     content: '...';
+  //   }
+  // }
 }
