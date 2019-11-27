@@ -18,7 +18,6 @@ class AboutPage extends Component {
 
   render = () => {
     const { aboutBlog, aboutAuthor } = this.state;
-    console.log(aboutBlog);
 
     return (
       <div className='container'>

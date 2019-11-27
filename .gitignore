@@ -28,3 +28,6 @@ server/db-config.js
 
 # logs
 server/*.log
+
+# mock
+src/mock/*
