@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
+import DatePicker from 'react-datepicker';
+// import "react-datepicker/dist/react-datepicker.css";
 import { fetchPostById, checkIfPostExistsById, createPost, updatePost } from '../services/post.service';
 import { getCategoryById } from '../services/category.service';
 import Editor from './Editor';
@@ -28,6 +30,8 @@ class EditorPage extends Component {
       id: '',
       content: '',
       status: 0,
+      postTime: new Date(),
+      updatedPostTime: new Date(),
       category_ids: [],
       tags: [],
       categories: [],
@@ -48,13 +52,15 @@ class EditorPage extends Component {
       return;
     }
 
-    // logger.info(post);
+    logger.info(post);
     this.setState({
       isNew: false,
       editingPost: post,
       id: post._id ? post._id : '',
       content: post.content,
       status: post.status,
+      postTime: post.post_time,
+      updatedPostTime: Date.parse(post.post_time),
       category_ids: post.category_ids,
       tags: post.tags,
       categories: post.categories,
@@ -105,6 +111,19 @@ class EditorPage extends Component {
     this.setState({ status: status });
   };
 
+  updatePostTime = (date) => {
+    this.setState({
+      updatedPostTime: date
+    });
+  }
+
+  resetPostTime = () => {
+    const { postTime } = this.state;
+    this.setState({
+      updatedPostTime: Date.parse(postTime)
+    });
+  }
+
   updateCategories = (categories) => {
     this.setState({
       category_ids: categories.map(category => (category._id)),
@@ -117,7 +136,7 @@ class EditorPage extends Component {
   };
 
   redirectToPost = (postId) => {
-    logger.info('Redireting the post...');
+    logger.info('Redirecting the post...');
     this.setState({
       shouldRedirect: true,
       id: postId
@@ -125,13 +144,14 @@ class EditorPage extends Component {
   };
 
   save = async () => {
-    const { editingPost, id, content, status, category_ids, tags, categories } = this.state;
+    const { editingPost, id, content, status, updatedPostTime, category_ids, tags, categories } = this.state;
     const post = {
       ...editingPost,
       _id: id,
       title: this.extractTitle(content),
       content: content,
       status: status,
+      post_time: updatedPostTime.toISOString(),
       category_ids: category_ids,
       tags: tags,
       categories: categories
@@ -179,7 +199,7 @@ class EditorPage extends Component {
 
   render = () => {
     const { isAdmin } = this.props;
-    const { id, content, status, categories, tags, isAbleToSave, shouldRedirect } = this.state;
+    const { id, content, status, updatedPostTime, categories, tags, isAbleToSave, shouldRedirect } = this.state;
     // logger.info(`Is Admin: ${isAdmin}`);
 
     if (shouldRedirect) {
@@ -204,6 +224,13 @@ class EditorPage extends Component {
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
+          <div className='side-block'>
+            <h2>Post Date</h2>
+            <div className='date-picker'>
+              <DatePicker selected={updatedPostTime} onChange={this.updatePostTime} showTimeSelect dateFormat="yyyy-MM-dd HH:mm" />
+              <button onClick={this.resetPostTime}>UNDO</button>
+            </div>
+          </div>
           <CategorySelector categories={categories} handleUpdating={this.updateCategories} />
           <TagPin tags={tags} handleUpdating={this.updateTags} />
         </aside>

@@ -27,6 +27,8 @@ const PostInput = new GraphQLInputObjectType({
     title: { type: GraphQLString },
     content: { type: GraphQLString },
     status: { type: GraphQLInt },
+    post_time: { type: GraphQLString },
+    update_time: { type: GraphQLString },
     category_ids: { type: new GraphQLList(GraphQLID) },
     tags: { type: new GraphQLList(GraphQLString) }
   }

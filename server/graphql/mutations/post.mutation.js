@@ -85,6 +85,8 @@ const postMutations = {
           title: args.post.title,
           content: args.post.content,
           status: args.post.status,
+          post_time: args.post.post_time,
+          update_time: args.post.update_time,
           category_ids: args.post.category_ids,
           tags: args.post.tags
         });

@@ -120,4 +120,12 @@
       border-color: $input-line;
     }
   }
+  & .date-picker {
+    margin: 0 $space-common;
+    display: inline-flex;
+    align-items: baseline;
+    & > button {
+
+    }
+  }
 }

@@ -29,7 +29,11 @@ const dbConnection = (req, res, next) => {
 
   // mongoDB Atlas
   const atlasUri = `mongodb+srv://${dbConfig.mongo.user}:${dbConfig.mongo.password}@${dbConfig.mongo.host}/${dbConfig.mongo.database}?retryWrites=true&w=majority`;
-  mongoose.connect(atlasUri, { useNewUrlParser: true }, error => {
+  const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+  mongoose.connect(atlasUri, options, error => {
     if (error) {
       logger.error(error);
     } else {

@@ -303,14 +303,17 @@ const createPost = async (newPost) => {
 }
 
 const updatePost = async (post) => {
+  const updateTime = new Date().toISOString();
   const requestBody = {
     query: `
-      mutation($_id: ID, $title: String, $content: String, $status: Int, $category_ids: [ID], $tags: [String]) {
+      mutation($_id: ID, $title: String, $content: String, $status: Int, $post_time: String, $update_time: String, $category_ids: [ID], $tags: [String]) {
         updatePost(post: {
           _id: $_id,
           title: $title,
           content: $content,
           status: $status,
+          post_time: $post_time,
+          update_time: $update_time,
           category_ids: $category_ids,
           tags: $tags
         }) {
@@ -325,6 +328,8 @@ const updatePost = async (post) => {
       title: post.title,
       content: post.content,
       status: post.status,
+      post_time: post.post_time,
+      update_time: updateTime,
       category_ids: post.category_ids,
       tags: post.tags
     }

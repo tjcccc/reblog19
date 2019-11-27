@@ -115,7 +115,7 @@ const postQueries = {
     },
     resolve: async (_, args) => {
       try {
-        const result = await Post.count({
+        const result = await Post.countDocuments({
           category_ids: { $size: 0 },
           status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         });
@@ -181,7 +181,7 @@ const postQueries = {
         if (!args._id || args._id === undefined) {
           return false;
         }
-        const result = await Post.count({ _id: args._id });
+        const result = await Post.countDocuments({ _id: args._id });
         return result > 0;
       }
       catch(err) {

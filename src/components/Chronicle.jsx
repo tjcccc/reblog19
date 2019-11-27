@@ -72,7 +72,7 @@ class Chronicle extends Component {
 
 Chronicle.propTypes = {
   firstYear: PropTypes.number,
-  fetchPosts: PropTypes.func
+  fetchPosts: PropTypes.func.isRequired
 }
 
 export default connect()(Chronicle);
