@@ -4,6 +4,7 @@ const links = {
   home: '/home',
   archive: '/archive',
   drafts: '/drafts',
+  about: '/about',
   initialize: '/initialize',
   login: '/login',
   setting: '/setting',
