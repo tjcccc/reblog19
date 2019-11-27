@@ -124,8 +124,19 @@
     margin: 0 $space-common;
     display: inline-flex;
     align-items: baseline;
-    & > button {
-
+    & > .react-datepicker-popper {
+      & .react-datepicker {
+        font-size: $font-size-s;
+        & .react-datepicker__header,
+        & .react-datepicker__current-month,
+        & .react-datepicker-time__header {
+          font-size: $font-size-s;
+        }
+      }
+    }
+    & .react-datepicker__day-name,
+    & .react-datepicker__day {
+      padding: $space-tight;
     }
   }
 }

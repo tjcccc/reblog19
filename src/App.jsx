@@ -16,13 +16,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      blogName: ')',
+      blogName: '',
       authorName: ''
     }
   }
 
   fetchBlogConfig = async () => {
     const configResponse = await fetchConfig();
+    if (configResponse.status !== 200) {
+      return;
+    }
     const config = configResponse.data.data.config;
     this.setState({
       blogName: config.blog_name,
@@ -52,7 +55,9 @@ class App extends Component {
 
   render = () => {
     const { blogName, authorName } = this.state;
-    const title = `${authorName}: ${blogName}`;
+    // const title = `${authorName}${blogName === '' ? '' : ': '}${blogName}`;
+    const authorInfo = authorName !== '' ? ` (by ${authorName})` : '';
+    const title = `${blogName}${authorInfo}`
     const blogInfo = {
       name: blogName,
       author: authorName

@@ -42,7 +42,7 @@ class CategoryCollection extends Component {
     const { categories } = this.props;
     const { uncategorizedPostCount } = this.state;
 
-    const categoryList = categories === undefined ? null : categories.map((category, index) =>
+    const categoryList = categories === undefined || categories === null ? null : categories.map((category, index) =>
       (<a href='#/' key={index} onClick={() => this.selectCategory(category._id)} className={this.state.selectedId === category._id ? 'selected' : ''}>{category.label} ({category.count})</a>)
     );
     return (

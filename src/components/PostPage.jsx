@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import Post from './Post';
 import { fetchPostById } from '../services/post.service';
 import ReactMarkdown from 'react-markdown';
@@ -45,6 +46,9 @@ class PostPage extends Component {
 
     return (
       <div className='container'>
+        <Helmet>
+          <title>{!post || post === undefined ? '' : post.title}</title>
+        </Helmet>
         <article className='post-single'>
           {(!post || post === undefined) ? <h4>No content.</h4> : <Post data={post} key={0} />}
         </article>

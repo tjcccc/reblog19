@@ -22,7 +22,7 @@ const terms = {
     about: 'ABOUT',
     newer: 'NEWER',
     older: 'OLDER',
-    postUpdateTime: 'Update Time',
+    customPostTime: 'POST TIME',
     viewCount: 'Views',
     commentCount: 'Comments',
     read: 'READ',

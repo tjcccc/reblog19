@@ -60,7 +60,7 @@ class EditorPage extends Component {
       content: post.content,
       status: post.status,
       postTime: post.post_time,
-      updatedPostTime: Date.parse(post.post_time),
+      updatedPostTime: new Date(post.post_time),
       category_ids: post.category_ids,
       tags: post.tags,
       categories: post.categories,
@@ -227,7 +227,11 @@ class EditorPage extends Component {
           <div className='side-block'>
             <h2>Post Date</h2>
             <div className='date-picker'>
-              <DatePicker selected={updatedPostTime} onChange={this.updatePostTime} showTimeSelect dateFormat="yyyy-MM-dd HH:mm" />
+              <DatePicker
+                selected={updatedPostTime}
+                onChange={this.updatePostTime}
+                showTimeSelect timeIntervals='60'
+                dateFormat="yyyy-MM-dd HH:mm" />
               <button onClick={this.resetPostTime}>UNDO</button>
             </div>
           </div>
@@ -240,6 +244,8 @@ class EditorPage extends Component {
     return isAdmin ? editorPage : noAuthorizedPage;
   }
 }
+
+EditorPage.displayName = 'EditorPage';
 
 EditorPage.propTypes = {
   isAdmin: PropTypes.bool,
@@ -257,7 +263,5 @@ const mapStateToProps = state => ({
   isAdmin: state.authorization.isAdmin,
   allCategories: state.category.categories
 });
-
-EditorPage.displayName = 'EditorPage';
 
 export default connect(mapStateToProps, null)(EditorPage);

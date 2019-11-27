@@ -26,7 +26,8 @@ class Post extends Component {
 
     const postPath = `/post/${post.id}`;
 
-    const updateTime = this.getLocalDate(post.updateTime);
+    // const updateTime = this.getLocalDate(post.updateTime);
+    const localPostTime = this.getLocalDate(post.postTime);
 
     const adminActions = isAdmin ? (
       <a href={`/post/${post.id}/edit`}>
@@ -38,8 +39,8 @@ class Post extends Component {
       <section className='post-panel'>
         <section className='post-info'>
           <div>
-            <label>{terms.label.postUpdateTime}</label>
-            <span>{updateTime}</span>
+            <label>{terms.label.customPostTime}</label>
+            <span>{localPostTime}</span>
           </div>
         </section>
         <section className='post-actions'>
@@ -55,8 +56,8 @@ class Post extends Component {
       <section className='post-panel'>
         <section className='post-info'>
           <div>
-            <label>{terms.label.postUpdateTime}</label>
-            <span>{updateTime}</span>
+            <label>{terms.label.customPostTime}</label>
+            <span>{localPostTime}</span>
           </div>
           {/* <div>
             <label>{terms.label.viewCount}</label>
