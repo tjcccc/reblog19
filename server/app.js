@@ -6,7 +6,14 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+// System
+const compression = require('compression');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const helmet = require('helmet');
+
 // Database
+const mongoose = require('mongoose');
 const dbConnection = require('./middleware/db-connection');
 
 // GraphQL
@@ -17,6 +24,24 @@ const { isAuthorized } = require('./middleware/authorization');
 
 const app = express();
 
+// gzip Compression
+app.use(compression());
+
+// Session
+app.set('trust proxy', 1);
+app.use(session({
+  key: 'reblog19-server-session-store',
+  secret: 'r-E-b-L-O-G-!(',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Helmet
+app.use(helmet());
+app.disable('x-powered-by');
+
+// Server
 app.use(morgan('short'));
 app.use(bodyParser.json());
 app.use(cookieParser());
