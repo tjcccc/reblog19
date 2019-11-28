@@ -19,7 +19,7 @@ RUN chmod +x /entrypoint.sh
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
+EXPOSE 4000
 
 # CMD [ "npm", "start" ]
 ENTRYPOINT ["/entrypoint.sh"]
