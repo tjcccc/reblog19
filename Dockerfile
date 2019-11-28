@@ -16,7 +16,7 @@ RUN chmod +x /entrypoint.sh
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY build /build
+COPY build ./build
 
 EXPOSE 3000
 
