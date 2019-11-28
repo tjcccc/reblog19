@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY entrypoint.sh /
 COPY ecosystem.config.js ./
+COPY package.json ./
 
 RUN yarn global add serve
 RUN yarn global add pm2
@@ -16,7 +17,7 @@ RUN chmod +x /entrypoint.sh
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY build ./build
+COPY build /usr/src/app/build
 
 EXPOSE 3000
 
