@@ -25,6 +25,7 @@ yarn-error.log*
 
 # privacy
 server/db-config.js
+src/server-config.js
 
 # logs
 server/*.log

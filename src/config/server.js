@@ -1,5 +1,7 @@
+import { serverHost } from '../server-config';
+
 const serverConfig = {
-  graphQL: 'http://localhost:4000/graphql'
+  graphQL: `${serverHost}/graphql`
 };
 
 export default serverConfig;
