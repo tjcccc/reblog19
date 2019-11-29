@@ -2,6 +2,7 @@
   "name": "reblog19",
   "version": "0.2.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@github/markdown-toolbar-element": "^1.1.0",
     "axios": "^0.19.0",

@@ -3,25 +3,25 @@ const headerMenu = {
     {
       id: 'aa',
       label: 'HOME',
-      link: '/',
+      link: './',
       authLevel: 0
     },
     {
       id: 'bb',
       label: 'ARCHIVE',
-      link: '/archive',
+      link: './archive',
       authLevel: 0
     },
     {
       id: 'bb2',
       label: 'DRAFTS',
-      link: '/drafts',
+      link: './drafts',
       authLevel: 99
     },
     {
       id: 'cc',
       label: 'ABOUT',
-      link: '/about',
+      link: './about',
       authLevel: 0
     }
   ]
