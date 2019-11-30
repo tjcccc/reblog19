@@ -7,7 +7,9 @@ import terms from '../config/terms';
 class TagPin extends Component {
   constructor(props) {
     super(props);
-    this.state = { newTag: '' }
+    this.state = {
+      newTagLabel: ''
+    }
   }
 
   updatePostTags = (tags) => {
@@ -19,38 +21,44 @@ class TagPin extends Component {
 
     this.setState({
       editingTags: tags
-    })
+    });
 
     handleUpdating(tags);
   }
 
   addTag = () => {
     const { tags } = this.props;
-    const { newTag } = this.state;
+    const { newTagLabel } = this.state;
 
-    const trimedNewTag = newTag.trim();
+    const trimedNewTagLabel = newTagLabel.trim();
 
-    if (!newTag || !trimedNewTag || tags.some(tag => tag === trimedNewTag)) {
+    if (!newTagLabel || !trimedNewTagLabel || tags.some(tag => tag.label === trimedNewTagLabel)) {
       return;
     }
 
-    this.updatePostTags(tags.concat(trimedNewTag));
-    this.setState({ newTag: '' });
+    const newTag = {
+      label: trimedNewTagLabel
+    }
+
+    this.updatePostTags(tags.concat(newTag));
+    this.setState({
+      newTagLabel: ''
+    });
   };
 
   removeTag = (event) => {
     const { tags } = this.props;
-    const targetTag = event.currentTarget.id;
+    const targetTagLabel = event.currentTarget.id;
 
-    if (!tags.some(tag => tag === targetTag)) {
+    if (!tags.some(tag => tag.label === targetTagLabel)) {
       return;
     }
 
-    this.updatePostTags(tags.filter(tag => tag !== targetTag));
+    this.updatePostTags(tags.filter(tag => tag.label !== targetTagLabel));
   }
 
   handleTagInputChange = (event) => {
-    this.setState({ newTag: event.target.value });
+    this.setState({ newTagLabel: event.target.value });
   }
 
   handleTagInputReturnKey = (event) => {
@@ -68,8 +76,8 @@ class TagPin extends Component {
 
     const tagList = Array.isArray(pinnedTags) && pinnedTags.length > 0 ? pinnedTags.map((tag, index) => (
       <li key={index}>
-        <span>{tag}</span>
-        <button type='button' id={tag} onClick={this.removeTag}><GoX /></button>
+        <span>{tag.label}</span>
+        <button type='button' id={tag.label} onClick={this.removeTag}><GoX /></button>
       </li>
     )) : null;
 
@@ -84,7 +92,7 @@ class TagPin extends Component {
             id='post-tags'
             type='text'
             placeholder={terms.label.setTags}
-            value={this.state.newTag || ''}
+            value={this.state.newTagLabel || ''}
             onChange={this.handleTagInputChange}
             onKeyPress={this.handleTagInputReturnKey}
           />
@@ -96,7 +104,11 @@ class TagPin extends Component {
 }
 
 TagPin.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string),
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    label: PropTypes.string,
+    count: PropTypes.number
+  })),
   handleUpdating: PropTypes.func.isRequired
 }
 

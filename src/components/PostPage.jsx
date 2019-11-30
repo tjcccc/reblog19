@@ -12,7 +12,6 @@ class PostPage extends Component {
     const { post } = this.props;
     this.state = { post: post };
   }
-  displayName = 'PostPage';
 
   getPostById = async (id) => {
     const fetchedPostResponse = await fetchPostById(id)
@@ -72,8 +71,8 @@ PostPage.propTypes = {
     postTime: PropTypes.string,
     updateTime: PropTypes.string,
     content: PropTypes.string,
-    categories: PropTypes.arrayOf(PropTypes.string),
-    tags: PropTypes.arrayOf(PropTypes.string)
+    categorie_ids: PropTypes.arrayOf(PropTypes.string),
+    tagLabels: PropTypes.arrayOf(PropTypes.string)
   }),
   routeData: any
 }

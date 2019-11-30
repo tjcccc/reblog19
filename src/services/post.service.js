@@ -14,7 +14,7 @@ const fetchPosts = async (skip, limit, status = null) => {
           content
           status
           category_ids
-          tags
+          tag_ids
           view_count
           like_count
         }
@@ -48,7 +48,7 @@ const fetchPostsByDate = async (year, month, day = null, status = null) => {
           content
           status
           category_ids
-          tags
+          tag_ids
           view_count
           like_count
         }
@@ -80,7 +80,7 @@ const fetchPostsByCategory = async (skip, limit, categoryId, status = null) => {
           content
           status
           category_ids
-          tags
+          tag_ids
           view_count
           like_count
         }
@@ -112,7 +112,7 @@ const fetchPostsWithNoCategory = async (skip, limit, status = null) => {
           content
           status
           category_ids
-          tags
+          tag_ids
           view_count
           like_count
         }
@@ -164,7 +164,7 @@ const fetchPostsByTag = async (skip, limit, tagId, status = null) => {
           content
           status
           category_ids
-          tags
+          tag_ids
           view_count
           like_count
         }
@@ -196,12 +196,17 @@ const fetchPostById = async (id) => {
           content
           status
           category_ids
-          tags
+          tag_ids
           view_count
           like_count
           categories {
             _id
             order_id
+            label
+            count
+          }
+          tags {
+            _id
             label
             count
           }
@@ -269,13 +274,13 @@ const createPost = async (newPost) => {
   // console.log(newPost.tags);
   const requestBody = {
     query: `
-      mutation($title: String, $content: String, $status: Int, $category_ids: [ID], $tags: [String]) {
+      mutation($title: String, $content: String, $status: Int, $category_ids: [ID], $tagLabels: [String]) {
         createPost(newPost: {
           title: $title,
           content: $content,
           status: $status,
           category_ids: $category_ids,
-          tags: $tags }) {
+          tagLabels: $tags }) {
           _id
         }
       }
@@ -285,7 +290,7 @@ const createPost = async (newPost) => {
       content: newPost.content,
       status: newPost.status,
       category_ids: newPost.category_ids,
-      tags: newPost.tags
+      tagLabels: newPost.tagLabels
     }
   };
   // console.log(newPost.categories.map(category => category._id));
@@ -306,7 +311,7 @@ const updatePost = async (post) => {
   const updateTime = new Date().toISOString();
   const requestBody = {
     query: `
-      mutation($_id: ID, $title: String, $content: String, $status: Int, $post_time: String, $update_time: String, $category_ids: [ID], $tags: [String]) {
+      mutation($_id: ID, $title: String, $content: String, $status: Int, $post_time: String, $update_time: String, $category_ids: [ID], $tagLabels: [String]) {
         updatePost(post: {
           _id: $_id,
           title: $title,
@@ -315,7 +320,7 @@ const updatePost = async (post) => {
           post_time: $post_time,
           update_time: $update_time,
           category_ids: $category_ids,
-          tags: $tags
+          tagLabels: $tagLabels
         }) {
           _id
           title
@@ -331,7 +336,7 @@ const updatePost = async (post) => {
       post_time: post.post_time,
       update_time: updateTime,
       category_ids: post.category_ids,
-      tags: post.tags
+      tagLabels: post.tagLabels
     }
   };
   try {

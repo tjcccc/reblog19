@@ -132,13 +132,13 @@ const postQueries = {
     args: {
       skip: { type: GraphQLInt },
       limit: { type: GraphQLInt },
-      tag: { type: GraphQLString },
+      tagId: { type: GraphQLString },
       status: { type: GraphQLInt }
     },
     resolve: async (_, args) => {
       try {
         const result = await Post.find({
-          tags: { $all: [args.tag] },
+          tag_ids: { $all: [args.tagId] },
           status: args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status
         }).sort({ post_time: -1 }).skip(args.skip).limit(args.limit);
         return result.map(post => {
@@ -158,7 +158,7 @@ const postQueries = {
     },
     resolve: async (_, args) => {
       try {
-        const result = await Post.findOne({ _id: args._id }).populate('categories');
+        const result = await Post.findOne({ _id: args._id }).populate('categories').populate('tags');
 
         // result._doc doesn't have virtual fields, use result.
         return result;

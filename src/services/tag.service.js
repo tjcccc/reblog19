@@ -49,7 +49,32 @@ const fetchTagById = async (id) => {
   }
 }
 
+const fetchTagOrCreateByLabel = async (label) => {
+  const requestBody = {
+    query: `
+      mutation {
+        oldOrNewTagByLabel(label: "${label}") {
+          _id,
+          label,
+          count
+        }
+      }
+    `
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
 export {
   fetchTags,
-  fetchTagById
+  fetchTagById,
+  fetchTagOrCreateByLabel
 };

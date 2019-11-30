@@ -4,36 +4,17 @@ const Tag = require('../../entities/tag');
 const ObjectId = require('mongoose').Types.ObjectId;
 const logger = require('../../middleware/logger');
 
-const findOrCreateTag = async (label) => {
+const findTag = async (label) => {
   try {
     const result = await Tag.findOne({ label: label });
     logger.info(result);
-    if (result !== null) {
-      return result;
-    }
-
-    const newTag = new Tag({
-      _id: new ObjectId(),
-      label: label,
-      count: 0
-    });
-    logger.info(newTag);
-    return newTag.save()
-      .then(async result => {
-        logger.info(result);
-        return { ...result._doc };
-      }).catch(err => {
-        logger.error(err);
-        throw err;
-      });
+    return { ...result._doc };
   }
   catch(err) {
     logger.error(err);
-    // return empty
     return {};
-    // throw err;
   }
-};
+}
 
 const tagQueries = {
   tags: {
@@ -41,7 +22,7 @@ const tagQueries = {
     args: null,
     resolve: async () => {
       try {
-        const result = await Tag.find().sort({ _id: 1 });
+        const result = await Tag.find().sort({ count: -1 }).limit(20);
         return result.map(tag => {
           return { ...tag._doc };
         });
@@ -76,7 +57,7 @@ const tagQueries = {
       label: { type: GraphQLString }
     },
     resolve: async (_, args) => {
-      return await findOrCreateTag(args.label);
+      return await findTag(args.label);
     }
   }
 }

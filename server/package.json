@@ -1,6 +1,6 @@
 {
   "name": "reblog19-server",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "API Server for reblog19.",
   "main": "app.js",

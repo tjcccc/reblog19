@@ -26,11 +26,11 @@ const fetchCategories = async () => {
   }
 };
 
-const getCategoryById = (categories, id) => {
+const fetchCategoryById = (categories, id) => {
   return Array.isArray(categories) && categories.length > 0 ? categories.find(category => category._id === id) : undefined;
 }
 
 export {
   fetchCategories,
-  getCategoryById
+  fetchCategoryById
 };

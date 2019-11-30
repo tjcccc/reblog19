@@ -37,6 +37,35 @@ const updateTags = async () => {
   }
 }
 
+const getTagIdsByLabels = async (labels) => {
+  if (labels === undefined || labels === null || labels.length < 1) {
+    return [];
+  }
+  let tagIds = [];
+  // logger.info(labels);
+  await Promise.all(labels.map(async label => {
+    if (label === undefined || label === null || label === '') {
+      return;
+    }
+    const tagResult = await Tag.findOne({ label: label });
+    // logger.info(tagResult);
+    const tagDoc = tagResult._doc;
+    if (tagDoc !== undefined || tagDoc !== null) {
+      tagIds.push(tagDoc._id);
+      return;
+    }
+    const newTag = new Tag({
+      label: label,
+      count: 0
+    });
+    const newTagSaveResult = await newTag.save();
+    const newTagDoc = newTagSaveResult._doc;
+    tagIds.push(newTagDoc._id);
+  }));
+  // logger.info(tagIds);
+  return tagIds;
+};
+
 const postMutations = {
   createPost: {
     type: PostType,
@@ -44,6 +73,8 @@ const postMutations = {
       newPost: { type: PostInput }
     },
     resolve: async (_, args) => {
+      logger.info(args.newPost.tagLabels);
+      const tagIds = await getTagIdsByLabels(args.newPost.tagLabels);
       const post = new Post({
         _id: new ObjectId(),
         title: args.newPost.title,
@@ -53,7 +84,7 @@ const postMutations = {
         content: args.newPost.content,
         status: args.newPost.status,
         category_ids: args.newPost.category_ids,
-        tags: args.newPost.tags,
+        tag_ids: tagIds,
         view_count: 0,
         like_count: 0
       });
@@ -65,7 +96,7 @@ const postMutations = {
           await updateCategories();
 
           // Update tags for count
-          // await updateTags();
+          await updateTags();
 
           return { ...result._doc };
         }).catch(err => {
@@ -81,6 +112,8 @@ const postMutations = {
     },
     resolve: async (_, args) => {
       try {
+        const tagIds = await getTagIdsByLabels(args.post.tagLabels);
+        // logger.info(tagIds);
         const result = await Post.findOneAndUpdate({ _id: args.post._id }, {
           title: args.post.title,
           content: args.post.content,
@@ -88,7 +121,7 @@ const postMutations = {
           post_time: args.post.post_time,
           update_time: args.post.update_time,
           category_ids: args.post.category_ids,
-          tags: args.post.tags
+          tag_ids: tagIds
         });
         logger.info(result._doc);
 

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { FaBookOpen, FaShare, FaEdit } from 'react-icons/fa'
+// import { FaBookOpen, FaShare, FaEdit } from 'react-icons/fa';
+import { FaBookOpen, FaEdit } from 'react-icons/fa';
 import converter from '../utilities/converter';
 import terms from '../config/terms';
 
@@ -69,10 +70,10 @@ class Post extends Component {
           </div> */}
         </section>
         <section className='post-actions'>
-          <a href='/'>
+          {/* <a href='/'>
             <FaShare />
             <span>{terms.label.share}</span>
-          </a>
+          </a> */}
           {adminActions}
         </section>
       </section>

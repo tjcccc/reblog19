@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
   content: String,
   status: Number,
   category_ids: [ObjectId],
-  tags: [String],
+  tag_ids: [ObjectId],
   view_count: Number,
   like_count: Number
 },
@@ -23,6 +23,12 @@ const postSchema = new mongoose.Schema({
 postSchema.virtual('categories', {
   ref: 'Category',
   localField: 'category_ids',
+  foreignField: '_id'
+});
+
+postSchema.virtual('tags', {
+  ref: 'Tag',
+  localField: 'tag_ids',
   foreignField: '_id'
 });
 

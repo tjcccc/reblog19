@@ -5,7 +5,8 @@ import { Redirect } from 'react-router-dom'
 import DatePicker from 'react-datepicker';
 // import "react-datepicker/dist/react-datepicker.css";
 import { fetchPostById, checkIfPostExistsById, createPost, updatePost } from '../services/post.service';
-import { getCategoryById } from '../services/category.service';
+import { fetchCategoryById } from '../services/category.service';
+import { fetchTagById } from '../services/tag.service';
 import Editor from './Editor';
 import StatusSelector from './StatusSelector';
 import CategorySelector from './CategorySelector';
@@ -33,8 +34,9 @@ class EditorPage extends Component {
       postTime: new Date(),
       updatedPostTime: new Date(),
       category_ids: [],
-      tags: [],
       categories: [],
+      tag_ids: [],
+      tags: [],
       isAbleToSave: false,
       shouldRedirect: false
     };
@@ -62,8 +64,9 @@ class EditorPage extends Component {
       postTime: post.post_time,
       updatedPostTime: new Date(post.post_time),
       category_ids: post.category_ids,
-      tags: post.tags,
+      tag_ids: post.tag_ids,
       categories: post.categories,
+      tags: post.tags,
       isAbleToSave: true
     });
   };
@@ -96,8 +99,15 @@ class EditorPage extends Component {
     }
 
     // If categoryId not match any element in allCategories, do not add undefined to result array.
-    return categoryIds.map(categoryId => getCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
+    return categoryIds.map(categoryId => fetchCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
   };
+
+  getPostTags = (tagIds) => {
+    if (!Array.isArray(tagIds) || tagIds.length < 1) {
+      return undefined;
+    }
+    return tagIds.map(tagId => fetchTagById(tagId)).filter(tag => tag !== undefined);
+  }
 
   updateContent = (content) => {
     const prevContent = this.state.content;
@@ -132,7 +142,9 @@ class EditorPage extends Component {
   };
 
   updateTags = (tags) => {
-    this.setState({ tags: tags });
+    this.setState({
+      tags: tags
+    });
   };
 
   redirectToPost = (postId) => {
@@ -144,7 +156,7 @@ class EditorPage extends Component {
   };
 
   save = async () => {
-    const { editingPost, id, content, status, updatedPostTime, category_ids, tags, categories } = this.state;
+    const { editingPost, id, content, status, updatedPostTime, category_ids, categories, tag_ids, tags } = this.state;
     const post = {
       ...editingPost,
       _id: id,
@@ -153,8 +165,10 @@ class EditorPage extends Component {
       status: status,
       post_time: updatedPostTime.toISOString(),
       category_ids: category_ids,
+      tag_ids: tag_ids,
+      categories: categories,
       tags: tags,
-      categories: categories
+      tagLabels: tags.map(tag => tag.label).filter(label => label !== undefined)
     }
 
     let postId = id;
@@ -170,7 +184,7 @@ class EditorPage extends Component {
       logger.info('Creating...');
       const newPostResponse = await createPost(post);
       const newPost = newPostResponse.data.data.createPost;
-      // logger.info(newPostResponse.data.data.createPost);
+      logger.info(newPostResponse.data.data.createPost);
       postId = newPost._id;
     } else {
       // Update old post.

@@ -30,7 +30,8 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    & > a {
+    & > button {
+      background: none;
       line-height: $std-height * 2;
       height: $std-height * 2;
       margin: 0 $space-tight $space-tight 0;
