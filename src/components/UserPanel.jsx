@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
 import { checkAuthorization } from '../services/authorization.service';
 // import logger from '../utilities/logger';
 import { signOut, check } from '../redux/authorization/actions';
+import { hostBasename } from '../server-config';
 import links from '../config/links';
 
 class UserPanel extends Component {
@@ -38,22 +40,28 @@ class UserPanel extends Component {
     const { isAccountChecked, isSignedIn, isAdmin } = this.props;
 
     const adminOptions = (
-      <nav className='user-panel'>
-        <a href={links.createPost} className='special'>+ NEW POST</a>
-        <a href={links.setting}>SETTING</a>
-        <a href='/' onClick={this.signUserOut}>SIGN OUT</a>
-      </nav>
+      <BrowserRouter basename={hostBasename} forceRefresh={true}>
+        <nav className='user-panel'>
+          <Link to={links.createPost} className='special'>+ NEW POST</Link>
+          <Link to={links.setting}>SETTING</Link>
+          <Link to='/' onClick={this.signUserOut}>SIGN OUT</Link>
+        </nav>
+      </BrowserRouter>
     );
     const readerOptions = (
-      <nav className='user-panel'>
-        <a href={links.setting}>SETTING</a>
-        <a href='/' onClick={this.signUserOut}>SIGN OUT</a>
-      </nav>
+      <BrowserRouter basename={hostBasename} forceRefresh={true}>
+        <nav className='user-panel'>
+          <Link to={links.setting}>SETTING</Link>
+          <Link to='/' onClick={this.signUserOut}>SIGN OUT</Link>
+        </nav>
+      </BrowserRouter>
     );
     const unsignedInOptions = (
-      <nav className='user-panel'>
-        <a href={links.login}>SIGN IN</a>
-      </nav>
+      <BrowserRouter basename={hostBasename} forceRefresh={true}>
+        <nav className='user-panel'>
+          <Link to={links.login}>SIGN IN</Link>
+        </nav>
+      </BrowserRouter>
     );
 
     // logger.info(`Is Login status checked: ${isAccountChecked}`);

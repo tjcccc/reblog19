@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
 import levels from '../config/levels';
+import { hostBasename } from '../server-config';
 
 class MainMenu extends Component {
   render = () => {
@@ -10,16 +12,18 @@ class MainMenu extends Component {
     const adminLevel = levels.adminLevel;
     const menuItems = items.map((menuItem, index) => {
       if (menuItem.authLevel !== adminLevel) {
-        return <a href={menuItem.link} key={index}>{menuItem.label}</a>;
+        return <Link to={menuItem.link} key={index}>{menuItem.label}</Link>;
       } else {
-        return isAdmin ? <a href={menuItem.link} key={index}>{menuItem.label}</a> : '';
+        return isAdmin ? <Link to={menuItem.link} key={index}>{menuItem.label}</Link> : '';
       }
     });
     return (
-      <div className='main-menu responsive-container'>
-        <nav>{menuItems}</nav>
-        <SearchBar placeholder='Don&#39;t use it...' />
-      </div>
+      <BrowserRouter basename={hostBasename} forceRefresh={true}>
+        <div className='main-menu responsive-container'>
+          <nav>{menuItems}</nav>
+          <SearchBar placeholder='Don&#39;t use it...' />
+        </div>
+      </BrowserRouter>
     );
   }
 }

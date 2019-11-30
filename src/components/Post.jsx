@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 // import { FaBookOpen, FaShare, FaEdit } from 'react-icons/fa';
 import { FaBookOpen, FaEdit } from 'react-icons/fa';
 import converter from '../utilities/converter';
 import terms from '../config/terms';
+import { hostBasename } from '../server-config';
 
 class Post extends Component {
   getLocalDate = converter.getLocalDate;
@@ -31,10 +33,10 @@ class Post extends Component {
     const localPostTime = this.getLocalDate(post.postTime);
 
     const adminActions = isAdmin ? (
-      <a href={`/post/${post.id}/edit`}>
+      <Link to={`/post/${post.id}/edit`}>
         <FaEdit />
         <span>{terms.label.edit}</span>
-      </a>
+      </Link>
     ) : undefined;
     const postPanelCompact = (
       <section className='post-panel'>
@@ -45,10 +47,10 @@ class Post extends Component {
           </div>
         </section>
         <section className='post-actions'>
-          <a href={postPath}>
+          <Link to={postPath}>
             <FaBookOpen />
             <span>{terms.label.read}</span>
-          </a>
+          </Link>
           {adminActions}
         </section>
       </section>
@@ -96,10 +98,12 @@ class Post extends Component {
     }
 
     return (
-      <article className='markdown-body post' key={key}>
-        <ReactMarkdown source={post.content} renderers={{ heading: headingRenderer }} />
-        {postPanel}
-      </article>
+      <BrowserRouter basename={hostBasename} forceRefresh={true}>
+        <article className='markdown-body post' key={key}>
+          <ReactMarkdown source={post.content} renderers={{ heading: headingRenderer }} />
+          {postPanel}
+        </article>
+      </BrowserRouter>
     );
   };
 }
