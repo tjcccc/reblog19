@@ -11,6 +11,7 @@ import LoginPage from './components/LoginPage';
 import SettingPage from './components/SettingPage';
 import PostPage from './components/PostPage';
 import EditorPage from './components/EditorPage';
+import { hostBasename } from './server-config';
 
 const homePage = () => (<HomePage />);
 const initializationPage = () => (<InitializationPage />);
@@ -20,7 +21,7 @@ const postPage = (routeData) => (<PostPage routeData={routeData} />);
 const editorPage = (routeData) => (<EditorPage routeData={routeData} />);
 
 const Routes = () => (
-  <BrowserRouter basename='/blog/seesawgame'>
+  <BrowserRouter basename={hostBasename}>
     <Switch>
       <Redirect from={links.index} to={links.default} exact />
       <Route exact path={links.default} component={homePage} />
