@@ -43,13 +43,13 @@ class CategoryCollection extends Component {
     const { uncategorizedPostCount } = this.state;
 
     const categoryList = categories === undefined || categories === null ? null : categories.map((category, index) =>
-      (<a href='#/' key={index} onClick={() => this.selectCategory(category._id)} className={this.state.selectedId === category._id ? 'selected' : ''}>{category.label} ({category.count})</a>)
+      (<button key={index} onClick={() => this.selectCategory(category._id)} className={this.state.selectedId === category._id ? 'selected' : ''}>{category.label} ({category.count})</button>)
     );
     return (
       <nav className='side-block category-collection'>
         <h2>{terms.title.categoryCollection}</h2>
         {categoryList}
-        <a href='#/' onClick={() => this.selectCategory(terms.label.uncategorized)} className={this.state.selectedId === terms.label.uncategorized ? 'selected' : ''}>{terms.label.uncategorized} ({uncategorizedPostCount})</a>
+        <button onClick={() => this.selectCategory(terms.label.uncategorized)} className={this.state.selectedId === terms.label.uncategorized ? 'selected' : ''}>{terms.label.uncategorized} ({uncategorizedPostCount})</button>
       </nav>
     );
   };

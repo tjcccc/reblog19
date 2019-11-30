@@ -19,7 +19,7 @@ button {
   }
 }
 
-.side-block button {
+.side-block button.normal {
   padding: $space-tight $space-common;
 }
 
@@ -95,7 +95,6 @@ form.config-form button {
     background: none;
     display: block;
     padding: $space-tight 0;
-    font-size: $font-size-m;
     &.year {
       letter-spacing: $letter-spacing-s;
       &::before {
@@ -109,14 +108,12 @@ form.config-form button {
   }
 }
 
-
 .date-picker .react-datepicker button {
   padding: unset;
   border-radius: unset;
   -webkit-writing-mode: horizontal-tb !important;
   writing-mode: horizontal-tb !important;
   text-rendering: auto;
-  color: buttontext;
   letter-spacing: normal;
   word-spacing: normal;
   text-transform: none;
@@ -124,6 +121,6 @@ form.config-form button {
   display: inline-block;
   align-items: flex-start;
   box-sizing: border-box;
-  margin: 0em;
+  margin: 0;
   font: 400 11px system-ui;
 }

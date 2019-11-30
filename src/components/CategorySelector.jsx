@@ -110,7 +110,7 @@ class CategorySelector extends Component {
           <h3>Apply categories to this post</h3>
           <div className='filter-bar'>
             <input type='text' placeholder='Filter categories...' />
-            <button type='button'>Create new category</button>
+            <button className='normal' type='button'>Create new category</button>
           </div>
           <ul className='aside-optional-list'>
             {allCategoriesList}
@@ -126,7 +126,7 @@ class CategorySelector extends Component {
           {categoryList}
         </ul>
         <p>
-          <button type='button' id='category-selector-button' onClick={this.displaySelectorPopup}>{terms.label.setCategories}</button>
+          <button className='normal' type='button' id='category-selector-button' onClick={this.displaySelectorPopup}>{terms.label.setCategories}</button>
         </p>
         {this.state.isSettingCategories ? selectorPopup : null}
       </div>

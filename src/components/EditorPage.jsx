@@ -246,7 +246,7 @@ class EditorPage extends Component {
                 onChange={this.updatePostTime}
                 showTimeSelect timeIntervals='60'
                 dateFormat="yyyy-MM-dd HH:mm" />
-              <button onClick={this.resetPostTime}>UNDO</button>
+              <button className='normal' onClick={this.resetPostTime}>UNDO</button>
             </div>
           </div>
           <CategorySelector categories={categories} handleUpdating={this.updateCategories} />

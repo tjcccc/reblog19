@@ -96,7 +96,7 @@ class TagPin extends Component {
             onChange={this.handleTagInputChange}
             onKeyPress={this.handleTagInputReturnKey}
           />
-          <button type='button' onClick={this.addTag}>{terms.label.add}</button>
+          <button className='normal' type='button' onClick={this.addTag}>{terms.label.add}</button>
         </p>
       </div>
     );
