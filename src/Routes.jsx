@@ -20,7 +20,7 @@ const postPage = (routeData) => (<PostPage routeData={routeData} />);
 const editorPage = (routeData) => (<EditorPage routeData={routeData} />);
 
 const Routes = () => (
-  <BrowserRouter>
+  <BrowserRouter basename='/blog/seesawgame'>
     <Switch>
       <Redirect from={links.index} to={links.default} exact />
       <Route exact path={links.default} component={homePage} />

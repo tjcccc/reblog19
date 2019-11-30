@@ -3,7 +3,7 @@ const schemaConstructor = require('./schema.constructor');
 
 module.exports = graphqlHTTP({
   schema: schemaConstructor,
-  graphiql: true,
+  graphiql: false,
   customFormatErrorFn: error => {
     if (!error.originalError) {
       return error;
