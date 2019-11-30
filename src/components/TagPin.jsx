@@ -30,14 +30,14 @@ class TagPin extends Component {
     const { tags } = this.props;
     const { newTagLabel } = this.state;
 
-    const trimedNewTagLabel = newTagLabel.trim();
+    const trimmedNewTagLabel = newTagLabel.trim();
 
-    if (!newTagLabel || !trimedNewTagLabel || tags.some(tag => tag.label === trimedNewTagLabel)) {
+    if (!newTagLabel || !trimmedNewTagLabel || tags.some(tag => tag.label === trimmedNewTagLabel)) {
       return;
     }
 
     const newTag = {
-      label: trimedNewTagLabel
+      label: trimmedNewTagLabel
     }
 
     this.updatePostTags(tags.concat(newTag));

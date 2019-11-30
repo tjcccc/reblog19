@@ -280,7 +280,7 @@ const createPost = async (newPost) => {
           content: $content,
           status: $status,
           category_ids: $category_ids,
-          tagLabels: $tags }) {
+          tagLabels: $tagLabels }) {
           _id
         }
       }

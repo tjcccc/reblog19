@@ -70,9 +70,10 @@ PostPage.propTypes = {
     createTime: PropTypes.string,
     postTime: PropTypes.string,
     updateTime: PropTypes.string,
-    content: PropTypes.string,
-    categorie_ids: PropTypes.arrayOf(PropTypes.string),
-    tagLabels: PropTypes.arrayOf(PropTypes.string)
+    content: PropTypes.string
+    // category_ids: PropTypes.arrayOf(PropTypes.string),
+    // tag_ids: PropTypes.arrayOf(PropTypes.string),
+    // tagLabels: PropTypes.arrayOf(PropTypes.string)
   }),
   routeData: any
 }

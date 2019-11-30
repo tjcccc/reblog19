@@ -27,7 +27,7 @@ const updateTags = async () => {
   try {
     const tagsResult = await Tag.find();
     tagsResult.map(async tag => {
-      const postsCount = await Post.find({ status: 1, tags: { $in: tag._id } }).countDocuments();
+      const postsCount = await Post.find({ status: 1, tag_ids: { $in: tag._id } }).countDocuments();
       await Tag.updateOne({ _id: tag._id }, { $set: { count: postsCount } });
     });
   }
@@ -48,19 +48,32 @@ const getTagIdsByLabels = async (labels) => {
       return;
     }
     const tagResult = await Tag.findOne({ label: label });
-    // logger.info(tagResult);
-    const tagDoc = tagResult._doc;
-    if (tagDoc !== undefined || tagDoc !== null) {
+    if (tagResult !== undefined && tagResult !== null) {
+      const tagDoc = tagResult._doc;
       tagIds.push(tagDoc._id);
       return;
     }
     const newTag = new Tag({
+      _id: new ObjectId(),
       label: label,
       count: 0
     });
     const newTagSaveResult = await newTag.save();
+    logger.info(newTagSaveResult);
     const newTagDoc = newTagSaveResult._doc;
     tagIds.push(newTagDoc._id);
+
+    // newTag.save()
+    //   .then(async result => {
+    //     logger.info("new tag:");
+    //     logger.info(result);
+    //     const newTagDoc = result._doc;
+    //     tagIds.push(newTagDoc);
+    //   }).catch(err => {
+    //     logger.error(err);
+    //     throw err;
+    //   });
+
   }));
   // logger.info(tagIds);
   return tagIds;
@@ -73,8 +86,8 @@ const postMutations = {
       newPost: { type: PostInput }
     },
     resolve: async (_, args) => {
-      logger.info(args.newPost.tagLabels);
       const tagIds = await getTagIdsByLabels(args.newPost.tagLabels);
+      logger.info(tagIds);
       const post = new Post({
         _id: new ObjectId(),
         title: args.newPost.title,

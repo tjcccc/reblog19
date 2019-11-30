@@ -184,7 +184,7 @@ class EditorPage extends Component {
       logger.info('Creating...');
       const newPostResponse = await createPost(post);
       const newPost = newPostResponse.data.data.createPost;
-      logger.info(newPostResponse.data.data.createPost);
+      logger.info(newPostResponse);
       postId = newPost._id;
     } else {
       // Update old post.

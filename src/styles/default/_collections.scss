@@ -38,6 +38,7 @@
       padding: 0 $space-common;
       border: $border-width solid $line-dim;
       border-radius: $std-radius-l;
+      font-weight: normal;
       &.selected {
         // pointer-events: none;
         font-weight: 600;

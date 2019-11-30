@@ -21,7 +21,7 @@ class Post extends Component {
       updateTime: data.update_time,
       content: data.content,
       category_ids: data.category_ids,
-      tags: data.tags,
+      tag_ids: data.tag_ids,
       viewCount: data.view_count
     }
 
@@ -113,7 +113,7 @@ Post.propTypes = {
     update_time: PropTypes.string,
     content: PropTypes.string,
     category_ids: PropTypes.arrayOf(PropTypes.string),
-    tags: PropTypes.arrayOf(PropTypes.string),
+    tag_ids: PropTypes.arrayOf(PropTypes.string),
     view_count: PropTypes.number
   }),
   isCompact: PropTypes.bool,
