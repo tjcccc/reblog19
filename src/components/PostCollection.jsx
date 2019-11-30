@@ -89,8 +89,8 @@ class PostCollection extends Component {
       <article className='post-collection'>
         {postList}
         <nav className='article-nav-group'>
-          <a href='#/' className={noNewer ? "disabled": ""} onClick={this.fetchNewerPosts}>{terms.label.newer}</a>
-          <a href='#/' className={noOlder ? "disabled": ""} onClick={this.fetchOlderPosts}>{terms.label.older}</a>
+          <button className={noNewer ? "disabled": ""} onClick={this.fetchNewerPosts}>{terms.label.newer}</button>
+          <button className={noOlder ? "disabled": ""} onClick={this.fetchOlderPosts}>{terms.label.older}</button>
         </nav>
       </article>
     );
