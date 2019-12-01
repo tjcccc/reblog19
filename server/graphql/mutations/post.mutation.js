@@ -62,18 +62,6 @@ const getTagIdsByLabels = async (labels) => {
     logger.info(newTagSaveResult);
     const newTagDoc = newTagSaveResult._doc;
     tagIds.push(newTagDoc._id);
-
-    // newTag.save()
-    //   .then(async result => {
-    //     logger.info("new tag:");
-    //     logger.info(result);
-    //     const newTagDoc = result._doc;
-    //     tagIds.push(newTagDoc);
-    //   }).catch(err => {
-    //     logger.error(err);
-    //     throw err;
-    //   });
-
   }));
   // logger.info(tagIds);
   return tagIds;
@@ -92,7 +80,7 @@ const postMutations = {
         _id: new ObjectId(),
         title: args.newPost.title,
         create_time: new Date().toISOString(),
-        post_time: new Date().toISOString(),
+        post_time: args.newPost.post_time,
         update_time: new Date().toISOString(),
         content: args.newPost.content,
         status: args.newPost.status,

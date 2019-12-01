@@ -274,11 +274,12 @@ const createPost = async (newPost) => {
   // console.log(newPost.tags);
   const requestBody = {
     query: `
-      mutation($title: String, $content: String, $status: Int, $category_ids: [ID], $tagLabels: [String]) {
+      mutation($title: String, $content: String, $status: Int, $post_time: String, $category_ids: [ID], $tagLabels: [String]) {
         createPost(newPost: {
           title: $title,
           content: $content,
           status: $status,
+          post_time: $post_time,
           category_ids: $category_ids,
           tagLabels: $tagLabels }) {
           _id
@@ -289,6 +290,7 @@ const createPost = async (newPost) => {
       title: newPost.title,
       content: newPost.content,
       status: newPost.status,
+      post_time: newPost.post_time,
       category_ids: newPost.category_ids,
       tagLabels: newPost.tagLabels
     }
