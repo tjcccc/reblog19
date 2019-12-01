@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import PostListItem from '../components/PostListItem';
 import Chronicle from '../components/Chronicle';
 import { fetchPostsByDate } from '../services/post.service';
 import months from '../config/months';
+import { hostBasename } from '../server-config';
 // import logger from '../utilities/logger';
 // import terms from '../config/terms';
 
@@ -77,17 +79,19 @@ class DraftsPage extends Component {
     );
 
     return (
-      <div className='container'>
-        <article className='post-single'>
-          <h2>Drafts of {monthName} {year}</h2>
-          <ul className='post-list'>
-            {postList}
-          </ul>
-        </article>
-        <aside className='date-list'>
-          <Chronicle firstYear={2014} fetchPosts={this.fetchPostsByChronicle} />
-        </aside>
-      </div>
+      <BrowserRouter basename={hostBasename} forceRefresh={true}>
+        <div className='container'>
+          <article className='post-single'>
+            <h2>Drafts of {monthName} {year}</h2>
+            <ul className='post-list'>
+              {postList}
+            </ul>
+          </article>
+          <aside className='date-list'>
+            <Chronicle firstYear={2014} fetchPosts={this.fetchPostsByChronicle} />
+          </aside>
+        </div>
+      </BrowserRouter>
     );
   };
 

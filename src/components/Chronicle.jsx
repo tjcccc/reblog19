@@ -6,6 +6,8 @@ import months from '../config/months';
 import converter from '../utilities/converter';
 import logger from '../utilities/logger';
 
+const reversedMonths = months.reverse();
+
 class Chronicle extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,7 @@ class Chronicle extends Component {
       selectedYear: 2019,
       selectedMonthId: 0,
       currentYear: (new Date()).getFullYear(),
-      monthList: months.reverse()
+      monthList: reversedMonths
     }
   }
 

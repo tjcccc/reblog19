@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import converter from '../utilities/converter';
 
@@ -22,9 +23,9 @@ class PostListItem extends Component {
 
     return (
       <li key={key}>
-        <a href={`/post/${post.id}`}>
+        <Link to={`/post/${post.id}`}>
           <h3>{post.title}</h3>
-        </a>
+        </Link>
         <span className='date'>{this.getLocalDate(post.postTime)}</span>
       </li>
     );
