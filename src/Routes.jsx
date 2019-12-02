@@ -4,7 +4,6 @@ import links from './config/links';
 import { connect } from 'react-redux';
 import HomePage from './components/HomePage';
 import ArchivePage from './components/ArchivePage';
-import DraftsPage from './components/DraftsPage';
 import AboutPage from './components/AboutPage';
 import InitializationPage from './components/InitializationPage';
 import LoginPage from './components/LoginPage';
@@ -19,6 +18,8 @@ const loginPage = () => (<LoginPage />);
 const settingPage = () => (<SettingPage />);
 const postPage = (routeData) => (<PostPage routeData={routeData} />);
 const editorPage = (routeData) => (<EditorPage routeData={routeData} />);
+const archivePage = () => (<ArchivePage title='Archive' status={1} />);
+const draftsPage = () => (<ArchivePage title='Drafts' status={0} />);
 
 const Routes = () => (
   <BrowserRouter basename={hostBasename}>
@@ -26,8 +27,8 @@ const Routes = () => (
       <Redirect from={links.index} to={links.default} exact />
       <Route exact path={links.default} component={homePage} />
       <Route path={links.home} component={homePage} />
-      <Route path={links.archive} component={ArchivePage} />
-      <Route path={links.drafts} component={DraftsPage} />
+      <Route path={links.archive} component={archivePage} />
+      <Route path={links.drafts} component={draftsPage} />
       <Route path={links.about} component={AboutPage} />
       <Route path={links.initialize} component={initializationPage} />
       <Route path={links.login} component={loginPage} />

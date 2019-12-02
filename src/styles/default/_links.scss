@@ -1,16 +1,6 @@
 @import "variables";
 @import "mixins";
 
-a.special {
-  border-radius: $std-radius-s;
-  background: $link-blue;
-  color: white !important;
-  padding: 0 $space-common;
-  &:hover {
-    background: darken($link-blue, $darken-shadow);
-  }
-}
-
 nav.article-nav-group {
   height: $std-height * 2;
   font-size: $font-size-m;

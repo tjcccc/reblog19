@@ -16,7 +16,9 @@ class Header extends Component {
             <img src={logo} alt='reblog19' />
             {blogInfo.name}
           </h1>
-          <UserPanel />
+          <div className='header-menu'>
+            <UserPanel />
+          </div>
         </div>
         <MainMenu items={menuItems} />
       </header>

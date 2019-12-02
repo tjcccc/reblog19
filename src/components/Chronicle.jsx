@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchEarliestPost } from '../services/post.service';
-import months from '../config/months';
+import { reversedMonths } from '../config/months';
 import converter from '../utilities/converter';
-import logger from '../utilities/logger';
-
-const reversedMonths = months.reverse();
+// import logger from '../utilities/logger';
 
 class Chronicle extends Component {
   constructor(props) {
@@ -35,12 +33,13 @@ class Chronicle extends Component {
 
   selectMonth = async (monthId) => {
     const year = this.state.selectedYear;
+    const { statusForPost } = this.props;
     this.setState({
       selectedMonthId: monthId
     })
     const { fetchPosts } = this.props;
-    logger.trace(typeof(fetchPosts));
-    await fetchPosts(year, monthId);
+    // logger.trace(typeof(fetchPosts));
+    await fetchPosts(year, monthId, statusForPost);
   };
 
   render = () => {
@@ -54,7 +53,7 @@ class Chronicle extends Component {
     );
     const yearList = converter.getRange(firstYear, currentYear + 1).reverse();
     const years = yearList.map((year, index) =>
-      <div key={index} className={year === selectedYear ? 'reveal' : 'hide'}>
+      <div key={index} className={year === selectedYear ? 'collapse' : 'shrink'}>
         <button className='year' onClick={() => this.selectYear(year)}>{year}</button>
         <ul>
           {months}
@@ -74,7 +73,8 @@ class Chronicle extends Component {
 
 Chronicle.propTypes = {
   firstYear: PropTypes.number,
-  fetchPosts: PropTypes.func.isRequired
+  fetchPosts: PropTypes.func.isRequired,
+  statusForPost: PropTypes.number
 }
 
 export default connect()(Chronicle);

@@ -21,28 +21,7 @@
   }
 }
 
-@media all and (min-width: $desktop-width-l) {
-  .main-menu {
-    padding: 0 ($container-desktop-margin * 1.5);
-  }
-}
-@media all and (min-width: $desktop-width-m) and (max-width: $desktop-width-l) {
-  .main-menu {
-    padding: 0 $container-desktop-margin;
-  }
-}
-@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-m) {
-  .main-menu {
-    padding: 0 $container-desktop-margin;
-  }
-}
-@media all and (max-width: $desktop-width-s) {
-  .main-menu {
-    padding: 0 $space-common * 2;
-  }
-}
-
-.user-panel {
+.header-menu > .user-panel {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -53,6 +32,58 @@
     margin: 0 $space-common;
     @include a-common;
     @include a-common-hover;
+    &.special {
+      border-radius: $std-radius-s;
+      background: $link-blue;
+      color: white !important;
+      padding: 0 $space-common;
+      &:hover {
+        background: darken($link-blue, $darken-shadow);
+      }
+    }
+  }
+}
+
+.bottom-menu-section {
+  font-size: $font-size-m;
+  & > nav {
+    margin-bottom: 0;
+    & > h2 {
+      display: none;
+    }
+  }
+  & > nav > a,
+  & > nav > button {
+    width: 100%;
+    display: list-item;
+    line-height: $std-height * 2;
+    text-align: center;
+    border-top: $border-width solid $line-dark;
+    border-radius: unset !important;
+    background: white;
+    font-weight: normal;
+    &:first-of-type {
+      border-top: none;
+    }
+    &.special {
+      background: $link-blue;
+      color: white !important;
+      padding: 0 $space-common;
+      border-top: none;
+      &:hover {
+        background: darken($link-blue, $darken-shadow);
+      }
+    }
+    &:hover {
+      background: $bg-dim;
+    }
+  }
+  & > nav > div {
+    padding: $space-common;
+    & > button {
+      background: white;
+      padding: 0 $space-common * 2;
+    }
   }
 }
 
@@ -92,5 +123,89 @@
     &:nth-child(2) {
       margin-left: $space-tight;
     }
+  }
+}
+
+.bottom-shadow {
+  @include bottom-shadow;
+}
+
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $std-height * 2;
+  background: $bg-dim;
+  & > button {
+    flex-grow: 1;
+    text-transform: uppercase;
+    &.selected {
+      background: $bg-dim;
+    }
+  }
+}
+
+.bottom-menu {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $bg-dim;
+  padding: $space-tight 0 ($std-height * 2 + $space-tight) 0;
+  @include bottom-shadow;
+  & > .bottom-menu-section {
+    padding: 0;
+  }
+}
+
+@media all and (min-width: $desktop-width-l) {
+  .main-menu {
+    padding: 0 ($container-desktop-margin * 1.5);
+  }
+  .bottom-nav {
+    display: none;
+  }
+  .bottom-menu {
+    display: none;
+  }
+}
+@media all and (min-width: $desktop-width-m) and (max-width: $desktop-width-l) {
+  .main-menu {
+    padding: 0 $container-desktop-margin;
+  }
+  .bottom-nav {
+    display: none;
+  }
+  .bottom-menu {
+    display: none;
+  }
+}
+@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-m) {
+  .main-menu {
+    padding: 0 $container-desktop-margin;
+  }
+  .bottom-nav {
+    display: none;
+  }
+  .bottom-menu {
+    display: none;
+  }
+}
+@media all and (max-width: $desktop-width-s) {
+  .main-menu {
+    padding: 0 $space-common * 2;
+  }
+  .header-menu,
+  .search-bar {
+    display: none;
+  }
+  .bottom-nav {
+    display: flex;
+  }
+  .bottom-menu {
+    display: block;
   }
 }

@@ -133,7 +133,7 @@ ul.aside-optional-list {
   & > div > div {
     padding: $space-common;
   }
-  & .reveal {
+  & .collapse {
     & > button {
       color: $value-dark;
       font-weight: bold;
@@ -145,7 +145,7 @@ ul.aside-optional-list {
       display: block;
     }
   }
-  & .hide {
+  & .shrink {
     padding-bottom: 0;
     & > ul {
       display: none;
@@ -159,3 +159,71 @@ ul.aside-optional-list {
   //   }
   // }
 }
+
+@media all and (min-width: $desktop-width-l) {
+  ul.post-list,
+  ol.post-list {
+    & > li {
+      vertical-align: middle;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      & > .date {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+  }
+}
+@media all and (min-width: $desktop-width-m) and (max-width: $desktop-width-l) {
+  ul.post-list,
+  ol.post-list {
+    & > li {
+      vertical-align: middle;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      & > .date {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+  }
+}
+@media all and (min-width: $desktop-width-s) and (max-width: $desktop-width-m) {
+  ul.post-list,
+  ol.post-list {
+    & > li {
+      display: block;
+      & > a > h3 {
+        display: block;
+      }
+      & > span {
+        display: block;
+        line-height: $std-height;
+      }
+      & > .date {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+  }
+}
+@media all and (max-width: $desktop-width-s) {
+  ul.post-list,
+  ol.post-list {
+    & > li {
+      display: block;
+      & > a > h3 {
+        display: block;
+      }
+      & > span {
+        display: block;
+        line-height: $std-height;
+      }
+      & > .date {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+  }
+}
+

@@ -51,4 +51,9 @@ const months = [
   }
 ];
 
-export default months;
+const reversedMonths = months.slice().reverse();
+
+export {
+  months,
+  reversedMonths
+};
