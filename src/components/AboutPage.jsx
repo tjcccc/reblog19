@@ -17,6 +17,7 @@ class AboutPage extends Component {
   }
 
   render = () => {
+    // const { } = this.props;
     const { aboutBlog, aboutAuthor } = this.state;
 
     return (
@@ -42,4 +43,8 @@ class AboutPage extends Component {
 
 AboutPage.displayName = 'AboutPage';
 
-export default connect()(AboutPage);
+// const mapStateToProps = state => ({
+
+// });
+
+export default connect(null, null)(AboutPage);

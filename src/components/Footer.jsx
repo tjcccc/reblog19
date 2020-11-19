@@ -9,7 +9,7 @@ class Footer extends Component {
       <footer>
         <p><span>&copy;</span><span>2019</span><b>{blogInfo.author}</b> | <b>{blogInfo.name}</b></p>
         <p className='license'>
-          <a rel='license noopener noreferrer' href='http://creativecommons.org/licenses/by-nc/4.0/' target='_blank'><img alt='Creative Commons License' src='https://i.creativecommons.org/l/by-nc/4.0/88x31.png' /></a>
+          <a rel='license noopener noreferrer' href='http://creativecommons.org/licenses/by-nc/4.0/' target='_blank'><img alt='Creative Commons License' src='https://i.creativecommons.org/l/by-nc/4.0/80x15.png' /></a>
           <br />
           This work is licensed under a <a rel='license noopener noreferrer' href='http://creativecommons.org/licenses/by-nc/4.0/' target='_blank'>CC BY-NC 4.0</a>.
         </p>

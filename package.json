@@ -5,26 +5,27 @@
   "homepage": "/",
   "dependencies": {
     "@github/markdown-toolbar-element": "^1.1.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.0",
+    "concurrently": "^5.3.0",
     "debug": "^4.1.1",
-    "github-markdown-css": "^3.0.1",
-    "graphql": "^14.5.8",
+    "github-markdown-css": "^4.0.0",
+    "graphql": "^15.4.0",
     "moment": "^2.24.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "4.14.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",
-    "react": "^16.12.0",
+    "react": "^17.0.1",
     "react-click-outside": "tj/react-click-outside",
     "react-cookie": "^4.0.1",
-    "react-datepicker": "^2.10.1",
-    "react-dom": "^16.12.0",
+    "react-datepicker": "^3.3.0",
+    "react-dom": "^17.0.1",
     "react-helmet-async": "^1.0.4",
     "react-icons": "^3.8.0",
-    "react-markdown": "^4.2.2",
+    "react-markdown": "^5.0.2",
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "4.0.0",
     "redux": "^4.0.4"
   },
   "scripts": {
@@ -33,7 +34,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stylelint": "stylelint src/styles/**/*.scss",
-    "serve": "serve -s build -l 3000"
+    "serve": "serve -s build -l 3000",
+    "dev": "concurrently \"cd server && yarn run dev\" \"yarn run start\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,8 +48,8 @@
   ],
   "devDependencies": {
     "redux-devtools": "^3.5.0",
-    "stylelint": "^12.0.0",
-    "stylelint-config-standard": "^19.0.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.13.0"
   }
 }

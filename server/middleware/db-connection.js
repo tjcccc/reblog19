@@ -18,7 +18,8 @@ const dbConnection = (req, res, next) => {
         password: dbConfig.mongo.password
       },
       authSource: dbConfig.mongo.database,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     }, error => {
       if (error) {
         logger.error(error);

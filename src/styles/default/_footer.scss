@@ -17,7 +17,7 @@ footer {
   }
   & .license {
     & img {
-      height: $std-height;
+      max-height: $std-height;
       width: auto;
     }
   }
