@@ -303,8 +303,7 @@ const createPost = async (newPost) => {
         'Content-Type': 'application/json'
       }
     });
-  }
-  catch (error) {
+  } catch (error) {
     throw new Error(error);
   }
 }

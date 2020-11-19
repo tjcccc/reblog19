@@ -7,9 +7,10 @@ const fetchConfig = async () => {
       query {
         config {
           _id
-          user_id,
-          blog_name,
+          user_id
+          blog_name
           author_name
+          about
         }
       }
     `
@@ -26,6 +27,32 @@ const fetchConfig = async () => {
   }
 };
 
-export {
-  fetchConfig
+const updateAboutPage = async (aboutContent) => {
+  const requestBody = {
+    query: `
+      mutation($about: String) {
+        updateAbout(about: $about) {
+          about
+        }
+      }
+    `,
+    variables: {
+      about: aboutContent
+    }
+  };
+  try {
+    return await axios.post(serverConfig.graphQL, JSON.stringify(requestBody), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
 };
+
+export {
+  fetchConfig,
+  updateAboutPage
+};
+

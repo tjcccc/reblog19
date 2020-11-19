@@ -6,7 +6,8 @@ const ConfigType = new GraphQLObjectType({
     _id: { type: GraphQLID },
     user_id: { type: GraphQLID },
     blog_name: { type: GraphQLString },
-    author_name: { type: GraphQLString }
+    author_name: { type: GraphQLString },
+    about: { type: GraphQLString }
   })
 });
 

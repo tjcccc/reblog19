@@ -11,7 +11,8 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    font-size: $font-size-s;
+    font-size: $font-size-m;
+    font-weight: bold;
     & > a {
       line-height: $std-height * 2;
       margin: 0 $space-common;
@@ -25,7 +26,8 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  font-size: $font-size-s;
+  font-size: $font-size-m;
+  font-weight: bold;
   margin-right: $space-common * 2;
   & > a {
     line-height: $std-height;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { updateAboutPage } from '../services/config.service';
+import Editor from './Editor';
 import terms from '../config/terms';
 
 class SettingPage extends Component {
@@ -14,12 +16,32 @@ class SettingPage extends Component {
         password: false,
         confirmPassword: false
       },
-      isValidationChecked: false
+      isValidationChecked: false,
+      aboutContent: '',
+      isAbleToSave: false
     };
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+  }
+
+  updateAboutContent = async (content) => {
+    const prevContent = this.props.savedAboutContent;
+    this.setState({
+      isAbleToSave: (content !== '' && content !== prevContent),
+      aboutContent: content
+    });
+  };
+
+  save = async () => {
+    const { aboutContent } = this.state;
+    await updateAboutPage(aboutContent);
+  }
+
   render = () => {
-    const { isAdmin } = this.props;
+    const { isAdmin, savedAboutContent } = this.props;
+    const { isAbleToSave } = this.state;
 
     const adminSetting = () => isAdmin ? (
       <div>
@@ -37,11 +59,25 @@ class SettingPage extends Component {
       </div>
     ) : null;
 
+    const tempAboutEditor = () => isAdmin ? (
+      <form className='config-form' id='blog-post' onSubmit={this.handleSubmit}>
+        <h2>About Page</h2>
+        <article>
+          <Editor
+            content={savedAboutContent}
+            formId='blog-post'
+            handleUpdating={this.updateAboutContent}
+            handleSaving={this.save}
+            trigger={isAbleToSave} />
+        </article>
+      </form>
+    ) : null;
+
     return (
       <div className='container responsive-container'>
         <h1>{terms.title.setting}</h1>
         <form className='config-form'>
-          {adminSetting}
+          {adminSetting()}
           <h2>{terms.title.accountSetting}</h2>
           <div className='form-element-group'>
             <label>{terms.label.username}</label>
@@ -62,6 +98,7 @@ class SettingPage extends Component {
             <button>{terms.label.update}</button>
           </div>
         </form>
+        {tempAboutEditor()}
       </div>
     )
   };
@@ -76,11 +113,13 @@ SettingPage.propTypes = {
     confirmPassword: PropTypes.bool
   }),
   isValidationChecked: PropTypes.bool,
-  isAdmin: PropTypes.bool
+  isAdmin: PropTypes.bool,
+  savedAboutContent: PropTypes.string
 }
 
 const mapStateToProps = state => ({
-  isAdmin: state.authorization.isAdmin
+  isAdmin: state.authorization.isAdmin,
+  savedAboutContent: state.config.about
 });
 
 export default connect(mapStateToProps, null)(SettingPage);

@@ -1,50 +1,44 @@
-import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
-import ReactMarkdown from 'react-markdown';
-import about from '../mock/about';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Helmet } from "react-helmet-async";
+import ReactMarkdown from "react-markdown";
 // import logger from '../utilities/logger';
 // import terms from '../config/terms';
 
 class AboutPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      aboutBlog: about.blog,
-      aboutAuthor: about.author
-    }
   }
 
   render = () => {
-    // const { } = this.props;
-    const { aboutBlog, aboutAuthor } = this.state;
+    const { about } = this.props;
 
     return (
-      <div className='container'>
+      <div className="container">
         <Helmet>
           <title>About</title>
         </Helmet>
-        <article className='markdown-body post'>
-          <ReactMarkdown source={aboutBlog} />
-        </article>
-        <br />
-        <br />
-        <br />
-        <br />
-        <article className='markdown-body post'>
-          <ReactMarkdown source={aboutAuthor} />
+        <article className="markdown-body post">
+          <ReactMarkdown source={about} />
         </article>
       </div>
     );
   };
-
 }
 
-AboutPage.displayName = 'AboutPage';
+AboutPage.displayName = "AboutPage";
 
-// const mapStateToProps = state => ({
+AboutPage.propTypes = {
+  // blogName: PropTypes.string,
+  // authorName: PropTypes.string,
+  about: PropTypes.string
+};
 
-// });
+const mapStateToProps = (state) => ({
+  // blogName: state.config.blogName,
+  // authorName: state.config.authorName,
+  about: state.config.about
+});
 
-export default connect(null, null)(AboutPage);
+export default connect(mapStateToProps, null)(AboutPage);

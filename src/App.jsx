@@ -6,6 +6,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { fetchConfig } from './services/config.service';
 import { fetchCategories } from './services/category.service';
 import { fetchTags } from './services/tag.service';
+import { loadConfig } from './redux/config/actions';
 import { loadCategories } from './redux/category/actions';
 import { loadTags } from './redux/tag/actions';
 import headerMenu from './config/header-menu';
@@ -27,6 +28,7 @@ class App extends Component {
       return;
     }
     const config = configResponse.data.data.config;
+    this.props.onLoadConfig(config);
     this.setState({
       blogName: config.blog_name,
       authorName: config.author_name
@@ -80,11 +82,15 @@ class App extends Component {
 }
 
 App.propTypes = {
+  onLoadConfig: PropTypes.func.isRequired,
   onLoadCategories: PropTypes.func.isRequired,
   onLoadTags: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  onLoadConfig: (config) => {
+    dispatch(loadConfig(config));
+  },
   onLoadCategories: (categories) => {
     dispatch(loadCategories(categories));
   },

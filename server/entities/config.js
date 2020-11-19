@@ -5,7 +5,8 @@ const configSchema = new mongoose.Schema({
   _id: ObjectId,
   user_id: ObjectId,
   blog_name: String,
-  author_name: String
+  author_name: String,
+  about: String
 },
 {
   collection: 'configs'

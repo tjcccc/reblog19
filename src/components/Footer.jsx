@@ -7,7 +7,7 @@ class Footer extends Component {
     const { blogInfo } = this.props;
     return (
       <footer>
-        <p><span>&copy;</span><span>2019</span><b>{blogInfo.author}</b> | <b>{blogInfo.name}</b></p>
+        <p><span>&copy;</span><span>2019 - 2020</span><b>{blogInfo.author}</b> | <b>{blogInfo.name}</b></p>
         <p className='license'>
           <a rel='license noopener noreferrer' href='http://creativecommons.org/licenses/by-nc/4.0/' target='_blank'><img alt='Creative Commons License' src='https://i.creativecommons.org/l/by-nc/4.0/80x15.png' /></a>
           <br />
