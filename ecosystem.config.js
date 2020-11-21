@@ -21,7 +21,7 @@ module.exports = {
       name: 'reblog19-client',
       script: 'yarn',
       args: 'run serve',
-      interpreter: '/bin/bash',
+      //interpreter: '/bin/bash',
       instances: 1,
       autorestart: true,
       watch: false,

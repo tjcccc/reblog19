@@ -21,7 +21,7 @@ COPY build /usr/src/app/build
 COPY server /usr/src/app/server
 RUN yarn --cwd server/ install
 
-EXPOSE 3000
+EXPOSE 3000 4000
 
 # CMD [ "npm", "start" ]
 ENTRYPOINT ["/entrypoint.sh"]
