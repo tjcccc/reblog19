@@ -1,21 +1,39 @@
 /* eslint-disable no-undef */
 module.exports = {
-  apps : [{
-    name: 'reblog19-client',
-    script: 'yarn',
-    args: 'run serve',
-    interpreter: '/bin/bash',
-    instances: 1,
-    autorestart: true,
-    watch: false,
-    max_memory_restart: '1G',
-    env: {
-      NODE_ENV: 'development'
+  apps : [
+    {
+      name: 'reblog19-server',
+      cwd: 'server/',
+      script: './app.js',
+      args: 'one two',
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+      env: {
+        NODE_ENV: 'development'
+      },
+      env_production: {
+        NODE_ENV: 'production'
+      }
     },
-    env_production: {
-      NODE_ENV: 'production'
-    }
-  }],
+    {
+      name: 'reblog19-client',
+      script: 'yarn',
+      args: 'run serve',
+      interpreter: '/bin/bash',
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+      env: {
+        NODE_ENV: 'development'
+      },
+      env_production: {
+        NODE_ENV: 'production'
+      }
+    },
+  ],
   deploy : {
     production : {
       user : 'node',

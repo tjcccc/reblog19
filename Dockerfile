@@ -18,6 +18,8 @@ RUN chmod +x /entrypoint.sh
 
 # Bundle app source
 COPY build /usr/src/app/build
+COPY server /usr/src/app/server
+RUN yarn --cwd server/ install
 
 EXPOSE 3000
 
