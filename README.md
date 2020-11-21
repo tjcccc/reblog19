@@ -12,6 +12,15 @@ A simple markdown blog.
 
 ---
 
+## Build and Deploy
+
+```bash
+yarn build
+sudo docker build -t reblog19-app:latest .
+sudo docker run -d --name reblog19 --network my-network -p 3002:3000 reblog19-app
+# sudo docker run -d --name {app_name} --network {network} -p {port}:3000 reblog19-app
+```
+
 ## Front-End
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
