@@ -32,3 +32,6 @@ server/*.log
 
 # mock
 src/mock/*
+
+# cache
+.eslintcache
