@@ -51,14 +51,31 @@ class PostCollection extends Component {
     });
   };
 
+  goPageTop() {
+    if (typeof document === `undefined`) {
+      return;
+    }
+
+    // For Safari
+    // eslint-disable-next-line no-undef
+    document.body.scrollTop = 0;
+
+    // For Chrome, Firefox, IE and Opera
+    // eslint-disable-next-line no-undef
+    document.documentElement.scrollTop = 0;
+  }
+
   fetchNewerPosts = () => {
     this.pagination.index = this.pagination.index - 1 < 0 ? 0 : this.pagination.index - 1;
     this.fetchRecentPosts();
+    this.goPageTop();
+
   };
 
   fetchOlderPosts = () => {
     this.pagination.index += 1;
     this.fetchRecentPosts();
+    this.goPageTop();
   };
 
   componentDidMount = () => {

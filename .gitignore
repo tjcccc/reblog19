@@ -35,3 +35,6 @@ src/mock/*
 
 # cache
 .eslintcache
+
+# Aliyun serverless
+.fun

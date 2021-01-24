@@ -1,7 +1,7 @@
 // Express
 const express = require('express');
 const morgan = require('morgan');
-const logger = require('./middleware/logger');
+// const logger = require('./middleware/logger');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -22,6 +22,9 @@ const graphqlHTTP = require('./graphql/http');
 // Authorization
 const { isAuthorized } = require('./middleware/authorization');
 // const { default: serverConfig } = require('../src/config/server');
+
+// Aliyun serverless
+const proxy = require('@webserverless/fc-express');
 
 const app = express();
 
@@ -55,6 +58,12 @@ app.get('/', (req, res) => {
   res.send('<h1>hello, reblog19 server.</h1>');
 });
 
-const PORT = process.env.PORT || 4000;
+// const PORT = process.env.PORT || 4000;
 
-app.listen(4000, () => logger.info(`Server started on port ${PORT}.`));
+// app.listen(4000, () => logger.info(`Server started on port ${PORT}.`));
+
+// For Aliyun serverless
+const server = new proxy.Server(app);
+module.exports.handler = (req, res, context) => {
+  server.httpProxy(req, res, context);
+};
