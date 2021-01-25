@@ -1,7 +1,8 @@
 const logger = require('../../middleware/logger');
 const { UserType, PasswordInput } = require('../types/user.type');
 const User = require('../../entities/user');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const userMutations = {

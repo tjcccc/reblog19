@@ -23,9 +23,6 @@ const graphqlHTTP = require('./graphql/http');
 const { isAuthorized } = require('./middleware/authorization');
 // const { default: serverConfig } = require('../src/config/server');
 
-// Aliyun serverless
-const proxy = require('@webserverless/fc-express');
-
 const app = express();
 
 // gzip Compression
@@ -62,8 +59,4 @@ app.get('/', (req, res) => {
 
 // app.listen(4000, () => logger.info(`Server started on port ${PORT}.`));
 
-// For Aliyun serverless
-const server = new proxy.Server(app);
-module.exports.handler = (req, res, context) => {
-  server.httpProxy(req, res, context);
-};
+module.exports = app;

@@ -1,6 +1,6 @@
-# Logs
 logs/
 *.log
-
-# Dependency directories
-# node_modules/
+.env
+package-lock.json
+template.yml
+.funignore

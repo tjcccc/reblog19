@@ -18,7 +18,7 @@ Resources:
     reblog19-server: # function name
       Type: 'Aliyun::Serverless::Function'
       Properties:
-        Handler: app-serverless.handler
+        Handler: index.handler
         Runtime: nodejs12
         CodeUri: '.'
       Events:

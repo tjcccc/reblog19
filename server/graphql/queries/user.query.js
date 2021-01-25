@@ -3,7 +3,8 @@ const { GraphQLString, GraphQLList } = require('graphql');
 const { UserType } = require('../types/user.type');
 const { AuthorizationType } = require('../types/authorization.type');
 const User = require('../../entities/user');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { secretKey } = require('../../keys');
 
