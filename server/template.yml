@@ -6,27 +6,19 @@ Resources:
   reblog19-service:
     Type: 'Aliyun::Serverless::Service'
     Properties:
-      Policies:
-        - AliyunFCReadOnlyAccess # Managed Policy
-        - Version: '1' # Policy Document
-          Statement:
-            - Effect: Allow
-              Action:
-                - oss:GetObject
-                - oss:GetObjectACL
-              Resource: '*'
-    reblog19-server: # function name
+      Description: 'It is reblog19 Service.'
+    reblog19-server:
       Type: 'Aliyun::Serverless::Function'
       Properties:
         Handler: index.handler
-        Runtime: nodejs12
+        Runtime: custom
         CodeUri: './'
         MemorySize: 1024
         InstanceConcurrency: 5
         Timeout: 120
       Events:
-        httpTrigger: # trigger name
-          Type: HTTP # http trigger
+        httpTrigger:
+          Type: HTTP
           Properties:
               AuthType: ANONYMOUS
               Methods: ['GET', 'POST', 'PUT']

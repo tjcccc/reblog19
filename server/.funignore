@@ -1,6 +1,23 @@
+# logs
 logs/
 *.log
+
+# node
 .env
 package-lock.json
+yarn-lock.json
+
+# aliyun
 template.yml
 .funignore
+
+# docker
+Dockerfile
+.dockerignore
+entrypoint.sh
+
+# pm2
+ecosystem.config.js
+
+# others
+db-config.sample.js
