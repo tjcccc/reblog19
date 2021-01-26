@@ -20,10 +20,23 @@ Resources:
       Properties:
         Handler: index.handler
         Runtime: nodejs12
-        CodeUri: '.'
+        CodeUri: './'
+        MemorySize: 1024
+        InstanceConcurrency: 5
+        Timeout: 120
       Events:
         httpTrigger: # trigger name
           Type: HTTP # http trigger
           Properties:
               AuthType: ANONYMOUS
               Methods: ['GET', 'POST', 'PUT']
+  Domain:
+      Type: Aliyun::Serverless::CustomDomain
+      Properties:
+        DomainName: Auto
+        Protocol: HTTP
+        RouteConfig:
+          Routes:
+            "/*":
+              ServiceName: reblog19-service
+              FunctionName: reblog19-server

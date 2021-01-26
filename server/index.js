@@ -6,7 +6,13 @@ const server = new Server(app);
 
 // http trigger entry
 module.exports.handler = function(req, res, context) {
-  server.httpProxy(req, res, context);
+  try {
+    server.httpProxy(req, res, context);
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+
 };
 
 // api gateway entry
