@@ -1,7 +1,7 @@
 const { GraphQLList, GraphQLString } = require('graphql');
 const { TagType } = require('../types/tag.type');
 const Tag = require('../../entities/tag');
-const ObjectId = require('mongoose').Types.ObjectId;
+// const ObjectId = require('mongoose').Types.ObjectId;
 const logger = require('../../middleware/logger');
 
 const findTag = async (label) => {

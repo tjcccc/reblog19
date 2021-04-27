@@ -6,8 +6,10 @@
       "graphql",
       "ql",
       "qlid",
+      "reblog",
       "resave",
       "scrollable",
+      "uncategorized",
       "virtuals"
     ]
 }

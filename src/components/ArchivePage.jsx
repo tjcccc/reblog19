@@ -30,7 +30,7 @@ class ArchivePage extends Component {
     const { status } = this.props;
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1;
+    const month = -1;
 
     const postsResponse = await fetchPostsByDate(year, month, 0, status);
     let posts = postsResponse.data.data.postsByDate;
@@ -84,7 +84,7 @@ class ArchivePage extends Component {
     const { posts, year, monthId, bottomNavId } = this.state;
 
     const month = reversedMonths.find(m => m.id === parseInt(monthId));
-    const monthName = month !== undefined ? month.name : '(Unknown month)';
+    const monthName = month !== undefined ? month.name : '';
     const postList = (posts === undefined || posts.length === 0) ? (<h4>No Post.</h4>) : posts.map((post, index) =>
       <PostListItem key={index} data={post} />
     );
@@ -93,7 +93,7 @@ class ArchivePage extends Component {
     );
     const currentYear = (new Date()).getFullYear();
     const years = converter.getRange(2014, currentYear + 1).reverse();
-    const bottmYearList = years.map((year, index) =>
+    const bottomYearList = years.map((year, index) =>
       <button key={index} onClick={() => this.fetchPostsBySelectingYear(year, status)}>{year}</button>
     );
 
@@ -112,7 +112,7 @@ class ArchivePage extends Component {
           <div className={bottomNavId !== '' ? 'bottom-menu' : 'hide'}>
             <div id={navButtonId.userMenu} className={bottomNavId === navButtonId.userMenu ? 'bottom-menu-section' : 'hide'}><UserPanel /></div>
             <div id={navButtonId.month} className={bottomNavId === navButtonId.month ? 'bottom-menu-section' : 'hide'}><nav>{bottomMonthList}</nav></div>
-            <div id={navButtonId.year} className={bottomNavId === navButtonId.year ? 'bottom-menu-section' : 'hide'}><nav>{bottmYearList}</nav></div>
+            <div id={navButtonId.year} className={bottomNavId === navButtonId.year ? 'bottom-menu-section' : 'hide'}><nav>{bottomYearList}</nav></div>
           </div>
           <nav className={bottomNavId !== '' ? 'bottom-nav' : 'bottom-nav bottom-shadow'}>
             <button id={navButtonId.userMenu} className={bottomNavId === navButtonId.userMenu ? 'selected' : ''} onClick={event => triggerButtonNav(this, event)}>{navButtonId.userMenu}</button>

@@ -18,7 +18,7 @@ const loginPage = () => (<LoginPage />);
 const settingPage = () => (<SettingPage />);
 const postPage = (routeData) => (<PostPage routeData={routeData} />);
 const editorPage = (routeData) => (<EditorPage routeData={routeData} />);
-const archivePage = () => (<ArchivePage title='Archive' status={1} />);
+const archivePage = () => (<ArchivePage title='Posts' status={1} />);
 const draftsPage = () => (<ArchivePage title='Drafts' status={0} />);
 
 const Routes = () => (

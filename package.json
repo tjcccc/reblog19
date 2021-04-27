@@ -9,13 +9,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stylelint": "stylelint src/styles/**/*.scss",
-    "serve": "serve -s build -l 3000",
-    "dev": "concurrently \"cd server && yarn run dev\" \"yarn run start\""
+    "serve": "serve -s build -l 3000"
   },
   "dependencies": {
     "@github/markdown-toolbar-element": "^1.1.0",
     "axios": "~0.21.1",
-    "concurrently": "^5.3.0",
     "debug": "^4.3.1",
     "github-markdown-css": "^4.0.0",
     "graphql": "^15.4.0",

@@ -2,7 +2,7 @@ const links = {
   default: '/',
   index: '/index',
   home: '/home',
-  archive: '/archive',
+  archive: '/posts',
   drafts: '/drafts',
   about: '/about',
   initialize: '/initialize',

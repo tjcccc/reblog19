@@ -8,8 +8,8 @@ const headerMenu = {
     },
     {
       id: 'bb',
-      label: 'ARCHIVE',
-      link: '/archive',
+      label: 'POSTS',
+      link: '/posts',
       authLevel: 0
     },
     {

@@ -40,8 +40,8 @@ const postQueries = {
         const month = args.month;
         const day = args.day;
         const isDayGiven = day !== undefined && day > 0 && day < 32;
-        const startDate = new Date(year, month - 1, isDayGiven ? day : 1);
-        const endDate = new Date(year, month - 1, isDayGiven ? day + 1 : 31);
+        const startDate = new Date(year, month === -1 ? 0 : month - 1, isDayGiven ? day : 1);
+        const endDate = new Date(year, month === -1 ? 11 : month - 1, isDayGiven ? day + 1 : 31);
         console.log(startDate);
         console.log(endDate);
         console.log(args.status !== 0 && args.status !== 1 ? { $ne: args.status } : args.status);
@@ -193,7 +193,7 @@ const postQueries = {
   earliestPost: {
     type: PostType,
     args: null,
-    resolve: async (_, args) => {
+    resolve: async () => {
       try {
         const result = await Post.findOne().sort({ post_time: 1 });
         return result;

@@ -9,10 +9,11 @@ import converter from '../utilities/converter';
 class Chronicle extends Component {
   constructor(props) {
     super(props);
+    const currentYear = (new Date()).getFullYear();
     this.state = {
-      selectedYear: 2019,
+      selectedYear: currentYear,
       selectedMonthId: 0,
-      currentYear: (new Date()).getFullYear(),
+      currentYear: currentYear,
       monthList: reversedMonths
     }
   }
@@ -23,12 +24,14 @@ class Chronicle extends Component {
     return await fetchEarliestPost().data;
   }
 
-  selectYear = (year) => {
+  selectYear = async (year) => {
     // logger.trace(year);
     const yearInt = parseInt(year);
     this.setState({
       selectedYear: yearInt === this.state.selectedYear ? 0 : yearInt
-    })
+    });
+    const { fetchPosts, statusForPost } = this.props;
+    await fetchPosts(yearInt, -1, statusForPost);
   }
 
   selectMonth = async (monthId) => {
