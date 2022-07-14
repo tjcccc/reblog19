@@ -100,7 +100,7 @@ class Post extends Component {
     return (
       <BrowserRouter basename={hostBasename} forceRefresh={true}>
         <article className='markdown-body post' key={key}>
-          <ReactMarkdown source={post.content} renderers={{ heading: headingRenderer }} />
+          <ReactMarkdown components={{ heading: headingRenderer }}>{post.content}</ReactMarkdown>
           {postPanel}
         </article>
       </BrowserRouter>

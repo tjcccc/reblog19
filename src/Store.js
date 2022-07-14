@@ -1,5 +1,6 @@
 /*eslint-env browser*/
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+// import { configureStore } from '@reduxjs/toolkit';
 import { SIGN_OUT } from './redux/authorization/actionTypes';
 import AuthorizationReducer from './redux/authorization/reducer';
 import Config from './redux/config/reducer';

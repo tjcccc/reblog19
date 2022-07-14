@@ -65,14 +65,16 @@ class PostCollection extends Component {
     document.documentElement.scrollTop = 0;
   }
 
-  fetchNewerPosts = () => {
+  fetchNewerPosts = (event) => {
+    event.preventDefault();
     this.pagination.index = this.pagination.index - 1 < 0 ? 0 : this.pagination.index - 1;
     this.fetchRecentPosts();
     this.goPageTop();
 
   };
 
-  fetchOlderPosts = () => {
+  fetchOlderPosts = (event) => {
+    event.preventDefault();
     this.pagination.index += 1;
     this.fetchRecentPosts();
     this.goPageTop();
@@ -106,8 +108,8 @@ class PostCollection extends Component {
       <article className='post-collection'>
         {postList}
         <nav className='article-nav-group'>
-          <button className={noNewer ? "disabled": ""} onClick={this.fetchNewerPosts}>{terms.label.newer}</button>
-          <button className={noOlder ? "disabled": ""} onClick={this.fetchOlderPosts}>{terms.label.older}</button>
+          <button className={noNewer ? "disabled": ""} onClick={event => this.fetchNewerPosts(event)}>{terms.label.newer}</button>
+          <button className={noOlder ? "disabled": ""} onClick={event => this.fetchOlderPosts(event)}>{terms.label.older}</button>
         </nav>
       </article>
     );

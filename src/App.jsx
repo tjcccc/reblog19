@@ -67,14 +67,14 @@ class App extends Component {
     return (
       <HelmetProvider context={this.helmetContext}>
         <div className="app">
-            <Helmet>
-              <meta charSet='utf-8' />
-              <title>{title}</title>
-            </Helmet>
-            <Header blogInfo={blogInfo} menuItems={headerMenu.items} />
-            <Routes />
-            <Footer blogInfo={blogInfo} />
-          </div>
+          <Helmet>
+            <meta charSet='utf-8' />
+            <title>{title}</title>
+          </Helmet>
+          <Header blogInfo={blogInfo} menuItems={headerMenu.items} />
+          <Routes />
+          <Footer blogInfo={blogInfo} />
+        </div>
       </HelmetProvider>
     );
   }
