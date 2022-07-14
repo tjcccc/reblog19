@@ -9,12 +9,13 @@ const cors = require('cors');
 // System
 const compression = require('compression');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 const helmet = require('helmet');
 
 // Database
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const dbConnection = require('./middleware/db-connection');
+const dbConfig = require('./db-config');
 
 // GraphQL
 const graphqlHTTP = require('./graphql/http');
@@ -33,9 +34,13 @@ app.set('trust proxy', 1);
 app.use(session({
   key: 'reblog19-server-session-store',
   secret: 'r-E-b-L-O-G-!(',
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: dbConfig.mongo.mongoUrl,
+    dbName: dbConfig.mongo.database,
+    collectionName: 'sessions'
+  })
 }));
 
 // Helmet

@@ -2,7 +2,7 @@ const logger = require('./logger');
 const mongoose = require('mongoose');
 const dbConfig = require('../db-config');
 
-mongoose.set('useFindAndModify', false);
+// mongoose.set('useFindAndModify', false);
 
 const dbConnection = (req, res, next) => {
   if (mongoose.connection.readyState !== 0) {
@@ -14,34 +14,30 @@ const dbConnection = (req, res, next) => {
     // Common mongoDB server
     mongoose.connect(dbConfig.mongo.host, {
       auth: {
-        user: dbConfig.mongo.user,
+        username: dbConfig.mongo.user,
         password: dbConfig.mongo.password
       },
-      authSource: dbConfig.mongo.database,
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }, error => {
-      if (error) {
-        logger.error(error);
-      } else {
-        logger.info('Database is connected.');
-        next();
-      }
+      authSource: dbConfig.mongo.database
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true
+    }).then(() => {
+      logger.info('Database is connected.');
+      next();
+    }).catch(error => {
+      logger.error(error);
     });
   } else {
       // mongoDB Atlas
       const atlasUri = `mongodb+srv://${dbConfig.mongo.user}:${dbConfig.mongo.password}@${dbConfig.mongo.host}/${dbConfig.mongo.database}?retryWrites=true&w=majority`;
       const options = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true
       }
-      mongoose.connect(atlasUri, options, error => {
-        if (error) {
-          logger.error(error);
-        } else {
-          logger.info('Database is connected.');
-          next();
-        }
+      mongoose.connect(atlasUri, options).then(() => {
+        logger.info('Database is connected.');
+        next();
+      }).catch(error => {
+        logger.error(error);
       });
   }
 

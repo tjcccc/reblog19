@@ -3,6 +3,7 @@
       "autorestart",
       "datepicker",
       "dropdown",
+      "graphiql",
       "graphql",
       "ql",
       "qlid",
@@ -10,6 +11,7 @@
       "resave",
       "scrollable",
       "uncategorized",
-      "virtuals"
+      "virtuals",
+      "webserverless"
     ]
 }

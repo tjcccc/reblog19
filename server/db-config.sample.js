@@ -3,6 +3,7 @@
 const dbConfig = {
   isMongoDBAtlas: false,
   mongo: {
+    mongoUrl: 'mongodb://username:password@ip:port/db',
     host: 'mongodb://ip:port/db',
     user: 'username',
     password: 'password',
