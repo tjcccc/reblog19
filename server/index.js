@@ -1,13 +1,13 @@
 const app = require('./app-serverless');
 // var http = require('http');
-// const proxy = require('@webserverless/fc-express');
+const proxy = require('@webserverless/fc-express');
 // eslint-disable-next-line node/no-extraneous-require
 var getRawBody = require('raw-body');
 
 
 // For Aliyun serverless
 const server = new proxy.Server(app);
-// const port = normalizePort(process.env.PORT || '4000');
+const port = normalizePort(process.env.PORT || '4000');
 // app.set('port', port)
 // const server = http.createServer(app);
 
@@ -21,21 +21,21 @@ module.exports.handler = async (req, res, context) => {
       path: req.path,
       queries: req.queries,
       headers: req.headers,
-      method : req.method,
-      requestURI : req.url,
-      clientIP : req.clientIP
+      method: req.method,
+      requestURI: req.url,
+      clientIP: req.clientIP
     }
 
-    getRawBody(req, function(err, body) {
-        res.setHeader('content-type', 'text/json');
+    getRawBody(req, function (err, body) {
+      res.setHeader('content-type', 'text/json');
 
-        for (var key in req.queries) {
-          var value = req.queries[key];
-          res.setHeader(key, value);
-        }
-        params.body = body.toString();
-        // res.send(JSON.stringify(params, null, '    '));
-        server.httpProxy(req, res, context);
+      for (var key in req.queries) {
+        var value = req.queries[key];
+        res.setHeader(key, value);
+      }
+      params.body = body.toString();
+      // res.send(JSON.stringify(params, null, '    '));
+      server.httpProxy(req, res, context);
     });
 
     // server.httpProxy(req, res, context);
@@ -93,13 +93,13 @@ function onError(error) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       // process.exit(1);
-      throw(error);
-      // break;
+      throw (error);
+    // break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       // process.exit(1);
-      throw(error);
-      // break;
+      throw (error);
+    // break;
     default:
       throw error;
   }

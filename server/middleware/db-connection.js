@@ -17,7 +17,7 @@ const dbConnection = (req, res, next) => {
         username: dbConfig.mongo.user,
         password: dbConfig.mongo.password
       },
-      authSource: dbConfig.mongo.database
+      authSource: dbConfig.mongo.authSource
       // useNewUrlParser: true,
       // useUnifiedTopology: true
     }).then(() => {

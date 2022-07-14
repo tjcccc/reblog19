@@ -7,6 +7,7 @@ const dbConfig = {
     host: 'mongodb://ip:port/db',
     user: 'username',
     password: 'password',
+    authSource: 'admin',
     database: 'db'
   }
 };

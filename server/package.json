@@ -6,8 +6,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js",
-    "start": "node app.js",
+    "dev": "export NODE_ENV=development || set NODE_ENV=development && nodemon app.js",
+    "start": "export NODE_ENV=production || set NODE_ENV=production && node app.js",
     "start:pm2": "pm2-runtime start ecosystem.config.js --env production"
   },
   "keywords": [

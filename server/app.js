@@ -38,13 +38,15 @@ app.use(session({
   saveUninitialized: false,
   store: MongoStore.create({
     mongoUrl: dbConfig.mongo.mongoUrl,
-    dbName: dbConfig.mongo.database,
+    dbName: 'reblog19',
     collectionName: 'sessions'
   })
 }));
 
 // Helmet
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: process.env.NODE_ENV === 'production' ? true : false
+}));
 app.disable('x-powered-by');
 
 // Server
