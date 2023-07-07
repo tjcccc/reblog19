@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "redux-devtools": "^3.5.0",
-    "stylelint": "^14.9.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^26.0.0",
     "stylelint-scss": "^4.3.0"
   },
