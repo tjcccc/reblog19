@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes, { any } from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-// import "react-datepicker/dist/react-datepicker.css";
-import { fetchPostById, checkIfPostExistsById, createPost, updatePost } from '../services/post.service';
+// import 'react-datepicker/dist/react-datepicker.css';
+import {
+  fetchPostById,
+  checkIfPostExistsById,
+  createPost,
+  updatePost,
+} from '../services/post.service';
 import { fetchCategoryById } from '../services/category.service';
 import { fetchTagById } from '../services/tag.service';
 import Editor from './Editor';
@@ -22,8 +27,8 @@ class EditorPage extends Component {
       content: '',
       status: 0,
       categories: [],
-      tags: []
-    }
+      tags: [],
+    };
 
     this.state = {
       isNew: true,
@@ -38,14 +43,14 @@ class EditorPage extends Component {
       tag_ids: [],
       tags: [],
       isAbleToSave: false,
-      shouldRedirect: false
+      shouldRedirect: false,
     };
   }
 
   redirectPostPath = '';
 
   getPostById = async (id) => {
-    const fetchedPost = await fetchPostById(id)
+    const fetchedPost = await fetchPostById(id);
     return fetchedPost.data.data.post;
   };
 
@@ -67,13 +72,13 @@ class EditorPage extends Component {
       tag_ids: post.tag_ids,
       categories: post.categories,
       tags: post.tags,
-      isAbleToSave: true
+      isAbleToSave: true,
     });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-  }
+  };
 
   extractTitle = (content) => {
     let title = 'New Post';
@@ -86,10 +91,10 @@ class EditorPage extends Component {
       title = content;
     }
     return title;
-  }
+  };
 
   getPostCategories = (allCategories, categoryIds) => {
-    if (!Array.isArray(categoryIds) || categoryIds.length < 1 ) {
+    if (!Array.isArray(categoryIds) || categoryIds.length < 1) {
       return undefined;
     }
 
@@ -99,21 +104,25 @@ class EditorPage extends Component {
     }
 
     // If categoryId not match any element in allCategories, do not add undefined to result array.
-    return categoryIds.map(categoryId => fetchCategoryById(allCategories, categoryId)).filter(category => category !== undefined);
+    return categoryIds
+      .map((categoryId) => fetchCategoryById(allCategories, categoryId))
+      .filter((category) => category !== undefined);
   };
 
   getPostTags = (tagIds) => {
     if (!Array.isArray(tagIds) || tagIds.length < 1) {
       return undefined;
     }
-    return tagIds.map(tagId => fetchTagById(tagId)).filter(tag => tag !== undefined);
-  }
+    return tagIds
+      .map((tagId) => fetchTagById(tagId))
+      .filter((tag) => tag !== undefined);
+  };
 
   updateContent = (content) => {
     const prevContent = this.state.content;
     this.setState({
-      isAbleToSave: (content !== '' && content !== prevContent),
-      content: content
+      isAbleToSave: content !== '' && content !== prevContent,
+      content: content,
     });
   };
 
@@ -123,27 +132,27 @@ class EditorPage extends Component {
 
   updatePostTime = (date) => {
     this.setState({
-      updatedPostTime: date
+      updatedPostTime: date,
     });
-  }
+  };
 
   resetPostTime = () => {
     const { postTime } = this.state;
     this.setState({
-      updatedPostTime: Date.parse(postTime)
+      updatedPostTime: Date.parse(postTime),
     });
-  }
+  };
 
   updateCategories = (categories) => {
     this.setState({
-      category_ids: categories.map(category => (category._id)),
-      categories: categories
+      category_ids: categories.map((category) => category._id),
+      categories: categories,
     });
   };
 
   updateTags = (tags) => {
     this.setState({
-      tags: tags
+      tags: tags,
     });
   };
 
@@ -151,12 +160,22 @@ class EditorPage extends Component {
     logger.info('Redirecting the post...');
     this.setState({
       shouldRedirect: true,
-      id: postId
+      id: postId,
     });
   };
 
   save = async () => {
-    const { editingPost, id, content, status, updatedPostTime, category_ids, categories, tag_ids, tags } = this.state;
+    const {
+      editingPost,
+      id,
+      content,
+      status,
+      updatedPostTime,
+      category_ids,
+      categories,
+      tag_ids,
+      tags,
+    } = this.state;
     const post = {
       ...editingPost,
       _id: id,
@@ -168,8 +187,10 @@ class EditorPage extends Component {
       tag_ids: tag_ids,
       categories: categories,
       tags: tags,
-      tagLabels: tags.map(tag => tag.label).filter(label => label !== undefined)
-    }
+      tagLabels: tags
+        .map((tag) => tag.label)
+        .filter((label) => label !== undefined),
+    };
 
     let postId = id;
 
@@ -177,7 +198,9 @@ class EditorPage extends Component {
     logger.info(post);
 
     const postChecking = await checkIfPostExistsById(post._id);
-    logger.info(`Is this post already exist? ${postChecking.data.data.postExistence}`);
+    logger.info(
+      `Is this post already exist? ${postChecking.data.data.postExistence}`,
+    );
 
     if (!postChecking.data.data.postExistence) {
       // New post
@@ -196,7 +219,7 @@ class EditorPage extends Component {
     }
 
     this.redirectToPost(postId);
-  }
+  };
 
   componentDidMount = async () => {
     const { id } = this.props.routeData.match.params;
@@ -205,7 +228,7 @@ class EditorPage extends Component {
       return;
     }
 
-    this.setState({ content: terms.placeholder.loading })
+    this.setState({ content: terms.placeholder.loading });
 
     const remotePost = await this.getPostById(id);
     this.loadPost(remotePost);
@@ -213,12 +236,21 @@ class EditorPage extends Component {
 
   render = () => {
     const { isAdmin } = this.props;
-    const { id, content, status, updatedPostTime, categories, tags, isAbleToSave, shouldRedirect } = this.state;
+    const {
+      id,
+      content,
+      status,
+      updatedPostTime,
+      categories,
+      tags,
+      isAbleToSave,
+      shouldRedirect,
+    } = this.state;
     // logger.info(`Is Admin: ${isAdmin}`);
 
     if (shouldRedirect) {
       const postPath = `/post/${id}`;
-      return <Redirect to={postPath} />;
+      return <Navigate to={postPath} />;
     }
 
     const noAuthorizedPage = (
@@ -227,14 +259,19 @@ class EditorPage extends Component {
       </div>
     );
     const editorPage = (
-      <form className='container responsive-container' id='blog-post' onSubmit={this.handleSubmit}>
+      <form
+        className='container responsive-container'
+        id='blog-post'
+        onSubmit={this.handleSubmit}
+      >
         <article>
           <Editor
-            content={content ? content: '' }
+            content={content ? content : ''}
             formId='blog-post'
             handleUpdating={this.updateContent}
             handleSaving={this.save}
-            trigger={isAbleToSave} />
+            trigger={isAbleToSave}
+          />
         </article>
         <aside className='editor-options'>
           <StatusSelector status={status} handleUpdating={this.updateStatus} />
@@ -244,19 +281,26 @@ class EditorPage extends Component {
               <DatePicker
                 selected={updatedPostTime}
                 onChange={this.updatePostTime}
-                showTimeSelect timeIntervals='60'
-                dateFormat="yyyy-MM-dd HH:mm" />
-              <button className='normal' onClick={this.resetPostTime}>UNDO</button>
+                showTimeSelect
+                timeIntervals='60'
+                dateFormat='yyyy-MM-dd HH:mm'
+              />
+              <button className='normal' onClick={this.resetPostTime}>
+                UNDO
+              </button>
             </div>
           </div>
-          <CategorySelector categories={categories} handleUpdating={this.updateCategories} />
+          <CategorySelector
+            categories={categories}
+            handleUpdating={this.updateCategories}
+          />
           <TagPin tags={tags} handleUpdating={this.updateTags} />
         </aside>
       </form>
     );
 
     return isAdmin ? editorPage : noAuthorizedPage;
-  }
+  };
 }
 
 EditorPage.displayName = 'EditorPage';
@@ -265,17 +309,19 @@ EditorPage.propTypes = {
   isAdmin: PropTypes.bool,
   isNew: PropTypes.bool,
   routeData: any,
-  allCategories: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string,
-    order_id: PropTypes.number,
-    label: PropTypes.string,
-    count: PropTypes.number
-  }))
-}
+  allCategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      order_id: PropTypes.number,
+      label: PropTypes.string,
+      count: PropTypes.number,
+    }),
+  ),
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAdmin: state.authorization.isAdmin,
-  allCategories: state.category.categories
+  allCategories: state.category.categories,
 });
 
 export default connect(mapStateToProps, null)(EditorPage);

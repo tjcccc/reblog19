@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
 import logger from '../utilities/logger';
@@ -17,16 +17,16 @@ class LoginPage extends Component {
       password: '',
       validInput: {
         mail: false,
-        password: false
+        password: false,
       },
-      isValidationChecked: false
+      isValidationChecked: false,
     };
   }
 
   handleInput = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
-    })
+      [event.target.name]: event.target.value,
+    });
   };
 
   signUserIn = (loginData) => {
@@ -34,11 +34,11 @@ class LoginPage extends Component {
     const { cookies } = this.props;
     cookies.set('token', loginData.token, {
       path: '/',
-      maxAge: loginData.tokenExpiration * 24 * 60 * 60
+      maxAge: loginData.tokenExpiration * 24 * 60 * 60,
     });
 
     this.props.onSignIn(loginData);
-  }
+  };
 
   login = async (event) => {
     event.preventDefault();
@@ -64,7 +64,7 @@ class LoginPage extends Component {
     }
 
     return authorization.data;
-  }
+  };
 
   render = () => {
     return (
@@ -73,44 +73,64 @@ class LoginPage extends Component {
         <form className='config-form' onSubmit={this.login}>
           <div className='form-element-group'>
             <label>{terms.label.mail}</label>
-            <input name='mail' type='email' placeholder={terms.placeholder.emailForLogin} onChange={this.handleInput} />
-            <p className='input-warning' hidden={!this.state.isValidationChecked || this.state.validInput.mail}>{terms.validation.email}</p>
+            <input
+              name='mail'
+              type='email'
+              placeholder={terms.placeholder.emailForLogin}
+              onChange={this.handleInput}
+            />
+            <p
+              className='input-warning'
+              hidden={
+                !this.state.isValidationChecked || this.state.validInput.mail
+              }
+            >
+              {terms.validation.email}
+            </p>
           </div>
           <div className='form-element-group'>
             <label>{terms.label.password}</label>
-            <input name='password' type='password' placeholder={terms.placeholder.passwordForLogin} onChange={this.handleInput} />
+            <input
+              name='password'
+              type='password'
+              placeholder={terms.placeholder.passwordForLogin}
+              onChange={this.handleInput}
+            />
           </div>
           <div className='form-element-group one-line'>
             <input type='checkbox' htmlFor='remember-me' />
-            <label name='remember-me' id='remember-me'>{terms.label.rememberMe}</label>
+            <label name='remember-me' id='remember-me'>
+              {terms.label.rememberMe}
+            </label>
           </div>
           <div className='form-button-group'>
             <button type='submit'>{terms.label.signIn}</button>
           </div>
         </form>
       </div>
-    )
+    );
   };
-
 }
 
 LoginPage.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
   validInput: PropTypes.shape({
     mail: PropTypes.bool,
-    password: PropTypes.bool
+    password: PropTypes.bool,
   }),
   isValidationChecked: PropTypes.bool,
   onSignIn: PropTypes.func.isRequired,
   history: PropTypes.shape({
-    goBack: PropTypes.func.isRequired
-  })
-}
+    goBack: PropTypes.func.isRequired,
+  }),
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onSignIn: (loginData) => {
     dispatch(signIn(loginData));
-  }
+  },
 });
 
-export default withRouter(withCookies(connect(null, mapDispatchToProps)(LoginPage)));
+export default withRouter(
+  withCookies(connect(null, mapDispatchToProps)(LoginPage)),
+);
