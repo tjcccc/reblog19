@@ -14,7 +14,7 @@
   "dependencies": {
     "@github/markdown-toolbar-element": "^2.2.3",
     "@reduxjs/toolkit": "^2.2.3",
-    "axios": "~1.6.8",
+    "axios": "~1.7.4",
     "debug": "^4.3.4",
     "github-markdown-css": "^5.5.1",
     "graphql": "^16.8.1",
